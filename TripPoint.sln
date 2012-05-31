@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripPoint.Model", "TripPoint.Model\TripPoint.Model.csproj", "{E5C34F04-D6D5-41B1-920A-55C36880427E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripPoint.WindowsPhone", "TripPoint.WindowsPhone\TripPoint.WindowsPhone.csproj", "{295F6514-155B-40C1-B8C4-C6C737FECDAB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E5C34F04-D6D5-41B1-920A-55C36880427E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5C34F04-D6D5-41B1-920A-55C36880427E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5C34F04-D6D5-41B1-920A-55C36880427E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5C34F04-D6D5-41B1-920A-55C36880427E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{295F6514-155B-40C1-B8C4-C6C737FECDAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{295F6514-155B-40C1-B8C4-C6C737FECDAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{295F6514-155B-40C1-B8C4-C6C737FECDAB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{295F6514-155B-40C1-B8C4-C6C737FECDAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{295F6514-155B-40C1-B8C4-C6C737FECDAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{295F6514-155B-40C1-B8C4-C6C737FECDAB}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
