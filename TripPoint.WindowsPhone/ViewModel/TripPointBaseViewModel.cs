@@ -9,9 +9,12 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
+using GalaSoft.MvvmLight;
+
 namespace TripPoint.WindowsPhone.ViewModel
 {
-    public class CreateTripViewModel : TripPointBaseViewModel
+    // TODO: rename to TripPointViewModelBase
+    public class TripPointBaseViewModel : ViewModelBase
     {
         
     }
