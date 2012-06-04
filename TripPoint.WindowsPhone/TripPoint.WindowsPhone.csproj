@@ -68,6 +68,7 @@
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\CreateTripViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\Trip\CreateTrip.xaml.cs">
       <DependentUpon>CreateTrip.xaml</DependentUpon>
