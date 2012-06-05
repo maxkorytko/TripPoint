@@ -123,4 +123,7 @@
   <data name="CreateTripPageTitle" xml:space="preserve">
     <value>Create Trip</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
 </root>
