@@ -75,7 +75,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\CreateTripViewModel.cs" />
-    <Compile Include="ViewModel\TripPointBaseViewModel.cs" />
+    <Compile Include="ViewModel\TripPointViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\Trip\CreateTripView.xaml.cs">
       <DependentUpon>CreateTripView.xaml</DependentUpon>

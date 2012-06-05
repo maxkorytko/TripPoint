@@ -13,8 +13,7 @@ using GalaSoft.MvvmLight;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
-    // TODO: rename to TripPointViewModelBase
-    public class TripPointBaseViewModel : ViewModelBase
+    public class TripPointViewModelBase : ViewModelBase
     {
         
     }

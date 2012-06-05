@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
-    public class CreateTripViewModel : TripPointBaseViewModel
+    public class CreateTripViewModel : TripPointViewModelBase
     {
         
     }
