@@ -4,20 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:i18n="clr-namespace:TripPoint.WindowsPhone.I18N"
     xmlns:vm="clr-namespace:TripPoint.WindowsPhone.ViewModel"
     >
 
     <!--Application Resources-->
     <Application.Resources>
-        <i18n:Localization x:Key="Localization" />
-        
         <vm:ViewModelLocator x:Key="Locator" />
-        
-        <Style x:Key="ApplicationTitle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="48" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-        </Style>
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>

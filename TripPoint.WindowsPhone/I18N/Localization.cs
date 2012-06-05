@@ -13,12 +13,7 @@ namespace TripPoint.WindowsPhone.I18N
 {
     public class Localization
     {
-        private Resources _resources;
-
-        public Localization()
-        {
-            _resources = new Resources();
-        }
+        private static Resources _resources = new Resources();
 
         public Resources Resources
         {
