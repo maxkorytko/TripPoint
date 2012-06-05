@@ -77,8 +77,8 @@
     <Compile Include="ViewModel\CreateTripViewModel.cs" />
     <Compile Include="ViewModel\TripPointBaseViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="View\Trip\CreateTrip.xaml.cs">
-      <DependentUpon>CreateTrip.xaml</DependentUpon>
+    <Compile Include="View\Trip\CreateTripView.xaml.cs">
+      <DependentUpon>CreateTripView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -90,9 +90,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Trip\CreateTrip.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="View\Trip\CreateTripView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

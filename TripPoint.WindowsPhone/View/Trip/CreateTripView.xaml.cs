@@ -13,9 +13,9 @@ using Microsoft.Phone.Controls;
 
 namespace TripPoint.WindowsPhone.View.Trip
 {
-    public partial class CreateTrip : PhoneApplicationPage
+    public partial class CreateTripView : PhoneApplicationPage
     {
-        public CreateTrip()
+        public CreateTripView()
         {
             InitializeComponent();
         }
