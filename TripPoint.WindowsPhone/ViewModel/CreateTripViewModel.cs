@@ -28,7 +28,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void SaveTrip()
         {
-
+            MessageBox.Show("Save Trip");
         }
     }
 }

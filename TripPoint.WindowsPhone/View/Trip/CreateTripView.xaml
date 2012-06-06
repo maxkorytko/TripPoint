@@ -5,7 +5,7 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:appBar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -59,12 +59,12 @@
         </Grid>
     </Grid>
  
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False">
-            <shell:ApplicationBarIconButton IconUri="/Assets/Images/Dark/appbar.save.rest.png" 
-                                            Text="Save">
-            </shell:ApplicationBarIconButton>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
+    <appBar:Bindable.ApplicationBar>
+        <appBar:BindableApplicationBar IsVisible="True">
+            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Save}"
+                                                 IconUri="/Assets/Images/Dark/appbar.save.rest.png" 
+                                                 Command="{Binding SaveTripCommand}"/>
+        </appBar:BindableApplicationBar>
+    </appBar:Bindable.ApplicationBar>
 
 </phone:PhoneApplicationPage>
