@@ -1,34 +1,27 @@
-﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-
+﻿using TripPoint.Model.Domain;
+using TripPoint.Model.Utils;
 using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CreateTripViewModel : TripPointViewModelBase
     {
+        private static readonly string TAG = "CreateTripViewModel";
+
         public CreateTripViewModel()
         {
+            Trip = new Trip();
+            
             SaveTripCommand = new RelayCommand(SaveTrip);
         }
 
-        public RelayCommand SaveTripCommand
-        {
-            get;
-            private set;
-        }
+        public Trip Trip { get; private set; }
+
+        public RelayCommand SaveTripCommand { get; private set; }
 
         private void SaveTrip()
         {
-            MessageBox.Show("Save Trip");
+            //Logger.Log(TAG, "save trip: {0}, {1}, {2}", Trip.Name, Trip.StartDate, Trip.Notes);
         }
     }
 }
