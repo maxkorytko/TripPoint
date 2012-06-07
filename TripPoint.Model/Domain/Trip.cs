@@ -11,9 +11,9 @@ namespace TripPoint.Model.Domain
 
         public string Place { get; set; }
 
-        public DateTime StartDate { get; private set;  }
+        public DateTime StartDate { get; set;  }
 
-        public DateTime EndDate { get; private set; }
+        public DateTime EndDate { get; set; }
 
         public string Notes { get; set; }
     }
