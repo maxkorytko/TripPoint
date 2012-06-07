@@ -12,7 +12,13 @@
             InitCreateTripViewModel();
         }
 
-        public static CreateTripViewModel CreateTripViewModel
+        private static void InitCreateTripViewModel()
+        {
+            if (_createTripViewModel == null)
+                _createTripViewModel = new CreateTripViewModel();
+        }
+
+        public static CreateTripViewModel CreateTripViewModelStatic
         {
             get
             {
@@ -21,10 +27,12 @@
             }
         }
 
-        private static void InitCreateTripViewModel()
+        public CreateTripViewModel CreateTripViewModel
         {
-            if (_createTripViewModel == null)
-                _createTripViewModel = new CreateTripViewModel();
+            get
+            {
+                return CreateTripViewModelStatic;
+            }
         }
 
         private static void ClearCreateTripViewModel()
