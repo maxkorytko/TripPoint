@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using TripPoint.Model.Domain;
 using TripPoint.Model.Utils;
 using GalaSoft.MvvmLight.Command;
@@ -9,10 +10,7 @@ namespace TripPoint.WindowsPhone.ViewModel
     {
         public CreateTripViewModel()
         {
-            Trip = new Trip
-            {
-                StartDate = DateTime.Now
-            };
+            Trip = new Trip();
             
             SaveTripCommand = new RelayCommand(SaveTrip);
         }
@@ -24,6 +22,23 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void SaveTrip()
         {
             Logger.Log(this, "save trip: {0}, {1}, {2}", Trip.Name, Trip.StartDate, Trip.Notes);
+
+            bool isTripValid = Trip.Validate();
+
+            if (isTripValid)
+            {
+                PersistTrip();
+                //NavigateToView(Views.TripDetailsView);
+            }
+            else
+            {
+                MessageBox.Show("Validation Failed");
+            }
+        }
+
+        private void PersistTrip()
+        {
+            //_tripRepository.SaveTrip(Trip);
         }
     }
 }
