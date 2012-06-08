@@ -12,6 +12,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using TripPoint.WindowsPhone.Navigation;
 
 namespace TripPoint.WindowsPhone
 {
@@ -121,6 +122,9 @@ namespace TripPoint.WindowsPhone
 
             // Handle navigation failures
             RootFrame.NavigationFailed += RootFrame_NavigationFailed;
+
+            // Set custom uri mapper
+            RootFrame.UriMapper = TripPointNavigation.UriMapper;
 
             // Ensure we don't initialize again
             phoneApplicationInitialized = true;

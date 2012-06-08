@@ -77,12 +77,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Navigation\TripPointNavigation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\CreateTripViewModel.cs" />
     <Compile Include="ViewModel\TripPointViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\TripPointViews.cs" />
     <Compile Include="View\Trip\CreateTripView.xaml.cs">
       <DependentUpon>CreateTripView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Trip\TripDetailsView.xaml.cs">
+      <DependentUpon>TripDetailsView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +102,10 @@
     <Page Include="View\Trip\CreateTripView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Trip\TripDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
