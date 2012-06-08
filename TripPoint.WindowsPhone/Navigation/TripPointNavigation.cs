@@ -1,5 +1,12 @@
-﻿using System;
+﻿#region SDK Usings
+
+using System;
+using System.Windows;
 using System.Windows.Navigation;
+
+#endregion
+
+using TripPoint.WindowsPhone;
 
 namespace TripPoint.WindowsPhone.Navigation
 {
@@ -41,6 +48,18 @@ namespace TripPoint.WindowsPhone.Navigation
             {
                 _uriMapper.UriMappings.Add(uriMapping);
             }
+        }
+
+        /// <summary>
+        /// Navigates to a given URI
+        /// </summary>
+        /// <param name="uri">URI to navigate to</param>
+        /// <returns>true if navigation is successful</returns>
+        public static bool Navigate(string uri)
+        {
+            var rootFrame = (Application.Current as App).RootFrame;
+
+            return rootFrame.Navigate(new Uri(uri, UriKind.Relative));
         }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.Phone.Controls;
 
 #endregion
 
+using TripPoint.WindowsPhone.Navigation;
 using TripPoint.Model.Domain;
 using TripPoint.Model.Utils;
 using GalaSoft.MvvmLight.Command;
@@ -34,9 +35,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             if (isTripValid)
             {
                 PersistTrip();
-
-                var rootVisual = Application.Current.RootVisual as PhoneApplicationFrame;
-                rootVisual.Navigate(new Uri("/TripDetails", UriKind.Relative));
+                TripPointNavigation.Navigate("/TripDetails");
             }
             else
             {
