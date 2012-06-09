@@ -1,4 +1,6 @@
-﻿namespace TripPoint.WindowsPhone.ViewModel
+﻿using TripPoint.Model.Data.Repository.Memory;
+
+namespace TripPoint.WindowsPhone.ViewModel
 {
     public class ViewModelLocator
     {
@@ -15,7 +17,7 @@
         private static void InitCreateTripViewModel()
         {
             if (_createTripViewModel == null)
-                _createTripViewModel = new CreateTripViewModel();
+                _createTripViewModel = new CreateTripViewModel(new MemoryTripRepository());
         }
 
         public static CreateTripViewModel CreateTripViewModelStatic
