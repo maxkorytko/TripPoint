@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripPoint.Model", "TripPoin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripPoint.WindowsPhone", "TripPoint.WindowsPhone\TripPoint.WindowsPhone.csproj", "{295F6514-155B-40C1-B8C4-C6C737FECDAB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripPoint.Test", "TripPoint.Test\TripPoint.Test.csproj", "{DC72922C-AA3E-408F-AA65-49ADC7BDAD69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,12 @@ Global
 		{295F6514-155B-40C1-B8C4-C6C737FECDAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{295F6514-155B-40C1-B8C4-C6C737FECDAB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{295F6514-155B-40C1-B8C4-C6C737FECDAB}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{DC72922C-AA3E-408F-AA65-49ADC7BDAD69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC72922C-AA3E-408F-AA65-49ADC7BDAD69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC72922C-AA3E-408F-AA65-49ADC7BDAD69}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{DC72922C-AA3E-408F-AA65-49ADC7BDAD69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC72922C-AA3E-408F-AA65-49ADC7BDAD69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC72922C-AA3E-408F-AA65-49ADC7BDAD69}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
