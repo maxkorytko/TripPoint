@@ -9,7 +9,9 @@ namespace TripPoint.Model.Domain
     {
         public Trip()
         {
+            Name = string.Empty;
             StartDate = DateTime.Now;
+            Notes = string.Empty;
         }
 
         public string ID
