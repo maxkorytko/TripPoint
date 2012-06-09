@@ -49,8 +49,6 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void SaveTrip()
         {
-            Logger.Log(this, "save trip: {0}, {1}, {2}", Trip.Name, Trip.StartDate, Trip.Notes);
-
             bool isTripValid = Trip.Validate();
 
             if (isTripValid)
@@ -67,6 +65,8 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void PersistTrip()
         {
             _tripRepository.SaveTrip(Trip);
+
+            Logger.Log("Persisted trip: {0}", Trip);
         }
     }
 }
