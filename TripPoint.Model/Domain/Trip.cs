@@ -12,6 +12,15 @@ namespace TripPoint.Model.Domain
             StartDate = DateTime.Now;
         }
 
+        public string ID
+        {
+            get
+            {
+                int hashCode = GetHashCode();
+                return Convert.ToString(hashCode);
+            }
+        }
+
         public string Name { get; set; }
 
         public string Place { get; set; }
