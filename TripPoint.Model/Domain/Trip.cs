@@ -59,5 +59,10 @@ namespace TripPoint.Model.Domain
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            return string.Format("Name: {0}, StartDate: {1}", Name, StartDate);
+        }
     }
 }
