@@ -49,6 +49,8 @@
     <Reference Include="mscorlib.extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Repository\ITripRepository.cs" />
+    <Compile Include="Data\Repository\Memory\MemoryTripRepository.cs" />
     <Compile Include="Domain\Checkpoint.cs" />
     <Compile Include="Domain\GeoLocation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
