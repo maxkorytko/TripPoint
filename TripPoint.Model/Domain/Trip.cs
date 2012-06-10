@@ -62,6 +62,12 @@ namespace TripPoint.Model.Domain
 
         #endregion
 
+        public override int GetHashCode()
+        {
+            string value = string.Format("{0}{1}{2}{3}", Name, StartDate, EndDate, Notes);
+            return value.GetHashCode();
+        }
+
         public override string ToString()
         {
             return string.Format("Name: {0}, StartDate: {1}", Name, StartDate);
