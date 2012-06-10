@@ -54,7 +54,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             if (isTripValid)
             {
                 PersistTrip();
-                TripPointNavigation.Navigate(string.Format("/TripDetails/{0}", Trip.ID));
+                TripPointNavigation.Navigate(string.Format("/Trip/Details/{0}", Trip.ID));
             }
             else
             {

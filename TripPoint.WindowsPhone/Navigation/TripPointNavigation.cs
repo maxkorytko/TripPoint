@@ -19,9 +19,14 @@ namespace TripPoint.WindowsPhone.Navigation
 
         private static UriMapping[] _uriMappings = new UriMapping[]
         {
-            new UriMapping()
+            new UriMapping
             {
-                Uri = new Uri("/TripDetails/{ID}", UriKind.Relative),
+                Uri = new Uri("/Trip/Current", UriKind.Relative),
+                MappedUri = new Uri("/View/Trip/CurrentTripView.xaml", UriKind.Relative)
+            },
+            new UriMapping
+            {
+                Uri = new Uri("/Trip/Details/{ID}", UriKind.Relative),
                 MappedUri = new Uri("/View/Trip/TripDetailsView.xaml", UriKind.Relative)
             }
         };
