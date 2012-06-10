@@ -19,33 +19,12 @@ namespace TripPoint.Model.Data.Repository.Memory
                 throw new ArgumentNullException("trip");
 
             _dataStore[trip.ID] = trip;
-
-            //if (TripExists(trip))
-            //{
-            //    UpdateTrip(trip);
-            //    return;
-            //}
-
-            //CreateTrip(trip);
         }
-
-        //private static bool TripExists(Trip trip)
-        //{
-        //    return _dataStore.ContainsKey(trip.ID);
-        //}
-
-        //private static void CreateTrip(Trip trip)
-        //{
-        //    _dataStore.Add(trip.ID, trip);
-        //}
-
-        //private static void UpdateTrip(Trip trip)
-        //{
-        //    _dataStore[trip.ID] = trip;
-        //}
 
         public Trip FindTrip(string tripID)
         {
+            if (tripID == null) return null;
+
             Trip trip = null;
 
             if (_dataStore.ContainsKey(tripID))
