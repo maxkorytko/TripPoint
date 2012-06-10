@@ -85,6 +85,9 @@
     <Compile Include="View\Trip\CreateTripView.xaml.cs">
       <DependentUpon>CreateTripView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Trip\CurrentTripView.xaml.cs">
+      <DependentUpon>CurrentTripView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Trip\TripDetailsView.xaml.cs">
       <DependentUpon>TripDetailsView.xaml</DependentUpon>
     </Compile>
@@ -101,6 +104,10 @@
     <Page Include="View\Trip\CreateTripView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Trip\CurrentTripView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Trip\TripDetailsView.xaml">
       <SubType>Designer</SubType>
