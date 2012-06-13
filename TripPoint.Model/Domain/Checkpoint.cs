@@ -14,6 +14,8 @@ namespace TripPoint.Model.Domain
         /// </summary>
         public DateTime TimeStamp { get; private set; }
 
-        public String Title { get; set; }
+        public string Title { get; set; }
+
+        public string Notes { get; set; }
     }
 }

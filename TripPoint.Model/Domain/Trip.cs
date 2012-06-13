@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 
 namespace TripPoint.Model.Domain
 {
@@ -11,7 +12,9 @@ namespace TripPoint.Model.Domain
         {
             Name = string.Empty;
             StartDate = DateTime.Now;
+            EndDate = null;
             Notes = string.Empty;
+            Checkpoints = new ObservableCollection<Checkpoint>();
         }
 
         public string ID
@@ -29,9 +32,11 @@ namespace TripPoint.Model.Domain
 
         public DateTime StartDate { get; set;  }
 
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         public string Notes { get; set; }
+
+        public ObservableCollection<Checkpoint> Checkpoints { get; private set; }
 
         /// <summary>
         /// Validates required properties
