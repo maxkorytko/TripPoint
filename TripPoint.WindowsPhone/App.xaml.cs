@@ -12,7 +12,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+
 using TripPoint.WindowsPhone.Navigation;
+using TripPoint.Model.Domain;
 
 namespace TripPoint.WindowsPhone
 {
@@ -23,6 +25,11 @@ namespace TripPoint.WindowsPhone
         /// </summary>
         /// <returns>The root frame of the Phone Application.</returns>
         public PhoneApplicationFrame RootFrame { get; private set; }
+
+        /// <summary>
+        /// The trip in progress
+        /// </summary>
+        public Trip CurrentTrip { get; set; }
 
         /// <summary>
         /// Constructor for the Application object.
@@ -37,6 +44,8 @@ namespace TripPoint.WindowsPhone
 
             // Phone-specific initialization
             InitializePhoneApplication();
+
+            InitializeCurrentTrip();
 
             // Show graphics profiling information while debugging.
             if (System.Diagnostics.Debugger.IsAttached)
@@ -142,5 +151,15 @@ namespace TripPoint.WindowsPhone
         }
 
         #endregion
+
+        /// <summary>
+        /// Retreives current trip from a trip repository
+        /// Assigns a value to the CurrentTrip property
+        /// </summary>
+        private void InitializeCurrentTrip()
+        {
+            // TODO: fetch current trip from a trip repository
+            // TODO: search for a trip with no end date
+        }
     }
 }
