@@ -34,7 +34,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void InitProperties()
         {
             Trip = new Trip();
-            SaveTripCommand = new RelayCommand(SaveTrip);
+            SaveTripCommand = new RelayCommand(SaveTripAction);
         }
 
         /// <summary>
@@ -47,13 +47,13 @@ namespace TripPoint.WindowsPhone.ViewModel
         /// </summary>
         public RelayCommand SaveTripCommand { get; private set; }
 
-        private void SaveTrip()
+        private void SaveTripAction()
         {
             bool isTripValid = Trip.Validate();
 
             if (isTripValid)
             {
-                PersistTrip();
+                SaveTrip();
                 TripPointNavigation.Navigate("/Trip/Current");
             }
             else
@@ -62,7 +62,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
-        private void PersistTrip()
+        private void SaveTrip()
         {
             _tripRepository.SaveTrip(Trip);
 
