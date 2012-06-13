@@ -51,15 +51,15 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             bool isTripValid = Trip.Validate();
 
-            if (isTripValid)
-            {
-                SaveTrip();
-                TripPointNavigation.Navigate("/Trip/Current");
-            }
-            else
+            if (!isTripValid)
             {
                 MessageBox.Show("Validation Failed");
+                return;
             }
+
+            SaveTrip();
+            (Application.Current as App).CurrentTrip = Trip;
+            TripPointNavigation.Navigate("/Trip/Current");
         }
 
         private void SaveTrip()
