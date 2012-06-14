@@ -24,8 +24,7 @@
                 <Grid x:Name="TripDetailsLayout">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     
                     <StackPanel Grid.Row="0">
@@ -37,21 +36,36 @@
                                    Text="{Binding CurrentTrip.StartDate}" />
                     </StackPanel>
                     
-                    <StackPanel Grid.Row="1" Margin="0,25,0,15">
-                        <TextBlock Style="{StaticResource PhoneTextBlockBase}" Text="Last Checkpoint" />
-
-                        <TextBlock x:Name="LastCheckpointTitle" Style="{StaticResource PhoneTextTitle2Style}"
-                            HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="Checkpoint title" TextTrimming="WordEllipsis" />
-
-                        <TextBlock x:Name="LastCheckpointCreateDate" Style="{StaticResource PhoneTextBlockBase}"
-                                   Text="September 23, 5:23 PM" />
-                    </StackPanel>
+                    <Grid x:Name="CreateCheckpointContainer" Grid.Row="1" Visibility="Visible">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        
+                        <Button Content="Create Checkpoint" VerticalAlignment="Center" />
+                    </Grid>
                     
-                    <StackPanel Grid.Row="2" VerticalAlignment="Top">
-                        <Button x:Name="AddNotesButton" Content="Add Notes" />
+                    <Grid x:Name="CurrentCheckpointContainer" Grid.Row="1" Visibility="Collapsed">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        
+                        <StackPanel Grid.Row="0" Margin="0,25,0,15">
+                            <TextBlock Style="{StaticResource PhoneTextBlockBase}" Text="Last Checkpoint" />
 
-                        <Button x:Name="AddPicturesButton" Content="Add Pictures" />
-                    </StackPanel>
+                            <TextBlock x:Name="LastCheckpointTitle" Style="{StaticResource PhoneTextTitle2Style}"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="Checkpoint title" TextTrimming="WordEllipsis" />
+
+                            <TextBlock x:Name="LastCheckpointCreateDate" Style="{StaticResource PhoneTextBlockBase}"
+                                       Text="September 23, 5:23 PM" />
+                        </StackPanel>
+                    
+                        <StackPanel Grid.Row="1" VerticalAlignment="Top">
+                            <Button x:Name="AddNotesButton" Content="Add Notes" />
+
+                            <Button x:Name="AddPicturesButton" Content="Add Pictures" />
+                        </StackPanel>
+                    </Grid>        
                 </Grid>
             </controls:PanoramaItem>
             
