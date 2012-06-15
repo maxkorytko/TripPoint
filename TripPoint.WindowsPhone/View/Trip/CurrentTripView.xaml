@@ -41,7 +41,8 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         
-                        <Button Content="Create Checkpoint" VerticalAlignment="Center" />
+                        <Button Content="Create Checkpoint" VerticalAlignment="Center"
+                                Command="{Binding CreateCheckpointCommand}" />
                     </Grid>
                     
                     <Grid x:Name="CurrentCheckpointContainer" Grid.Row="1" Visibility="Collapsed">
@@ -80,7 +81,7 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 
-                                <Image Source="/Assets/Images/Dark/checkpoin.thumb.png" />
+                                <Image Source="/Assets/Images/Dark/checkpoint.thumb.png" />
                                 
                                 <StackPanel>
                                     <TextBlock x:Name="CheckpointTitle" Grid.Column="0" Text="Checkpoint Title" />

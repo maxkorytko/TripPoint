@@ -1,20 +1,21 @@
-﻿using System;
-using System.Net;
+﻿#region SDK Usings
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+#endregion
 
 using TripPoint.Model.Domain;
+using TripPoint.Model.Utils;
+using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CurrentTripViewModel : TripPointViewModelBase
     {
+        public CurrentTripViewModel()
+        {
+            CreateCheckpointCommand = new RelayCommand(CreateCheckpointAction);
+        }
+
         public Trip CurrentTrip
         {
             get
@@ -26,6 +27,13 @@ namespace TripPoint.WindowsPhone.ViewModel
 
                 return currentTrip;
             }
+        }
+
+        public ICommand CreateCheckpointCommand { get; private set; }
+
+        private void CreateCheckpointAction()
+        {
+            Logger.Log(this, "Create Checkpoint");
         }
     }
 }
