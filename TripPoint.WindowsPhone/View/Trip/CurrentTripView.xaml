@@ -86,8 +86,8 @@
                                 <Image Source="/Assets/Images/Dark/checkpoint.thumb.png" />
                                 
                                 <StackPanel>
-                                    <TextBlock x:Name="CheckpointTitle" Grid.Column="0" Text="Checkpoint Title" />
-                                    <TextBlock x:Name="CheckpointCreateDate" Grid.Column="1" Text="December 12, 2011" />
+                                    <TextBlock x:Name="CheckpointTitle" Grid.Column="0" Text="{Binding Title}" />
+                                    <TextBlock x:Name="CheckpointCreateDate" Grid.Column="1" Text="{Binding TimeStamp}" />
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
