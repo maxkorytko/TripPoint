@@ -98,10 +98,12 @@
     <appBar:Bindable.ApplicationBar>
         <appBar:BindableApplicationBar IsVisible="True">
             <appBar:BindableApplicationBarButton Text="Finish Trip"
-                                                 IconUri="/Assets/Images/Dark/appbar.check.rest.png" />
+                                                 IconUri="/Assets/Images/Dark/appbar.check.rest.png" 
+                                                 Command="{Binding FinishTripCommand}" />
             
             <appBar:BindableApplicationBarButton Text="checkpoint"
-                                                 IconUri="/Assets/Images/Dark/appbar.new.rest.png" />
+                                                 IconUri="/Assets/Images/Dark/appbar.new.rest.png" 
+                                                 Command="{Binding CreateCheckpointCommand}" />
         </appBar:BindableApplicationBar>
     </appBar:Bindable.ApplicationBar>
 
