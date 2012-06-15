@@ -117,11 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddNotes" xml:space="preserve">
+    <value>Add Notes</value>
+  </data>
+  <data name="AddPictures" xml:space="preserve">
+    <value>Add Pictures</value>
+  </data>
   <data name="AppTitle" xml:space="preserve">
     <value>Trip Point</value>
   </data>
+  <data name="CreateCheckpoint" xml:space="preserve">
+    <value>Create Checkpoint</value>
+  </data>
+  <data name="CreateCheckpoint_AppBar" xml:space="preserve">
+    <value>checkpoint</value>
+  </data>
   <data name="CreateTripPageTitle" xml:space="preserve">
     <value>Create Trip</value>
+  </data>
+  <data name="FinishTrip_AppBar" xml:space="preserve">
+    <value>finish trip</value>
+  </data>
+  <data name="LatestCheckpoint" xml:space="preserve">
+    <value>Latest Checkpoint</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>

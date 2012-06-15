@@ -61,6 +61,24 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Notes.
+        /// </summary>
+        public static string AddNotes {
+            get {
+                return ResourceManager.GetString("AddNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Pictures.
+        /// </summary>
+        public static string AddPictures {
+            get {
+                return ResourceManager.GetString("AddPictures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trip Point.
         /// </summary>
         public static string AppTitle {
@@ -70,11 +88,47 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Checkpoint.
+        /// </summary>
+        public static string CreateCheckpoint {
+            get {
+                return ResourceManager.GetString("CreateCheckpoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to checkpoint.
+        /// </summary>
+        public static string CreateCheckpoint_AppBar {
+            get {
+                return ResourceManager.GetString("CreateCheckpoint_AppBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Trip.
         /// </summary>
         public static string CreateTripPageTitle {
             get {
                 return ResourceManager.GetString("CreateTripPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to finish trip.
+        /// </summary>
+        public static string FinishTrip_AppBar {
+            get {
+                return ResourceManager.GetString("FinishTrip_AppBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latest Checkpoint.
+        /// </summary>
+        public static string LatestCheckpoint {
+            get {
+                return ResourceManager.GetString("LatestCheckpoint", resourceCulture);
             }
         }
         

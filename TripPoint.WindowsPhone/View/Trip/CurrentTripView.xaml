@@ -36,23 +36,25 @@
                                    Text="{Binding CurrentTrip.StartDate}" />
                     </StackPanel>
                     
-                    <Grid x:Name="CreateCheckpointContainer" Grid.Row="1" Visibility="Visible">
+                    <Grid x:Name="CreateCheckpointContainer" Grid.Row="1" Visibility="Collapsed">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         
-                        <Button Content="Create Checkpoint" VerticalAlignment="Center"
+                        <Button Content="{Binding Localization.Resources.CreateCheckpoint}" 
+                                VerticalAlignment="Center"
                                 Command="{Binding CreateCheckpointCommand}" />
                     </Grid>
                     
-                    <Grid x:Name="CurrentCheckpointContainer" Grid.Row="1" Visibility="Collapsed">
+                    <Grid x:Name="CurrentCheckpointContainer" Grid.Row="1" Visibility="Visible">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         
                         <StackPanel Grid.Row="0" Margin="0,25,0,15">
-                            <TextBlock Style="{StaticResource PhoneTextBlockBase}" Text="Last Checkpoint" />
+                            <TextBlock Style="{StaticResource PhoneTextBlockBase}"
+                                       Text="{Binding Localization.Resources.LatestCheckpoint}" />
 
                             <TextBlock x:Name="LastCheckpointTitle" Style="{StaticResource PhoneTextTitle2Style}"
                                 HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="Checkpoint title" TextTrimming="WordEllipsis" />
@@ -62,9 +64,9 @@
                         </StackPanel>
                     
                         <StackPanel Grid.Row="1" VerticalAlignment="Top">
-                            <Button x:Name="AddNotesButton" Content="Add Notes" />
+                            <Button x:Name="AddNotesButton" Content="{Binding Localization.Resources.AddNotes}" />
 
-                            <Button x:Name="AddPicturesButton" Content="Add Pictures" />
+                            <Button x:Name="AddPicturesButton" Content="{Binding Localization.Resources.AddPictures}" />
                         </StackPanel>
                     </Grid>        
                 </Grid>
@@ -97,11 +99,11 @@
 
     <appBar:Bindable.ApplicationBar>
         <appBar:BindableApplicationBar IsVisible="True">
-            <appBar:BindableApplicationBarButton Text="Finish Trip"
+            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.FinishTrip_AppBar}"
                                                  IconUri="/Assets/Images/Dark/appbar.check.rest.png" 
                                                  Command="{Binding FinishTripCommand}" />
             
-            <appBar:BindableApplicationBarButton Text="checkpoint"
+            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.CreateCheckpoint_AppBar}"
                                                  IconUri="/Assets/Images/Dark/appbar.new.rest.png" 
                                                  Command="{Binding CreateCheckpointCommand}" />
         </appBar:BindableApplicationBar>
