@@ -98,7 +98,10 @@
     <appBar:Bindable.ApplicationBar>
         <appBar:BindableApplicationBar IsVisible="True">
             <appBar:BindableApplicationBarButton Text="Finish Trip"
-                                                 IconUri="/Assets/Images/Dark/appbar.save.rest.png" />
+                                                 IconUri="/Assets/Images/Dark/appbar.check.rest.png" />
+            
+            <appBar:BindableApplicationBarButton Text="checkpoint"
+                                                 IconUri="/Assets/Images/Dark/appbar.new.rest.png" />
         </appBar:BindableApplicationBar>
     </appBar:Bindable.ApplicationBar>
 
