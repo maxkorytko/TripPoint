@@ -15,6 +15,8 @@ using Microsoft.Phone.Shell;
 
 using TripPoint.WindowsPhone.Navigation;
 using TripPoint.Model.Domain;
+using TripPoint.Model.Data.Repository;
+using TripPoint.Model.Data.Repository.Memory;
 
 namespace TripPoint.WindowsPhone
 {
@@ -158,8 +160,15 @@ namespace TripPoint.WindowsPhone
         /// </summary>
         private void InitializeCurrentTrip()
         {
-            // TODO: fetch current trip from a trip repository
-            // TODO: search for a trip with no end date
+            // TODO: replace with a factory or DI
+            ITripRepository tripRepository = new MemoryTripRepository();
+
+            var currentTrip = (from trip in tripRepository.Trips
+                              where !trip.EndDate.HasValue
+                              orderby trip.StartDate descending
+                              select trip).FirstOrDefault();
+
+            CurrentTrip = currentTrip;
         }
     }
 }
