@@ -49,6 +49,8 @@ namespace TripPoint.WindowsPhone
 
             InitializeCurrentTrip();
 
+            SetStartupPage();
+
             // Show graphics profiling information while debugging.
             if (System.Diagnostics.Debugger.IsAttached)
             {
@@ -169,6 +171,14 @@ namespace TripPoint.WindowsPhone
                               select trip).FirstOrDefault();
 
             CurrentTrip = currentTrip;
+        }
+
+        private void SetStartupPage()
+        {
+            if (CurrentTrip != null)
+                TripPointNavigation.Navigate("/Trip/Current");
+            else
+                TripPointNavigation.Navigate("/Trip/Create");
         }
     }
 }

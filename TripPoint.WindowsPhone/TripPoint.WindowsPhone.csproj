@@ -69,9 +69,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HomePage.xaml.cs">
-      <DependentUpon>HomePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="I18N\Localization.cs" />
     <Compile Include="I18N\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -99,10 +96,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="HomePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Trip\CreateTripView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
