@@ -1,5 +1,6 @@
 ﻿#region SDK Usings
 
+using System.Windows;
 using System.Windows.Input;
 
 #endregion
@@ -33,7 +34,8 @@ namespace TripPoint.WindowsPhone.ViewModel.Checkpoint
 
         private void CancelCreateCheckpointAction()
         {
-            Logger.Log(this, "CancelCreateCheckpoint");
+            if ((Application.Current as App).RootFrame.CanGoBack)
+                (Application.Current as App).RootFrame.GoBack();
         }
     }
 }
