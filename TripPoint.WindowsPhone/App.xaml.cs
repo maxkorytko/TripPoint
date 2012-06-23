@@ -139,6 +139,9 @@ namespace TripPoint.WindowsPhone
             // Set custom uri mapper
             RootFrame.UriMapper = TripPointNavigation.UriMapper;
 
+            // Set Navigated event listener
+            RootFrame.Navigated += TripPointNavigation.Navigated;
+
             // Ensure we don't initialize again
             phoneApplicationInitialized = true;
         }

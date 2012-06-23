@@ -3,9 +3,11 @@
 using System;
 using System.Windows;
 using System.Windows.Navigation;
+using Microsoft.Phone.Controls;
 
 #endregion
 
+using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone;
 
 namespace TripPoint.WindowsPhone.Navigation
@@ -31,8 +33,13 @@ namespace TripPoint.WindowsPhone.Navigation
             },
             new UriMapping
             {
-                Uri = new Uri("/Trip/Details/{ID}", UriKind.Relative),
+                Uri = new Uri("/Trip/{tripID}/Details", UriKind.Relative),
                 MappedUri = new Uri("/View/Trip/TripDetailsView.xaml", UriKind.Relative)
+            },
+            new UriMapping
+            {
+                Uri = new Uri("/Trip/{tripID}/Checkpoints/Create", UriKind.Relative),
+                MappedUri = new Uri("/View/Checkpoint/CreateCheckpointView.xaml?tripID={tripID}", UriKind.Relative)
             }
         };
 
@@ -47,6 +54,12 @@ namespace TripPoint.WindowsPhone.Navigation
                 return _uriMapper;
             }
         }
+
+        /// <summary>
+        /// Reference to the last navigated page
+        /// Allows accessing the properties of the current page from a view model
+        /// </summary>
+        public static PhoneApplicationPage CurrentPage { get; private set; }
 
         private static void InitializeUriMapper()
         {
@@ -70,6 +83,20 @@ namespace TripPoint.WindowsPhone.Navigation
             var rootFrame = (Application.Current as App).RootFrame;
 
             return rootFrame.Navigate(new Uri(uri, UriKind.Relative));
+        }
+
+        /// <summary>
+        /// Listener for the Navigated event
+        /// Sets the reference to the last navigated content
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public static void Navigated(Object sender, NavigationEventArgs e)
+        {
+            if (e.Content is PhoneApplicationPage)
+                CurrentPage = e.Content as PhoneApplicationPage;
+            else
+                CurrentPage = null;
         }
     }
 }
