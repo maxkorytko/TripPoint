@@ -60,6 +60,14 @@ namespace TripPoint.Model.Data.Repository.Memory
         }
         #endregion
 
+        public IEnumerable<Trip> Trips
+        {
+            get
+            {
+                return _dataStore.Values;
+            }
+        }
+
         public void SaveTrip(Trip trip)
         {
             if (trip == null)

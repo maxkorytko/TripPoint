@@ -1,9 +1,13 @@
-﻿using TripPoint.Model.Domain;
+﻿using System.Collections.Generic;
+
+using TripPoint.Model.Domain;
 
 namespace TripPoint.Model.Data.Repository
 {
     public interface ITripRepository
     {
+        IEnumerable<Trip> Trips { get; }
+
         /// <summary>
         /// Creates a trip in the data store
         /// Updates the trip if it already exists
