@@ -69,6 +69,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="I18N\Localization.cs" />
     <Compile Include="I18N\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
