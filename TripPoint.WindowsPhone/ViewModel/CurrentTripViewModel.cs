@@ -13,8 +13,12 @@ namespace TripPoint.WindowsPhone.ViewModel
     {
         public CurrentTripViewModel()
         {
-            FinishTripCommand = new RelayCommand(FinishTripAction);
+            InitializeCommands();
+        }
 
+        private void InitializeCommands()
+        {
+            FinishTripCommand = new RelayCommand(FinishTripAction);
             CreateCheckpointCommand = new RelayCommand(CreateCheckpointAction);
         }
 
@@ -24,10 +28,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             {
                 Trip currentTrip = (Application.Current as App).CurrentTrip;
 
-                if (currentTrip == null)
-                    currentTrip = new Trip();
-
-                return currentTrip;
+                return currentTrip != null ? currentTrip : new Trip();
             }
         }
 
