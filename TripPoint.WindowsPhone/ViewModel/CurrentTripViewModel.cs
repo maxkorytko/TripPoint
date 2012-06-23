@@ -32,6 +32,22 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
+        public bool CurrentTripHasCheckpoints
+        {
+            get
+            {
+                return CurrentTrip.Checkpoints.Count > 0;
+            }
+        }
+
+        public bool CurrentTripHasNoCheckpoints
+        {
+            get
+            {
+                return !CurrentTripHasCheckpoints;
+            }
+        }
+
         public ICommand FinishTripCommand { get; private set; }
 
         public ICommand CreateCheckpointCommand { get; private set; }

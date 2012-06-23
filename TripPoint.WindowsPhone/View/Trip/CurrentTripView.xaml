@@ -8,6 +8,7 @@
     xmlns:appBar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:convert="clr-namespace:TripPoint.WindowsPhone.Converters;assembly=TripPoint"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -15,7 +16,11 @@
     mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True"
     DataContext="{Binding CurrentTripViewModel, Source={StaticResource Locator}}">
-
+    
+    <phone:PhoneApplicationPage.Resources>
+        <convert:BoolToVisibilityConverter x:Key="BoolToVisibility" />
+    </phone:PhoneApplicationPage.Resources>
+    
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <controls:Panorama Title="Current Trip">
@@ -36,7 +41,9 @@
                                    Text="{Binding CurrentTrip.StartDate}" />
                     </StackPanel>
                     
-                    <Grid x:Name="CreateCheckpointContainer" Grid.Row="1" Visibility="Collapsed">
+                    <Grid x:Name="CreateCheckpointContainer" Grid.Row="1"
+                          Visibility="{Binding CurrentTripHasNoCheckpoints,Converter={StaticResource BoolToVisibility}}">
+                        
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
@@ -46,7 +53,8 @@
                                 Command="{Binding CreateCheckpointCommand}" />
                     </Grid>
                     
-                    <Grid x:Name="CurrentCheckpointContainer" Grid.Row="1" Visibility="Visible">
+                    <Grid x:Name="CurrentCheckpointContainer" Grid.Row="1"
+                          Visibility="{Binding CurrentTripHasCheckpoints,Converter={StaticResource BoolToVisibility}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
