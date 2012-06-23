@@ -11,7 +11,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True"
     DataContext="{Binding CreateCheckpointViewModel, Source={StaticResource Locator}}">
 
@@ -36,11 +36,11 @@
         <appBar:BindableApplicationBar IsVisible="True">
             <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Save}"
                                                  IconUri="/Assets/Images/Dark/appbar.save.rest.png" 
-                                                 Command="{Binding FinishTripCommand}" />
+                                                 Command="{Binding CreateCheckpointCommand}" />
 
             <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Cancel}"
                                                  IconUri="/Assets/Images/Dark/appbar.stop.rest.png" 
-                                                 Command="{Binding CreateCheckpointCommand}" />
+                                                 Command="{Binding CancelCreateCheckpointCommand}" />
         </appBar:BindableApplicationBar>
     </appBar:Bindable.ApplicationBar>
 
