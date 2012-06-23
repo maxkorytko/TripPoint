@@ -5,6 +5,7 @@ using System.Windows.Input;
 
 using TripPoint.Model.Domain;
 using TripPoint.Model.Utils;
+using TripPoint.WindowsPhone.Navigation;
 using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
@@ -59,7 +60,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void CreateCheckpointAction()
         {
-            Logger.Log(this, "Create Checkpoint");
+            TripPointNavigation.Navigate(
+                string.Format("/Trip/{0}/Checkpoints/Create", CurrentTrip.ID));
         }
     }
 }
