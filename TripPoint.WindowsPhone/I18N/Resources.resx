@@ -126,6 +126,9 @@
   <data name="AppTitle" xml:space="preserve">
     <value>Trip Point</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="CreateCheckpoint" xml:space="preserve">
     <value>Create Checkpoint</value>
   </data>
