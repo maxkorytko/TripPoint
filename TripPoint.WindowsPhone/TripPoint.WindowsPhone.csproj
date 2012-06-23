@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="Navigation\TripPointNavigation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\Checkpoint\CreateCheckpointViewModel.cs" />
     <Compile Include="ViewModel\CreateTripViewModel.cs" />
     <Compile Include="ViewModel\CurrentTripViewModel.cs" />
     <Compile Include="ViewModel\TripPointViewModelBase.cs" />
@@ -128,6 +129,7 @@
     <Content Include="Assets\Images\Dark\appbar.check.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.new.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.save.rest.png" />
+    <Content Include="Assets\Images\Dark\appbar.stop.rest.png" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

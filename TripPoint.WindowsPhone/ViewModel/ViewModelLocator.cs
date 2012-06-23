@@ -1,11 +1,14 @@
 ﻿using TripPoint.Model.Data.Repository.Memory;
 
+using TripPoint.WindowsPhone.ViewModel.Checkpoint;
+
 namespace TripPoint.WindowsPhone.ViewModel
 {
     public class ViewModelLocator
     {
         private static CreateTripViewModel _createTripViewModel;
         private static CurrentTripViewModel _currentTripViewModel;
+        private static CreateCheckpointViewModel _createCheckpointViewModel;
 
         /// <summary>
         /// Initializes a new instance of the GlobalViewModelLocator class.
@@ -14,6 +17,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             InitializeCreateTripViewModel();
             InitializeCurrentTripViewModel();
+            InitializeCreateCheckpointViewModel();
         }
 
         #region CreateTripViewModel
@@ -78,6 +82,37 @@ namespace TripPoint.WindowsPhone.ViewModel
         }
         #endregion
 
+        #region CreateCheckpointViewModel
+        private static void InitializeCreateCheckpointViewModel()
+        {
+            if (_createCheckpointViewModel == null)
+                _createCheckpointViewModel = new CreateCheckpointViewModel();
+        }
+
+        public static CreateCheckpointViewModel CreateCheckpointViewModelStatic
+        {
+            get
+            {
+                InitializeCreateCheckpointViewModel();
+                return _createCheckpointViewModel;
+            }
+        }
+
+        public CreateCheckpointViewModel CreateCheckpointViewModel
+        {
+            get
+            {
+                return CreateCheckpointViewModelStatic;
+            }
+        }
+
+        private static void ClearCreateCheckpointViewModel()
+        {
+            _createCheckpointViewModel.Cleanup();
+            _createCheckpointViewModel = null;
+        }
+        #endregion
+
         /// <summary>
         /// Cleans up all the resources.
         /// </summary>
@@ -85,6 +120,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             ClearCreateTripViewModel();
             ClearCurrentTripViewModel();
+            ClearCreateCheckpointViewModel();
         }
     }
 }
