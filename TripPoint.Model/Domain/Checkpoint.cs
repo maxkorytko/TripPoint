@@ -12,10 +12,16 @@ namespace TripPoint.Model.Domain
         /// <summary>
         /// Checkpoint creation time and date
         /// </summary>
-        public DateTime TimeStamp { get; private set; }
+        public DateTime Timestamp { get; set; }
 
         public string Title { get; set; }
 
         public string Notes { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0} at {1}. Location: {2}",
+                Title, Timestamp.TimeOfDay, Location);
+        }
     }
 }
