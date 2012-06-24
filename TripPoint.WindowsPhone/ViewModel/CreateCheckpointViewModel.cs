@@ -8,7 +8,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using TripPoint.Model.Utils;
 
-namespace TripPoint.WindowsPhone.ViewModel.Checkpoint
+namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CreateCheckpointViewModel : TripPointViewModelBase
     {

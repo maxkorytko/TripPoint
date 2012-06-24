@@ -1,6 +1,6 @@
 ﻿using TripPoint.Model.Data.Repository.Memory;
 
-using TripPoint.WindowsPhone.ViewModel.Checkpoint;
+using TripPoint.WindowsPhone.ViewModel;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
