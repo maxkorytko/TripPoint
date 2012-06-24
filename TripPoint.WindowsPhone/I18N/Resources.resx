@@ -132,6 +132,9 @@
   <data name="CreateCheckpoint" xml:space="preserve">
     <value>Create Checkpoint</value>
   </data>
+  <data name="CreateCheckpointPageTitle" xml:space="preserve">
+    <value>New Checkpoint</value>
+  </data>
   <data name="CreateCheckpoint_AppBar" xml:space="preserve">
     <value>checkpoint</value>
   </data>
@@ -144,7 +147,16 @@
   <data name="LatestCheckpoint" xml:space="preserve">
     <value>Latest Checkpoint</value>
   </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="Timestamp" xml:space="preserve">
+    <value>Timestamp</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
   </data>
 </root>

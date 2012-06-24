@@ -5,6 +5,7 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:appBar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -24,12 +25,42 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="Create Checkpoint" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="ApplicationTitle" Text="{Binding Localization.Resources.AppTitle}"
+                       Style="{StaticResource PhoneTextNormalStyle}"/>
+
+            <TextBlock x:Name="PageTitle" Text="{Binding Localization.Resources.CreateCheckpointPageTitle}"
+                       Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0"></Grid>
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <StackPanel Grid.Row="0" Margin="0,20,0,20">
+                <TextBlock Text="{Binding Localization.Resources.Title}" />
+                <TextBox Text="{Binding Checkpoint.Title, Mode=TwoWay}" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Margin="0,20,0,20">
+                <TextBlock Text="{Binding Localization.Resources.Timestamp}" />
+                <toolkit:TimePicker Value="{Binding Checkpoint.Timestamp, Mode=TwoWay}" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Margin="0,20,0,20">
+                <TextBlock Text="{Binding Localization.Resources.Notes}" />
+                <TextBox Text="{Binding Checkpoint.Notes, Mode=TwoWay}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="3">
+                <Button Content="{Binding Localization.Resources.AddPictures}"
+                        Command="{Binding AddPicturesCommand}" />
+            </StackPanel>
+        </Grid>
     </Grid>
 
     <appBar:Bindable.ApplicationBar>
