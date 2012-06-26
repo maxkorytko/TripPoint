@@ -1,6 +1,7 @@
 ﻿#region SDK Usings
 using System.Windows;
 using System.Windows.Input;
+using System.Linq;
 #endregion
 
 using TripPoint.Model.Domain;
@@ -21,6 +22,8 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             FinishTripCommand = new RelayCommand(FinishTripAction);
             CreateCheckpointCommand = new RelayCommand(CreateCheckpointAction);
+            AddNotesCommand = new RelayCommand(AddNotesAction);
+            AddPicturesCommand = new RelayCommand(AddPicturesAction);
         }
 
         public Trip CurrentTrip
@@ -49,9 +52,23 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
+        public Checkpoint LatestCheckpoint
+        {
+            get
+            {
+                if (CurrentTripHasNoCheckpoints) return null;
+
+                return CurrentTrip.Checkpoints.LastOrDefault(); 
+            }
+        }
+
         public ICommand FinishTripCommand { get; private set; }
 
         public ICommand CreateCheckpointCommand { get; private set; }
+
+        public ICommand AddNotesCommand { get; private set; }
+
+        public ICommand AddPicturesCommand { get; private set; }
 
         private void FinishTripAction()
         {
@@ -62,6 +79,16 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             TripPointNavigation.Navigate(
                 string.Format("/Trip/{0}/Checkpoints/Create", CurrentTrip.ID));
+        }
+
+        private void AddNotesAction()
+        {
+            Logger.Log(this, "Add Notes");
+        }
+
+        private void AddPicturesAction()
+        {
+            Logger.Log(this, "Add Pictures");
         }
     }
 }

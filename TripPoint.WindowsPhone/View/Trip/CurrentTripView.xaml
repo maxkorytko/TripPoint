@@ -42,7 +42,7 @@
                     </StackPanel>
                     
                     <Grid x:Name="CreateCheckpointContainer" Grid.Row="1"
-                          Visibility="{Binding CurrentTripHasNoCheckpoints,Converter={StaticResource BoolToVisibility}}">
+                          Visibility="{Binding CurrentTripHasNoCheckpoints, Converter={StaticResource BoolToVisibility}}">
                         
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -54,7 +54,7 @@
                     </Grid>
                     
                     <Grid x:Name="CurrentCheckpointContainer" Grid.Row="1"
-                          Visibility="{Binding CurrentTripHasCheckpoints,Converter={StaticResource BoolToVisibility}}">
+                          Visibility="{Binding CurrentTripHasCheckpoints, Converter={StaticResource BoolToVisibility}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
@@ -65,16 +65,19 @@
                                        Text="{Binding Localization.Resources.LatestCheckpoint}" />
 
                             <TextBlock x:Name="LastCheckpointTitle" Style="{StaticResource PhoneTextTitle2Style}"
-                                HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="Checkpoint title" TextTrimming="WordEllipsis" />
+                                HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                       Text="{Binding LatestCheckpoint.Title}" TextTrimming="WordEllipsis" />
 
                             <TextBlock x:Name="LastCheckpointCreateDate" Style="{StaticResource PhoneTextBlockBase}"
-                                       Text="September 23, 5:23 PM" />
+                                       Text="{Binding LatestCheckpoint.Timestamp}" />
                         </StackPanel>
                     
                         <StackPanel Grid.Row="1" VerticalAlignment="Top">
-                            <Button x:Name="AddNotesButton" Content="{Binding Localization.Resources.AddNotes}" />
+                            <Button x:Name="AddNotesButton" Content="{Binding Localization.Resources.AddNotes}" 
+                                    Command="{Binding AddNotesCommand}" />
 
-                            <Button x:Name="AddPicturesButton" Content="{Binding Localization.Resources.AddPictures}" />
+                            <Button x:Name="AddPicturesButton" Content="{Binding Localization.Resources.AddPictures}" 
+                                    Command="{Binding AddPicturesCommand}" />
                         </StackPanel>
                     </Grid>        
                 </Grid>
