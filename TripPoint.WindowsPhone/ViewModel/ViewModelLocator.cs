@@ -1,5 +1,5 @@
-﻿using TripPoint.Model.Data.Repository.Memory;
-
+﻿using TripPoint.Model.Data.Repository;
+using TripPoint.Model.Data.Repository.Memory;
 using TripPoint.WindowsPhone.ViewModel;
 
 namespace TripPoint.WindowsPhone.ViewModel
@@ -24,7 +24,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static void InitializeCreateTripViewModel()
         {
             if (_createTripViewModel == null)
-                _createTripViewModel = new CreateTripViewModel(new MemoryTripRepository());
+                _createTripViewModel = new CreateTripViewModel(TripRepository);
         }
 
         public static CreateTripViewModel CreateTripViewModelStatic
@@ -86,7 +86,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static void InitializeCreateCheckpointViewModel()
         {
             if (_createCheckpointViewModel == null)
-                _createCheckpointViewModel = new CreateCheckpointViewModel();
+                _createCheckpointViewModel = new CreateCheckpointViewModel(TripRepository);
         }
 
         public static CreateCheckpointViewModel CreateCheckpointViewModelStatic
@@ -121,6 +121,14 @@ namespace TripPoint.WindowsPhone.ViewModel
             ClearCreateTripViewModel();
             ClearCurrentTripViewModel();
             ClearCreateCheckpointViewModel();
+        }
+
+        private static ITripRepository TripRepository
+        {
+            get
+            {
+                return new MemoryTripRepository();
+            }
         }
     }
 }

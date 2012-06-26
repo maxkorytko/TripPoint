@@ -8,14 +8,23 @@ using System.Windows.Input;
 
 using GalaSoft.MvvmLight.Command;
 using TripPoint.Model.Domain;
+using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Utils;
+using TripPoint.WindowsPhone.Navigation;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CreateCheckpointViewModel : TripPointViewModelBase
     {
-        public CreateCheckpointViewModel()
+        private ITripRepository _tripRepository;
+
+        public CreateCheckpointViewModel(ITripRepository tripRepository)
         {
+            if (tripRepository == null)
+                throw new ArgumentNullException("tripRepository");
+
+            _tripRepository = tripRepository;
+
             Checkpoint = new Checkpoint
             {
                 Timestamp = DateTime.Now
@@ -42,6 +51,14 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void CreateCheckpointAction()
         {
             Logger.Log(this, "{0}", Checkpoint);
+
+            var trip = (Application.Current as App).CurrentTrip;
+            
+            trip.Checkpoints.Add(Checkpoint);
+
+            _tripRepository.SaveTrip(trip);
+
+            TripPointNavigation.Navigate("/Trip/Current");
         }
 
         private void CancelCreateCheckpointAction()
