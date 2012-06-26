@@ -63,6 +63,9 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
     <Reference Include="mscorlib.extensions" />
+    <Reference Include="WindowsPhoneWatermarkTextBoxControl">
+      <HintPath>Lib\WindowsPhoneWatermarkTextBoxControl.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -82,6 +85,9 @@
     <Compile Include="ViewModel\CurrentTripViewModel.cs" />
     <Compile Include="ViewModel\TripPointViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\Checkpoint\CheckpointAddNotes.xaml.cs">
+      <DependentUpon>CheckpointAddNotes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Checkpoint\CreateCheckpointView.xaml.cs">
       <DependentUpon>CreateCheckpointView.xaml</DependentUpon>
     </Compile>
@@ -100,6 +106,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="View\Checkpoint\CheckpointAddNotes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Checkpoint\CreateCheckpointView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
