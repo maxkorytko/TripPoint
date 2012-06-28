@@ -101,6 +101,7 @@
     <Compile Include="View\Trip\TripDetailsView.xaml.cs">
       <DependentUpon>TripDetailsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowsPhoneExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
