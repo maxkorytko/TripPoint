@@ -80,13 +80,14 @@
     </Compile>
     <Compile Include="Navigation\TripPointNavigation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\CheckpointAddNotesViewModel.cs" />
     <Compile Include="ViewModel\CreateCheckpointViewModel.cs" />
     <Compile Include="ViewModel\CreateTripViewModel.cs" />
     <Compile Include="ViewModel\CurrentTripViewModel.cs" />
     <Compile Include="ViewModel\TripPointViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="View\Checkpoint\CheckpointAddNotes.xaml.cs">
-      <DependentUpon>CheckpointAddNotes.xaml</DependentUpon>
+    <Compile Include="View\Checkpoint\CheckpointAddNotesView.xaml.cs">
+      <DependentUpon>CheckpointAddNotesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Checkpoint\CreateCheckpointView.xaml.cs">
       <DependentUpon>CreateCheckpointView.xaml</DependentUpon>
@@ -106,7 +107,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="View\Checkpoint\CheckpointAddNotes.xaml">
+    <Page Include="View\Checkpoint\CheckpointAddNotesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

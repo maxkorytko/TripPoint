@@ -13,9 +13,9 @@ using Microsoft.Phone.Controls;
 
 namespace TripPoint.WindowsPhone.View.Checkpoint
 {
-    public partial class CheckpointAddNotes : PhoneApplicationPage
+    public partial class CheckpointAddNotesView : PhoneApplicationPage
     {
-        public CheckpointAddNotes()
+        public CheckpointAddNotesView()
         {
             InitializeComponent();
         }
