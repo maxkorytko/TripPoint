@@ -31,7 +31,7 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <wpcontrols:WatermarkTextBox WatermarkText="type a note" />
+            <wpcontrols:WatermarkTextBox WatermarkText="type a note" Text="{Binding Notes, Mode=TwoWay}"/>
         </Grid>
     </Grid>
 
@@ -39,11 +39,11 @@
         <appBar:BindableApplicationBar IsVisible="True">
             <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Save}"
                                                  IconUri="/Assets/Images/Dark/appbar.save.rest.png" 
-                                                 Command="{Binding AddNoteCommand}" />
+                                                 Command="{Binding AddNotesCommand}" />
 
             <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Cancel}"
                                                  IconUri="/Assets/Images/Dark/appbar.stop.rest.png" 
-                                                 Command="{Binding CancelAddNoteCommand}" />
+                                                 Command="{Binding CancelAddNotesCommand}" />
         </appBar:BindableApplicationBar>
     </appBar:Bindable.ApplicationBar>
 
