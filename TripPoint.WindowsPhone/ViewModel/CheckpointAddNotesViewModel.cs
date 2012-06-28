@@ -39,7 +39,7 @@ namespace TripPoint.WindowsPhone.ViewModel
                 AddNotesToCheckpoint(checkpointIndex, Notes);
             }
 
-            GoBack();
+            TripPointNavigation.GoBack();
         }
 
         private static int GetCheckpointIndex()
@@ -64,13 +64,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void CancelAddNotesAction()
         {
-            GoBack();
-        }
-
-        private static void GoBack()
-        {
-            if ((Application.Current as App).RootFrame.CanGoBack)
-                (Application.Current as App).RootFrame.GoBack();
+            TripPointNavigation.GoBack();
         }
     }
 }

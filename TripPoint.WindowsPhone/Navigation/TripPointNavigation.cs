@@ -80,6 +80,15 @@ namespace TripPoint.WindowsPhone.Navigation
         }
 
         /// <summary>
+        /// Navigates to a previous page if possible
+        /// </summary>
+        public static void GoBack()
+        {
+            if ((Application.Current as App).RootFrame.CanGoBack)
+                (Application.Current as App).RootFrame.GoBack();
+        }
+
+        /// <summary>
         /// Navigates to a given URI
         /// </summary>
         /// <param name="uri">URI to navigate to</param>

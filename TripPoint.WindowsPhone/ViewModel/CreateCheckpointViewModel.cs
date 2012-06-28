@@ -63,8 +63,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void CancelCreateCheckpointAction()
         {
-            if ((Application.Current as App).RootFrame.CanGoBack)
-                (Application.Current as App).RootFrame.GoBack();
+            TripPointNavigation.GoBack();
         }
 
         private void AddPicturesAction()
