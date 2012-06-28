@@ -83,7 +83,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void AddNotesAction()
         {
-            Logger.Log(this, "Add Notes");
+            TripPointNavigation.Navigate(
+                string.Format("/Trip/{0}/Checkpoints/{1}/Add/Notes", CurrentTrip.ID, 0));
         }
 
         private void AddPicturesAction()
