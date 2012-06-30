@@ -85,7 +85,7 @@
             
             <!-- Checkpoints item -->
             <controls:PanoramaItem Header="Checkpoints">
-                <ListBox x:Name="CheckpointsList" ItemsSource="{Binding CurrentTrip.Checkpoints}">
+                <ListBox x:Name="CheckpointList" ItemsSource="{Binding CurrentTrip.Checkpoints}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
