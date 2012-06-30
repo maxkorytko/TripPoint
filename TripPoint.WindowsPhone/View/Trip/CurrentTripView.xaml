@@ -88,17 +88,17 @@
                 <ListBox x:Name="CheckpointList" ItemsSource="{Binding CurrentTrip.Checkpoints}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid Margin="0,25,0,25">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 
-                                <Image Source="/Assets/Images/Dark/checkpoint.thumb.png" />
+                                <Image Source="/Assets/Images/Dark/checkpoint.thumb.png" Grid.Column="0" />
                                 
-                                <StackPanel>
-                                    <TextBlock x:Name="CheckpointTitle" Grid.Column="0" Text="{Binding Title}" />
-                                    <TextBlock x:Name="CheckpointCreateDate" Grid.Column="1" Text="{Binding TimeStamp}" />
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="15,0,0,0">
+                                    <TextBlock x:Name="CheckpointTitle" Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}"/>
+                                    <TextBlock x:Name="CheckpointCreateDate" Text="{Binding Timestamp}" Style="{StaticResource PhoneTextBlockBase}" />
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
