@@ -119,7 +119,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static void InitializeCheckpointAddNotesViewModel()
         {
             if (_checkpointAddNotesViewModel == null)
-                _checkpointAddNotesViewModel = new CheckpointAddNotesViewModel();
+                _checkpointAddNotesViewModel = new CheckpointAddNotesViewModel(TripRepository);
         }
 
         public static CheckpointAddNotesViewModel CheckpointAddNotesViewModelStatic
