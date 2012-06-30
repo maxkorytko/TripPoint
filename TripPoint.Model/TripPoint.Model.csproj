@@ -53,6 +53,7 @@
     <Compile Include="Data\Repository\Memory\MemoryTripRepository.cs" />
     <Compile Include="Domain\Checkpoint.cs" />
     <Compile Include="Domain\GeoLocation.cs" />
+    <Compile Include="Domain\Note.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Trip.cs" />
     <Compile Include="Utils\Logger.cs" />
