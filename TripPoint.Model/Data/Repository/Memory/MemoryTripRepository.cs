@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 #endregion
 
@@ -27,7 +28,8 @@ namespace TripPoint.Model.Data.Repository.Memory
             trip.Checkpoints.Add(new Checkpoint
             {
                 Title = "Pearson in Toronto",
-                Notes = "Minutes before departure"
+                Notes = new ObservableCollection<Note> { new Note { Text = "Minutes before departure" } } 
+                
             });
             trip.Checkpoints.Add(new Checkpoint
             {
@@ -36,7 +38,7 @@ namespace TripPoint.Model.Data.Repository.Memory
             trip.Checkpoints.Add(new Checkpoint
             {
                 Title = "enjoying the scenery",
-                Notes = "50 km along the trail"
+                Notes = new ObservableCollection<Note> { new Note { Text = "50 km along the trail" } }
             });
             dataStore[trip.ID] = trip;
 
