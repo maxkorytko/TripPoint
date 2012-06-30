@@ -6,6 +6,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 {
     public class ViewModelLocator
     {
+        private static TripListViewModel _tripListViewModel;
         private static CreateTripViewModel _createTripViewModel;
         private static CurrentTripViewModel _currentTripViewModel;
         private static CreateCheckpointViewModel _createCheckpointViewModel;
@@ -16,11 +17,43 @@ namespace TripPoint.WindowsPhone.ViewModel
         /// </summary>
         public ViewModelLocator()
         {
+            InitializeTripListViewModel();
             InitializeCreateTripViewModel();
             InitializeCurrentTripViewModel();
             InitializeCreateCheckpointViewModel();
             InitializeCheckpointAddNotesViewModel();
         }
+
+        #region TripListViewModel
+        private static void InitializeTripListViewModel()
+        {
+            if (_tripListViewModel == null)
+                _tripListViewModel = new TripListViewModel(TripRepository);
+        }
+
+        public static TripListViewModel TripListViewModelStatic
+        {
+            get
+            {
+                InitializeTripListViewModel();
+                return _tripListViewModel;
+            }
+        }
+
+        public TripListViewModel TripListViewModel
+        {
+            get
+            {
+                return TripListViewModelStatic;
+            }
+        }
+
+        private static void ClearTripListViewModel()
+        {
+            _tripListViewModel.Cleanup();
+            _tripListViewModel = null;
+        }
+        #endregion
 
         #region CreateTripViewModel
         private static void InitializeCreateTripViewModel()
