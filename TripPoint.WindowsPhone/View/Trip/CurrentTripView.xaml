@@ -110,13 +110,17 @@
 
     <appBar:Bindable.ApplicationBar>
         <appBar:BindableApplicationBar IsVisible="True">
-            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.FinishTrip_AppBar}"
-                                                 IconUri="/Assets/Images/Dark/appbar.check.rest.png" 
-                                                 Command="{Binding FinishTripCommand}" />
-            
             <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.CreateCheckpoint_AppBar}"
                                                  IconUri="/Assets/Images/Dark/appbar.new.rest.png" 
                                                  Command="{Binding CreateCheckpointCommand}" />
+            
+            <appBar:BindableApplicationBar.MenuItems>
+                <appBar:BindableApplicationBarMenuItem Text="{Binding Localization.Resources.FinishTrip_AppBar}"
+                                                       Command="{Binding FinishTripCommand}" />
+
+                <appBar:BindableApplicationBarMenuItem Text="{Binding Localization.Resources.PastTrips_AppBar}"
+                                                       Command="{Binding PastTripsCommand}" />
+            </appBar:BindableApplicationBar.MenuItems>
         </appBar:BindableApplicationBar>
     </appBar:Bindable.ApplicationBar>
 

@@ -21,6 +21,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void InitializeCommands()
         {
             FinishTripCommand = new RelayCommand(FinishTripAction);
+            PastTripsCommand = new RelayCommand(PastTripsAction);
             CreateCheckpointCommand = new RelayCommand(CreateCheckpointAction);
             AddNotesCommand = new RelayCommand(AddNotesAction);
             AddPicturesCommand = new RelayCommand(AddPicturesAction);
@@ -64,6 +65,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         public ICommand FinishTripCommand { get; private set; }
 
+        public ICommand PastTripsCommand { get; private set; }
+
         public ICommand CreateCheckpointCommand { get; private set; }
 
         public ICommand AddNotesCommand { get; private set; }
@@ -73,6 +76,11 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void FinishTripAction()
         {
             Logger.Log(this, "Finish Trip");
+        }
+
+        private void PastTripsAction()
+        {
+            Logger.Log(this, "Past Trips");
         }
 
         private void CreateCheckpointAction()

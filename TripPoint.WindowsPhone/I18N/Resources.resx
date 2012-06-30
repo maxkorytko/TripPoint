@@ -150,6 +150,9 @@
   <data name="Notes" xml:space="preserve">
     <value>Notes</value>
   </data>
+  <data name="PastTrips_AppBar" xml:space="preserve">
+    <value>past trips</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>

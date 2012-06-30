@@ -160,6 +160,15 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to past trips.
+        /// </summary>
+        public static string PastTrips_AppBar {
+            get {
+                return ResourceManager.GetString("PastTrips_AppBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {
