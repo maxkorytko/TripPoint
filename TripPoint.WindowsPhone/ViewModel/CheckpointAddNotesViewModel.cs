@@ -32,7 +32,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void AddNotesAction()
         {
-            int checkpointIndex = GetCheckpointIndex();
+            var checkpointIndex = GetCheckpointIndex();
 
             if (checkpointIndex != -1)
             {
@@ -51,7 +51,8 @@ namespace TripPoint.WindowsPhone.ViewModel
             if (page != null)
             {   
                 var checkpointIndexParameter = page.TryGetQueryStringParameter("checkpointIndex");
-                Int32.TryParse(checkpointIndexParameter, out index);
+                if (!Int32.TryParse(checkpointIndexParameter, out index))
+                    index = -1;
             }
 
             return index;
