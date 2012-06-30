@@ -152,6 +152,7 @@
     <Content Include="Assets\Images\Dark\appbar.new.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.save.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.stop.rest.png" />
+    <Content Include="Assets\Images\Dark\checkpoint.thumb.png" />
     <Content Include="Assets\Images\Dark\trip.thumb.png" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -165,9 +166,6 @@
       <Project>{E5C34F04-D6D5-41B1-920A-55C36880427E}</Project>
       <Name>TripPoint.Model</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\Images\Dark\checkpoint_thumb.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
