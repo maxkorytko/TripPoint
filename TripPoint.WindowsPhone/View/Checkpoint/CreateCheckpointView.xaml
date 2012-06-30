@@ -28,7 +28,7 @@
             <TextBlock x:Name="ApplicationTitle" Text="{Binding Localization.Resources.AppTitle}"
                        Style="{StaticResource PhoneTextNormalStyle}"/>
 
-            <TextBlock x:Name="PageTitle" Text="{Binding Localization.Resources.CreateCheckpointPageTitle}"
+            <TextBlock x:Name="PageTitle" Text="{Binding Localization.Resources.CreateCheckpointViewTitle}"
                        Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
@@ -53,7 +53,7 @@
 
             <StackPanel Grid.Row="2" Margin="0,20,0,20">
                 <TextBlock Text="{Binding Localization.Resources.Notes}" />
-                <TextBox Text="{Binding Checkpoint.Notes, Mode=TwoWay}"/>
+                <TextBox Text="{Binding Notes, Mode=TwoWay}"/>
             </StackPanel>
 
             <StackPanel Grid.Row="3">

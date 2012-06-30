@@ -117,9 +117,9 @@ namespace TripPoint.WindowsPhone.I18N {
         /// <summary>
         ///   Looks up a localized string similar to new checkpoint.
         /// </summary>
-        public static string CreateCheckpointPageTitle {
+        public static string CreateCheckpointViewTitle {
             get {
-                return ResourceManager.GetString("CreateCheckpointPageTitle", resourceCulture);
+                return ResourceManager.GetString("CreateCheckpointViewTitle", resourceCulture);
             }
         }
         

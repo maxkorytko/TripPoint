@@ -132,7 +132,7 @@
   <data name="CreateCheckpoint" xml:space="preserve">
     <value>Create Checkpoint</value>
   </data>
-  <data name="CreateCheckpointPageTitle" xml:space="preserve">
+  <data name="CreateCheckpointViewTitle" xml:space="preserve">
     <value>new checkpoint</value>
   </data>
   <data name="CreateCheckpoint_AppBar" xml:space="preserve">
