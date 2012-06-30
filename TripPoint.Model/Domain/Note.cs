@@ -7,11 +7,21 @@ namespace TripPoint.Model.Domain
     /// </summary>
     public class Note
     {
+        public Note()
+        {
+            Timestamp = DateTime.Now;
+        }
+
         public string Text { get; set; }
 
         /// <summary>
         /// The time and date the note was creted on
         /// </summary>
-        public DateTime TimeStamp { get; set; }
+        public DateTime Timestamp { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("'{0}' on {1}", Text, Timestamp);
+        }
     }
 }
