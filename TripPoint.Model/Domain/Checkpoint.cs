@@ -8,6 +8,13 @@ namespace TripPoint.Model.Domain
     /// </summary>
     public class Checkpoint
     {
+        public Checkpoint()
+        {
+            Timestamp = DateTime.Now;
+            Location = new GeoLocation();
+            Notes = new ObservableCollection<Note>();
+        }
+
         /// <summary>
         /// Geographical location of the checkpoint
         /// </summary>
