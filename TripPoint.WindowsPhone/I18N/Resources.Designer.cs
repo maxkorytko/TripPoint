@@ -97,6 +97,15 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to new note.
+        /// </summary>
+        public static string CheckpointAddNotesViewTitle {
+            get {
+                return ResourceManager.GetString("CheckpointAddNotesViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Checkpoint.
         /// </summary>
         public static string CreateCheckpoint {

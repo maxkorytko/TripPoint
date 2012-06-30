@@ -129,6 +129,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="CheckpointAddNotesViewTitle" xml:space="preserve">
+    <value>new note</value>
+  </data>
   <data name="CreateCheckpoint" xml:space="preserve">
     <value>Create Checkpoint</value>
   </data>
