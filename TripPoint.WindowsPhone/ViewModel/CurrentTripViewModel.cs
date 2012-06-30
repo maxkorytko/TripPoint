@@ -80,7 +80,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void PastTripsAction()
         {
-            Logger.Log(this, "Past Trips");
+            TripPointNavigation.Navigate("/Trips");
         }
 
         private void CreateCheckpointAction()

@@ -23,6 +23,11 @@ namespace TripPoint.WindowsPhone.Navigation
         {
             new UriMapping
             {
+                Uri = new Uri("/Trips", UriKind.Relative),
+                MappedUri = new Uri("/View/Trip/TripListView.xaml", UriKind.Relative)
+            },
+            new UriMapping
+            {
                 Uri = new Uri("/Trip/Create", UriKind.Relative),
                 MappedUri = new Uri("/View/Trip/CreateTripView.xaml", UriKind.Relative)
             },
