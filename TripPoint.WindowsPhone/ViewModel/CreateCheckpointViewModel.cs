@@ -42,6 +42,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         public Checkpoint Checkpoint { get; private set; }
 
+        public string Notes { get; set; }
+
         public ICommand CreateCheckpointCommand { get; private set; }
 
         public ICommand CancelCreateCheckpointCommand { get; private set; }
@@ -52,8 +54,12 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             Logger.Log(this, "{0}", Checkpoint);
 
+            Checkpoint.Notes.Add(
+                new Note { Text = Notes }
+                );
+
             var trip = (Application.Current as App).CurrentTrip;
-            
+
             trip.Checkpoints.Add(Checkpoint);
 
             _tripRepository.SaveTrip(trip);
