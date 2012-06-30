@@ -105,6 +105,9 @@
     <Compile Include="View\Trip\TripDetailsView.xaml.cs">
       <DependentUpon>TripDetailsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Trip\TripListView.xaml.cs">
+      <DependentUpon>TripListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowsPhoneExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +135,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Trip\TripListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
@@ -145,6 +152,7 @@
     <Content Include="Assets\Images\Dark\appbar.new.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.save.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.stop.rest.png" />
+    <Content Include="Assets\Images\Dark\trip.thumb.png" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -159,7 +167,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\Dark\checkpoint_thumb.png" />
+    <Content Include="Assets\Images\Dark\checkpoint_thumb.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
