@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 
 namespace TripPoint.Model.Domain
 {
+    /// <summary>
+    /// Represents a checkpoint along the trip route
+    /// </summary>
     public class Checkpoint
     {
         /// <summary>
@@ -16,7 +20,10 @@ namespace TripPoint.Model.Domain
 
         public string Title { get; set; }
 
-        public string Notes { get; set; }
+        /// <summary>
+        /// A list of notes
+        /// </summary>
+        public ObservableCollection<Note> Notes { get; set; }
 
         public override string ToString()
         {
