@@ -115,7 +115,7 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New Checkpoint.
+        ///   Looks up a localized string similar to new checkpoint.
         /// </summary>
         public static string CreateCheckpointPageTitle {
             get {
@@ -165,6 +165,15 @@ namespace TripPoint.WindowsPhone.I18N {
         public static string PastTrips_AppBar {
             get {
                 return ResourceManager.GetString("PastTrips_AppBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to past trips.
+        /// </summary>
+        public static string PastTripsViewTitle {
+            get {
+                return ResourceManager.GetString("PastTripsViewTitle", resourceCulture);
             }
         }
         
