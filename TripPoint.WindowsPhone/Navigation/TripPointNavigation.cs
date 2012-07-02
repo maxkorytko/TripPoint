@@ -39,7 +39,7 @@ namespace TripPoint.WindowsPhone.Navigation
             new UriMapping
             {
                 Uri = new Uri("/Trip/{tripID}/Details", UriKind.Relative),
-                MappedUri = new Uri("/View/Trip/TripDetailsView.xaml", UriKind.Relative)
+                MappedUri = new Uri("/View/Trip/TripDetailsView.xaml?tripID={tripID}", UriKind.Relative)
             },
             new UriMapping
             {
