@@ -88,6 +88,7 @@
     <Compile Include="ViewModel\CreateCheckpointViewModel.cs" />
     <Compile Include="ViewModel\CreateTripViewModel.cs" />
     <Compile Include="ViewModel\CurrentTripViewModel.cs" />
+    <Compile Include="ViewModel\TripDetailsViewModel.cs" />
     <Compile Include="ViewModel\TripListViewModel.cs" />
     <Compile Include="ViewModel\TripPointViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
