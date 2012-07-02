@@ -9,6 +9,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static TripListViewModel _tripListViewModel;
         private static CreateTripViewModel _createTripViewModel;
         private static CurrentTripViewModel _currentTripViewModel;
+        private static TripDetailsViewModel _tripDetailsViewModel;
         private static CreateCheckpointViewModel _createCheckpointViewModel;
         private static CheckpointAddNotesViewModel _checkpointAddNotesViewModel;
 
@@ -20,6 +21,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             InitializeTripListViewModel();
             InitializeCreateTripViewModel();
             InitializeCurrentTripViewModel();
+            InitializeTripDetailsViewModel();
             InitializeCreateCheckpointViewModel();
             InitializeCheckpointAddNotesViewModel();
         }
@@ -114,6 +116,37 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             _currentTripViewModel.Cleanup();
             _currentTripViewModel = null;
+        }
+        #endregion
+
+        #region TripDetailsViewModel
+        private static void InitializeTripDetailsViewModel()
+        {
+            if (_tripDetailsViewModel == null)
+                _tripDetailsViewModel = new TripDetailsViewModel(TripRepository);
+        }
+
+        public static TripDetailsViewModel TripDetailsViewModelStatic
+        {
+            get
+            {
+                InitializeTripDetailsViewModel();
+                return _tripDetailsViewModel;
+            }
+        }
+
+        public TripDetailsViewModel TripDetailsViewModel
+        {
+            get
+            {
+                return TripDetailsViewModelStatic;
+            }
+        }
+
+        private static void ClearTripDetailsViewModel()
+        {
+            _tripDetailsViewModel.Cleanup();
+            _tripDetailsViewModel = null;
         }
         #endregion
 
