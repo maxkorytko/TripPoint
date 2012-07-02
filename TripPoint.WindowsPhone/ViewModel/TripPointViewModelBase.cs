@@ -1,6 +1,7 @@
 ﻿
-using GalaSoft.MvvmLight;
 using TripPoint.WindowsPhone.I18N;
+using TripPoint.WindowsPhone.Navigation;
+using GalaSoft.MvvmLight;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
@@ -17,6 +18,12 @@ namespace TripPoint.WindowsPhone.ViewModel
             { 
                 return _localization; 
             }
-        } 
+        }
+
+        /// <summary>
+        /// Called when a view managed by this view model has been navigated to
+        /// </summary>
+        /// <param name="e"></param>
+        public virtual void OnNavigatedTo(TripPointNavigationEventArgs e) { }
     }
 }

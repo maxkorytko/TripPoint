@@ -84,6 +84,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Navigation\TripPointNavigation.cs" />
+    <Compile Include="Navigation\TripPointNavigationEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\CheckpointAddNotesViewModel.cs" />
     <Compile Include="ViewModel\CreateCheckpointViewModel.cs" />

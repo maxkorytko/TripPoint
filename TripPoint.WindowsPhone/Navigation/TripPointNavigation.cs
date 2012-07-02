@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone;
+using TripPoint.WindowsPhone.ViewModel;
 
 namespace TripPoint.WindowsPhone.Navigation
 {
@@ -113,10 +114,21 @@ namespace TripPoint.WindowsPhone.Navigation
         /// <param name="e"></param>
         public static void Navigated(Object sender, NavigationEventArgs e)
         {
-            if (e.Content is PhoneApplicationPage)
-                CurrentPage = e.Content as PhoneApplicationPage;
-            else
-                CurrentPage = null;
+            PhoneApplicationPage page = null;
+
+            if (!(e.Content is PhoneApplicationPage)) return;
+            
+            page = e.Content as PhoneApplicationPage;
+
+            // TODO: remove the static property
+            CurrentPage = page;
+
+            if (page.DataContext != null && (page.DataContext is TripPointViewModelBase))
+            {
+                var navigationEventArgs = new TripPointNavigationEventArgs(e, page);
+
+                (page.DataContext as TripPointViewModelBase).OnNavigatedTo(navigationEventArgs);
+            }
         }
     }
 }
