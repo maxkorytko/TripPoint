@@ -1,8 +1,9 @@
 ﻿#region SDK Usings
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using System.Linq;
+using Microsoft.Phone.Controls;
 #endregion
 
 using TripPoint.Model.Domain;
@@ -16,6 +17,8 @@ namespace TripPoint.WindowsPhone.ViewModel
     public class CheckpointAddNotesViewModel : TripPointViewModelBase
     {
         private ITripRepository _tripRepository;
+
+        private int _checkpointIndex;
 
         public CheckpointAddNotesViewModel(ITripRepository tripRepository)
         {
@@ -33,45 +36,16 @@ namespace TripPoint.WindowsPhone.ViewModel
             CancelAddNotesCommand = new RelayCommand(CancelAddNotesAction);
         }
 
-        public string Notes { get; set; }
-
-        public ICommand AddNotesCommand { get; private set; }
-
-        public ICommand CancelAddNotesCommand { get; private set; }
-
         private void AddNotesAction()
         {
-            var checkpointIndex = GetCheckpointIndex();
-
-            if (checkpointIndex != -1)
+            if (_checkpointIndex != -1)
             {
                 var note = new Note { Text = Notes };
 
-                AddNotesToCheckpoint(checkpointIndex, note);
+                AddNotesToCheckpoint(_checkpointIndex, note);
             }
 
             TripPointNavigation.GoBack();
-        }
-
-        /// <summary>
-        /// Extracts the index of the checkpoint being updated
-        /// The index must be passed to the view as a parameter (e.g. a query string)
-        /// </summary>
-        /// <returns></returns>
-        private static int GetCheckpointIndex()
-        {
-            var index = -1;
-
-            var page = TripPointNavigation.CurrentPage;
-
-            if (page != null)
-            {   
-                var checkpointIndexParameter = page.TryGetQueryStringParameter("checkpointIndex");
-                if (!Int32.TryParse(checkpointIndexParameter, out index))
-                    index = -1;
-            }
-
-            return index;
         }
 
         private void AddNotesToCheckpoint(int checkpointIndex, Note note)
@@ -104,5 +78,37 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             TripPointNavigation.GoBack();
         }
+
+        public override void OnNavigatedTo(TripPointNavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            _checkpointIndex = GetCheckpointIndex(e.View);
+        }
+
+        /// <summary>
+        /// Extracts the index of the checkpoint being updated
+        /// The index must be passed to the view as a parameter (e.g. a query string)
+        /// </summary>
+        /// <returns></returns>
+        private static int GetCheckpointIndex(PhoneApplicationPage view)
+        {
+            var index = -1;
+
+            if (view != null)
+            {
+                var checkpointIndexParameter = view.TryGetQueryStringParameter("checkpointIndex");
+                if (!Int32.TryParse(checkpointIndexParameter, out index))
+                    index = -1;
+            }
+
+            return index;
+        }
+
+        public string Notes { get; set; }
+
+        public ICommand AddNotesCommand { get; private set; }
+
+        public ICommand CancelAddNotesCommand { get; private set; }
     }
 }

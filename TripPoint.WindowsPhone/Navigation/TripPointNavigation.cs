@@ -67,12 +67,6 @@ namespace TripPoint.WindowsPhone.Navigation
             }
         }
 
-        /// <summary>
-        /// Reference to the last navigated page
-        /// Allows accessing the properties of the current page from a view model
-        /// </summary>
-        public static PhoneApplicationPage CurrentPage { get; private set; }
-
         private static void InitializeUriMapper()
         {
             if (_uriMapper != null) return;
@@ -108,7 +102,7 @@ namespace TripPoint.WindowsPhone.Navigation
 
         /// <summary>
         /// Listener for the Navigated event
-        /// Sets the reference to the last navigated content
+        /// Passes navigation event handling to the view model of the page for which navigation event has been raised
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -119,9 +113,6 @@ namespace TripPoint.WindowsPhone.Navigation
             if (!(e.Content is PhoneApplicationPage)) return;
             
             page = e.Content as PhoneApplicationPage;
-
-            // TODO: remove the static property
-            CurrentPage = page;
 
             if (page.DataContext != null && (page.DataContext is TripPointViewModelBase))
             {
