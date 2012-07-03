@@ -7,6 +7,7 @@ using System.Windows.Input;
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Utils;
+using TripPoint.WindowsPhone.Navigation;
 using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
@@ -40,6 +41,9 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void ViewTripDetailsAction(Trip trip)
         {
             Logger.Log(this, "View trip: {0}", trip);
+
+            TripPointNavigation.Navigate(
+                string.Format("/Trip/{0}/Details", trip.ID));
         }
 
         public ObservableCollection<Trip> Trips { get; private set; }

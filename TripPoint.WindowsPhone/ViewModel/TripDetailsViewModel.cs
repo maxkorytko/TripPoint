@@ -1,5 +1,6 @@
 ﻿#region SDK Usings
 using System;
+using Microsoft.Phone.Controls;
 #endregion
 
 using TripPoint.Model.Domain;
@@ -20,16 +21,16 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             _tripRepository = tripRepository;
 
-            InitializeTrip();
+            Trip = new Trip();
         }
 
-        private void InitializeTrip()
+        public override void OnNavigatedTo(TripPointNavigationEventArgs e)
         {
-            Trip = new Trip();
+            base.OnNavigatedTo(e);
 
-            var tripID = GetTripID();
-
-            var trip = _tripRepository.FindTrip(tripID);
+            var tripID = GetTripID(e.View);
+            
+            var trip = GetTrip(tripID);
 
             if (trip != null)
                 Trip = trip;
@@ -37,18 +38,19 @@ namespace TripPoint.WindowsPhone.ViewModel
             Logger.Log(this, "Trip has been initialized. {0}", Trip);
         }
 
-        private static string GetTripID()
+        private static string GetTripID(PhoneApplicationPage view)
         {
-            string tripID;
+            string tripID = string.Empty;
 
-            var currentPage = TripPointNavigation.CurrentPage;
-
-            if (currentPage != null)
-                tripID = currentPage.TryGetQueryStringParameter("tripID");
-            else
-                tripID = string.Empty;
-
+            if (view != null)
+                tripID = view.TryGetQueryStringParameter("tripID");
+            
             return tripID;
+        }
+
+        private Trip GetTrip(string tripID)
+        {
+            return _tripRepository.FindTrip(tripID);
         }
 
         public Trip Trip { get; private set; }
