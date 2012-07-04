@@ -25,6 +25,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             CreateCheckpointCommand = new RelayCommand(CreateCheckpointAction);
             AddNotesCommand = new RelayCommand(AddNotesAction);
             AddPicturesCommand = new RelayCommand(AddPicturesAction);
+            ViewCheckpointDetailsCommand = new RelayCommand<Checkpoint>(ViewCheckpointDetailsAction);
         }
 
         public Trip CurrentTrip
@@ -73,6 +74,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         public ICommand AddPicturesCommand { get; private set; }
 
+        public ICommand ViewCheckpointDetailsCommand { get; private set; }
+
         private void FinishTripAction()
         {
             Logger.Log(this, "Finish Trip");
@@ -98,6 +101,11 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void AddPicturesAction()
         {
             Logger.Log(this, "Add Pictures");
+        }
+
+        private void ViewCheckpointDetailsAction(Checkpoint checkpoint)
+        {
+            Logger.Log(this, "view checkpoint: {0}", checkpoint);
         }
     }
 }
