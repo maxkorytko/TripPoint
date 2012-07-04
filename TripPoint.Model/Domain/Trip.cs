@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace TripPoint.Model.Domain
@@ -36,7 +37,7 @@ namespace TripPoint.Model.Domain
 
         public string Notes { get; set; }
 
-        public ObservableCollection<Checkpoint> Checkpoints { get; private set; }
+        public ICollection<Checkpoint> Checkpoints { get; private set; }
 
         /// <summary>
         /// Validates required properties
