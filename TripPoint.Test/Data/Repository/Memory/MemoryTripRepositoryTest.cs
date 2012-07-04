@@ -1,5 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
+using System.Linq;
+using System.Collections.ObjectModel;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
@@ -83,6 +85,41 @@ namespace TripPoint.Test.Data.Repository.Memory
             _tripRepository.DeleteTrip(tripA);
 
             Assert.AreEqual(2, _tripRepository.Count, "Must be 2 trips in the repository");
+        }
+
+        [TestMethod]
+        public void TestGetCheckpointByIndex()
+        {
+            var trip = new Trip();
+
+            trip.Checkpoints.Add(new Checkpoint
+            {
+                Title = "Checkpoint A"
+            });
+            
+            trip.Checkpoints.Add(new Checkpoint
+            {
+                Title = "Checkpoint B"
+            });
+
+            trip.Checkpoints.Add(new Checkpoint
+            {
+                Title = "Checkpoint C"
+            });
+
+            _tripRepository.SaveTrip(trip);
+
+            bool success = true;
+
+            var checkpoint = trip.Checkpoints.ElementAt(1);
+
+            if (!checkpoint.Title.Equals("Checkpoint B")) success = false;
+
+            checkpoint = trip.Checkpoints.ElementAt(2);
+
+            if (!checkpoint.Title.Equals("Checkpoint C")) success = false;
+
+            Assert.IsTrue(success, "Checkpoints have been re-arranged");
         }
     }
 }
