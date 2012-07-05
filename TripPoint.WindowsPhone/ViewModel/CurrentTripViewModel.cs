@@ -106,6 +106,13 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void ViewCheckpointDetailsAction(Checkpoint checkpoint)
         {
             Logger.Log(this, "view checkpoint: {0}", checkpoint);
+
+            var tripID = "0";
+            var checkpointID = "0";
+
+            // TODO: implement
+            TripPointNavigation.Navigate(string.Format("/Trip/{0}/Checkpoints/{1}/Details",
+                tripID, checkpointID));
         }
     }
 }
