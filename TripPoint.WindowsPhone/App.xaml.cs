@@ -168,10 +168,10 @@ namespace TripPoint.WindowsPhone
             // TODO: replace with a factory or DI
             ITripRepository tripRepository = new MemoryTripRepository();
 
+            // the must be one and only one current trip
             var currentTrip = (from trip in tripRepository.Trips
-                              where !trip.EndDate.HasValue
-                              orderby trip.StartDate descending
-                              select trip).FirstOrDefault();
+                               where !trip.EndDate.HasValue
+                               select trip).SingleOrDefault();
 
             CurrentTrip = currentTrip;
         }
