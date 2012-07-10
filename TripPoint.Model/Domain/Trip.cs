@@ -25,7 +25,8 @@ namespace TripPoint.Model.Domain
             StartDate = DateTime.Now;
             EndDate = null;
             Notes = string.Empty;
-            Checkpoints = new EntitySet<Checkpoint>(
+            
+            _checkpoints = new EntitySet<Checkpoint>(
                     AddCheckpointAction, RemoveCheckpointAction
                 );
         }

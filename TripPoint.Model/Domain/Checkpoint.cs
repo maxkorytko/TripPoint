@@ -22,7 +22,7 @@ namespace TripPoint.Model.Domain
         {
             Timestamp = DateTime.Now;
             Location = new GeoLocation();
-            Notes = new EntitySet<Note>(
+            _notes = new EntitySet<Note>(
                 AddNoteAction, RemoveNoteAction
                 );
         }
@@ -46,7 +46,7 @@ namespace TripPoint.Model.Domain
                 if (_tripID != value)
                 {
                     NotifyPropertyChanging("ID");
-                    _tripID = value;
+                    _checkpointID = value;
                     NotifyPropertyChanged("ID");
                 }
             }
