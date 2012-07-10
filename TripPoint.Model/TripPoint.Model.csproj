@@ -51,6 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Repository\ITripRepository.cs" />
+    <Compile Include="Data\TripPointDataContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Domain\Checkpoint.cs" />
     <Compile Include="Domain\GeoLocation.cs" />
     <Compile Include="Domain\Note.cs" />
