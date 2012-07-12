@@ -38,17 +38,17 @@ namespace TripPoint.WindowsPhone.ViewModel
             Logger.Log(this, "Trip has been initialized. {0}", Trip);
         }
 
-        private static string GetTripID(PhoneApplicationPage view)
+        private static int GetTripID(PhoneApplicationPage view)
         {
-            string tripID = string.Empty;
+            var tripID = -1;
 
             if (view != null)
-                tripID = view.TryGetQueryStringParameter("tripID");
+                tripID = Convert.ToInt32(view.TryGetQueryStringParameter("tripID"));
             
             return tripID;
         }
 
-        private Trip GetTrip(string tripID)
+        private Trip GetTrip(int tripID)
         {
             return _tripRepository.FindTrip(tripID);
         }

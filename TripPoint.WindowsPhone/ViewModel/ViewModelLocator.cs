@@ -1,5 +1,5 @@
 ﻿using TripPoint.Model.Data.Repository;
-using TripPoint.Model.Data.Repository.Memory;
+//using TripPoint.Model.Data.Repository.Memory;
 using TripPoint.WindowsPhone.ViewModel;
 
 namespace TripPoint.WindowsPhone.ViewModel
@@ -227,7 +227,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             get
             {
-                return new MemoryTripRepository();
+                return new IsolatedStorageTripRepository();
             }
         }
     }
