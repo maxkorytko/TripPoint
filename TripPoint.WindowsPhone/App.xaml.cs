@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Data.Linq;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
-using TripPoint.WindowsPhone.Navigation;
 using TripPoint.Model.Domain;
+using TripPoint.Model.Data;
 using TripPoint.Model.Data.Repository;
-using TripPoint.Model.Data.Repository.Memory;
+using TripPoint.Model.Utils;
+using TripPoint.WindowsPhone.Navigation;
 
 namespace TripPoint.WindowsPhone
 {
@@ -46,6 +39,8 @@ namespace TripPoint.WindowsPhone
 
             // Phone-specific initialization
             InitializePhoneApplication();
+
+            InitializeDatastore();
 
             InitializeCurrentTrip();
 
@@ -159,6 +154,18 @@ namespace TripPoint.WindowsPhone
 
         #endregion
 
+        private void InitializeDatastore()
+        {
+            using (DataContext dataContext = TripPointDataContext.DataContext())
+            {
+                if (!dataContext.DatabaseExists())
+                    dataContext.CreateDatabase();
+
+                if (!dataContext.DatabaseExists())
+                    Logger.Log(this, "Could not create database!");
+            }
+        }
+
         /// <summary>
         /// Retreives current trip from a trip repository
         /// Assigns a value to the CurrentTrip property
@@ -166,7 +173,7 @@ namespace TripPoint.WindowsPhone
         private void InitializeCurrentTrip()
         {
             // TODO: replace with a factory or DI
-            ITripRepository tripRepository = new MemoryTripRepository();
+            ITripRepository tripRepository = null;
 
             // the must be one and only one current trip
             var currentTrip = (from trip in tripRepository.Trips
