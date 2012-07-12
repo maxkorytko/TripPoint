@@ -15,11 +15,9 @@ namespace TripPoint.Model.Data.Repository
         /// <param name="trip">Trip object to persist</param>
         void SaveTrip(Trip trip);
 
-        Trip FindTrip(string tripID);
+        Trip FindTrip(int tripID);
 
         void DeleteTrip(Trip trip);
-
-        void DeleteAll();
 
         int Count { get; }
     }

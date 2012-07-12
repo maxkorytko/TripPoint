@@ -50,6 +50,7 @@
     <Reference Include="mscorlib.extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Repository\IsolatedStorageTripRepository.cs" />
     <Compile Include="Data\Repository\ITripRepository.cs" />
     <Compile Include="Data\TripPointDataContext.cs">
       <SubType>Code</SubType>
