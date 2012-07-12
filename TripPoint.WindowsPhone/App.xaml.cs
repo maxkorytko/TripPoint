@@ -34,13 +34,15 @@ namespace TripPoint.WindowsPhone
             // Global handler for uncaught exceptions. 
             UnhandledException += Application_UnhandledException;
 
+            // Creates a dabase if necessary
+            // Must be called before InitializeComponent
+            InitializeDatastore();
+
             // Standard Silverlight initialization
             InitializeComponent();
 
             // Phone-specific initialization
             InitializePhoneApplication();
-
-            InitializeDatastore();
 
             InitializeCurrentTrip();
 
@@ -159,10 +161,13 @@ namespace TripPoint.WindowsPhone
             using (DataContext dataContext = TripPointDataContext.DataContext())
             {
                 if (!dataContext.DatabaseExists())
+                {
                     dataContext.CreateDatabase();
 
-                if (!dataContext.DatabaseExists())
-                    Logger.Log(this, "Could not create database!");
+                    // has the database been created?
+                    if (!dataContext.DatabaseExists())
+                        Logger.Log(this, "Could not create database!");
+                }
             }
         }
 
@@ -173,7 +178,7 @@ namespace TripPoint.WindowsPhone
         private void InitializeCurrentTrip()
         {
             // TODO: replace with a factory or DI
-            ITripRepository tripRepository = null;
+            ITripRepository tripRepository = new IsolatedStorageTripRepository();
 
             // the must be one and only one current trip
             var currentTrip = (from trip in tripRepository.Trips
