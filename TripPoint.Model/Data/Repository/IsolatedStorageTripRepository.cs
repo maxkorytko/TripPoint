@@ -27,11 +27,9 @@ namespace TripPoint.Model.Data.Repository
         {
             if (trip == null) return;
 
-            var tripAlreadyExists = FindTrip(trip.ID) != null;
+            var isNewTrip = FindTrip(trip.ID) == null;
 
-            if (tripAlreadyExists)
-                _dataContext.Trips.Attach(trip);
-            else
+            if (isNewTrip)
                 _dataContext.Trips.InsertOnSubmit(trip);
 
             _dataContext.SubmitChanges();
