@@ -178,7 +178,7 @@ namespace TripPoint.WindowsPhone
         private void InitializeCurrentTrip()
         {
             // TODO: replace with a factory or DI
-            ITripRepository tripRepository = new IsolatedStorageTripRepository();
+            ITripRepository tripRepository = new DatabaseTripRepository();
 
             // the must be one and only one current trip
             var currentTrip = (from trip in tripRepository.Trips

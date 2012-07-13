@@ -227,7 +227,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             get
             {
-                return new IsolatedStorageTripRepository();
+                return new DatabaseTripRepository();
             }
         }
     }

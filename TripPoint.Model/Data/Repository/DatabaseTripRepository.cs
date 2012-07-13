@@ -8,7 +8,7 @@ using TripPoint.Model.Utils;
 
 namespace TripPoint.Model.Data.Repository
 {
-    public class IsolatedStorageTripRepository : ITripRepository
+    public class DatabaseTripRepository : ITripRepository
     {
         private TripPointDataContext _dataContext = TripPointDataContext.DataContext();
 
