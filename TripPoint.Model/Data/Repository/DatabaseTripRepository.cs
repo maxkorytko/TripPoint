@@ -10,13 +10,11 @@ namespace TripPoint.Model.Data.Repository
 {
     public class DatabaseTripRepository : ITripRepository
     {
-        private TripPointDataContext _dataContext = TripPointDataContext.DataContext();
-
         public IEnumerable<Trip> Trips
         {
             get 
             {
-                var trips = from trip in _dataContext.Trips
+                var trips = from trip in TripPointDataContext.DataContext.Trips
                             select trip;
 
                 return trips;
@@ -30,14 +28,14 @@ namespace TripPoint.Model.Data.Repository
             var isNewTrip = FindTrip(trip.ID) == null;
 
             if (isNewTrip)
-                _dataContext.Trips.InsertOnSubmit(trip);
+                TripPointDataContext.DataContext.Trips.InsertOnSubmit(trip);
 
-            _dataContext.SubmitChanges();
+            TripPointDataContext.DataContext.SubmitChanges();
         }
 
         public Trip FindTrip(int tripID)
         {
-            var trip = (from t in _dataContext.Trips
+            var trip = (from t in TripPointDataContext.DataContext.Trips
                         where t.ID == tripID
                         select t)
                        .SingleOrDefault();
@@ -53,13 +51,13 @@ namespace TripPoint.Model.Data.Repository
 
             if (tripToDelete == null) return;
 
-            _dataContext.Trips.DeleteOnSubmit(tripToDelete);
-            _dataContext.SubmitChanges();
+            TripPointDataContext.DataContext.Trips.DeleteOnSubmit(tripToDelete);
+            TripPointDataContext.DataContext.SubmitChanges();
         }
 
         public int Count
         {
-            get { return _dataContext.Trips.Count(); }
+            get { return TripPointDataContext.DataContext.Trips.Count(); }
         }
     }
 }

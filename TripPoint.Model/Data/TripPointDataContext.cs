@@ -16,9 +16,9 @@ namespace TripPoint.Model.Data
 
         public Table<Checkpoint> Checkpoints;
 
-        public static TripPointDataContext DataContext()
+        public static TripPointDataContext DataContext
         {
-            return new TripPointDataContext(ConnectionString);
+            get { return new TripPointDataContext(ConnectionString); }
         }
     }
 }

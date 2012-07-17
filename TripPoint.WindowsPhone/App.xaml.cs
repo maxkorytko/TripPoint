@@ -158,7 +158,7 @@ namespace TripPoint.WindowsPhone
 
         private void InitializeDatastore()
         {
-            using (DataContext dataContext = TripPointDataContext.DataContext())
+            using (DataContext dataContext = TripPointDataContext.DataContext)
             {
                 if (!dataContext.DatabaseExists())
                 {
