@@ -158,7 +158,7 @@ namespace TripPoint.WindowsPhone
 
         private void InitializeDatastore()
         {
-            using (DataContext dataContext = TripPointDataContext.DataContext)
+            using (var dataContext = new TripPointDataContext(TripPointDataContext.ConnectionString))
             {
                 if (!dataContext.DatabaseExists())
                 {
@@ -178,9 +178,10 @@ namespace TripPoint.WindowsPhone
         private void InitializeCurrentTrip()
         {
             // TODO: replace with a factory or DI
-            ITripRepository tripRepository = new DatabaseTripRepository();
+            ITripRepository tripRepository = new DatabaseTripRepository(
+                new TripPointDataContext(TripPointDataContext.ConnectionString));
 
-            // the must be one and only one current trip
+            // there must be one and only one current trip
             var currentTrip = (from trip in tripRepository.Trips
                                where !trip.EndDate.HasValue
                                select trip).SingleOrDefault();
