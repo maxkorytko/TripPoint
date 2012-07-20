@@ -64,10 +64,5 @@ namespace TripPoint.Model.Data.Repository
             _dataContext.Trips.DeleteOnSubmit(tripToDelete);
             _dataContext.SubmitChanges();
         }
-
-        public int Count
-        {
-            get { return _dataContext.Trips.Count(); }
-        }
     }
 }

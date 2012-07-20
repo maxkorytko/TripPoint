@@ -18,7 +18,5 @@ namespace TripPoint.Model.Data.Repository
         Trip FindTrip(int tripID);
 
         void DeleteTrip(Trip trip);
-
-        int Count { get; }
     }
 }
