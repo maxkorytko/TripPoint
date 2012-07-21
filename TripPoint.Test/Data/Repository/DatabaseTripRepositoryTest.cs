@@ -70,6 +70,36 @@ namespace TripPoint.Test.Data.Repository
         }
 
         [TestMethod]
+        public void TestUpdateTrip()
+        {
+            DeleteAllTrips();
+
+            _tripRepository.SaveTrip(new Trip { Name = "Trip" });
+
+            var trip = _dataContext.Trips.First();
+
+            trip.Name = "New Trip";
+
+            _tripRepository.SaveTrip(trip);
+
+            trip = _dataContext.Trips.First();
+
+            Assert.AreEqual<string>("New Trip", trip.Name, "The trip has not been udpated");
+        }
+
+        [TestMethod]
+        public void TestUpdateTripAfterAddingCheckpoint()
+        {
+            _tripA.Checkpoints.Add(new Checkpoint { Title = "Checkpoint" });
+
+            _tripRepository.SaveTrip(_tripA);
+
+            _tripA = _dataContext.Trips.Where(t => t.ID == _tripA.ID).FirstOrDefault();
+
+            Assert.AreEqual<int>(1, _tripA.Checkpoints.Count());
+        }
+
+        [TestMethod]
         public void TestTrips()
         {
             var trips = _tripRepository.Trips;
@@ -136,8 +166,12 @@ namespace TripPoint.Test.Data.Repository
 
         private void DeleteAllTrips()
         {
+            var checkpoints = _dataContext.Checkpoints.Select(checkpoint => checkpoint);
+            _dataContext.Checkpoints.DeleteAllOnSubmit(checkpoints);
+
             var trips = _dataContext.Trips.Select(trip => trip);
             _dataContext.Trips.DeleteAllOnSubmit<Trip>(trips);
+            
             _dataContext.SubmitChanges();
         }
 
