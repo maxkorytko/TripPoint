@@ -178,15 +178,19 @@ namespace TripPoint.WindowsPhone
         private void InitializeCurrentTrip()
         {
             // TODO: replace with a factory or DI
-            ITripRepository tripRepository = new DatabaseTripRepository(
-                new TripPointDataContext(TripPointDataContext.ConnectionString));
+            using (var dataContext = new TripPointDataContext(TripPointDataContext.ConnectionString))
+            {
+                dataContext.DeferredLoadingEnabled = false;
 
-            // there must be one and only one current trip
-            var currentTrip = (from trip in tripRepository.Trips
-                               where !trip.EndDate.HasValue
-                               select trip).SingleOrDefault();
+                var tripRepository = new DatabaseTripRepository(dataContext);
 
-            CurrentTrip = currentTrip;
+                // there must be one and only one current trip
+                var currentTrip = (from trip in tripRepository.Trips
+                                   where !trip.EndDate.HasValue
+                                   select trip).SingleOrDefault();
+
+                CurrentTrip = currentTrip;
+            }
         }
 
         private void SetStartupPage()
