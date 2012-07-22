@@ -22,11 +22,6 @@ namespace TripPoint.WindowsPhone
         public PhoneApplicationFrame RootFrame { get; private set; }
 
         /// <summary>
-        /// The trip in progress
-        /// </summary>
-        public Trip CurrentTrip { get; set; }
-
-        /// <summary>
         /// Constructor for the Application object.
         /// </summary>
         public App()
@@ -43,8 +38,6 @@ namespace TripPoint.WindowsPhone
 
             // Phone-specific initialization
             InitializePhoneApplication();
-
-            InitializeCurrentTrip();
 
             SetStartupPage();
 
@@ -160,6 +153,8 @@ namespace TripPoint.WindowsPhone
         {
             using (var dataContext = new TripPointDataContext(TripPointDataContext.ConnectionString))
             {
+                dataContext.Log = new TripPoint.Model.Utils.DebugStreamWriter();
+
                 if (!dataContext.DatabaseExists())
                 {
                     dataContext.CreateDatabase();
@@ -171,12 +166,10 @@ namespace TripPoint.WindowsPhone
             }
         }
 
-        /// <summary>
-        /// Retreives current trip from a trip repository
-        /// Assigns a value to the CurrentTrip property
-        /// </summary>
-        private void InitializeCurrentTrip()
+        private void SetStartupPage()
         {
+            Trip currentTrip = null;
+
             // TODO: replace with a factory or DI
             using (var dataContext = new TripPointDataContext(TripPointDataContext.ConnectionString))
             {
@@ -184,18 +177,10 @@ namespace TripPoint.WindowsPhone
 
                 var tripRepository = new DatabaseTripRepository(dataContext);
 
-                // there must be one and only one current trip
-                var currentTrip = (from trip in tripRepository.Trips
-                                   where !trip.EndDate.HasValue
-                                   select trip).SingleOrDefault();
-
-                CurrentTrip = currentTrip;
+                currentTrip = tripRepository.CurrentTrip;
             }
-        }
 
-        private void SetStartupPage()
-        {
-            if (CurrentTrip != null)
+            if (currentTrip != null)
                 TripPointNavigation.Navigate("/Trip/Current");
             else
                 TripPointNavigation.Navigate("/Trip/Create");

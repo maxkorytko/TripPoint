@@ -8,6 +8,8 @@ namespace TripPoint.Model.Data.Repository
     {
         IEnumerable<Trip> Trips { get; }
 
+        Trip CurrentTrip { get; }
+
         /// <summary>
         /// Creates a trip in the data store
         /// Updates the trip if it already exists

@@ -58,7 +58,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
 
             SaveTrip();
-            (Application.Current as App).CurrentTrip = Trip;
+            
             TripPointNavigation.Navigate("/Trip/Current");
         }
 

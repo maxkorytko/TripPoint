@@ -58,7 +58,7 @@ namespace TripPoint.WindowsPhone.ViewModel
                 new Note { Text = Notes }
                 );
 
-            var trip = (Application.Current as App).CurrentTrip;
+            var trip = _tripRepository.CurrentTrip;
 
             trip.Checkpoints.Add(Checkpoint);
 

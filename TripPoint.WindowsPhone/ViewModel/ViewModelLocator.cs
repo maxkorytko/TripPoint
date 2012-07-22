@@ -92,7 +92,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static void InitializeCurrentTripViewModel()
         {
             if (_currentTripViewModel == null)
-                _currentTripViewModel = new CurrentTripViewModel();
+                _currentTripViewModel = new CurrentTripViewModel(TripRepository);
         }
 
         public static CurrentTripViewModel CurrentTripViewModelStatic

@@ -69,9 +69,9 @@ namespace TripPoint.WindowsPhone.ViewModel
         /// Fetches the trip containing the checkpoint being updated
         /// </summary>
         /// <returns></returns>
-        private static Trip GetTrip()
+        private Trip GetTrip()
         {
-            return (Application.Current as App).CurrentTrip;
+            return _tripRepository.CurrentTrip;
         }
 
         private void CancelAddNotesAction()

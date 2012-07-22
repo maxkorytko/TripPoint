@@ -31,6 +31,17 @@ namespace TripPoint.Model.Data.Repository
             }
         }
 
+        public Trip CurrentTrip
+        {
+            get
+            {
+                // there must be one and only one current trip
+                return (from trip in Trips
+                        where !trip.EndDate.HasValue
+                        select trip).SingleOrDefault();
+            }
+        }
+
         public void SaveTrip(Trip trip)
         {
             if (trip == null) return;
@@ -38,7 +49,14 @@ namespace TripPoint.Model.Data.Repository
             var isNewTrip = FindTrip(trip.ID) == null;
 
             if (isNewTrip)
+            {
                 _dataContext.Trips.InsertOnSubmit(trip);
+            }
+            //else
+            //{
+            //    var originalTrip = FindTrip(trip.ID);
+            //    originalTrip = trip;
+            //}
 
             _dataContext.SubmitChanges();
         }
