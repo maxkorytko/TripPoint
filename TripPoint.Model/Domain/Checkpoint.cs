@@ -23,8 +23,7 @@ namespace TripPoint.Model.Domain
             Timestamp = DateTime.Now;
             Location = new GeoLocation();
             _notes = new EntitySet<Note>(
-                AddNoteAction, RemoveNoteAction
-                );
+                AddNoteAction, RemoveNoteAction);
         }
 
         #region ID
@@ -43,7 +42,7 @@ namespace TripPoint.Model.Domain
             }
             set
             {
-                if (_tripID != value)
+                if (_checkpointID != value)
                 {
                     NotifyPropertyChanging("ID");
                     _checkpointID = value;
