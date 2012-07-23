@@ -15,5 +15,7 @@ namespace TripPoint.Model.Data
         public Table<Trip> Trips;
 
         public Table<Checkpoint> Checkpoints;
+
+        public Table<Note> Notes;
     }
 }
