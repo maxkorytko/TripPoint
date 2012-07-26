@@ -1,5 +1,6 @@
 ﻿using TripPoint.Model.Data;
 using TripPoint.Model.Data.Repository;
+using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.WindowsPhone.ViewModel;
 
 namespace TripPoint.WindowsPhone.ViewModel
@@ -92,7 +93,9 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static void InitializeCurrentTripViewModel()
         {
             if (_currentTripViewModel == null)
-                _currentTripViewModel = new CurrentTripViewModel();
+            {   
+                _currentTripViewModel = new CurrentTripViewModel(RepositoryFactory.Create());
+            }
         }
 
         public static CurrentTripViewModel CurrentTripViewModelStatic

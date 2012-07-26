@@ -7,6 +7,7 @@ using System.Linq;
 
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
+using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
 using GalaSoft.MvvmLight.Command;
@@ -15,11 +16,16 @@ namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CurrentTripViewModel : TripPointViewModelBase
     {
+        private IRepositoryFactory _repositoryFactory;
         private ITripRepository _tripRepository;
 
-        public CurrentTripViewModel()
+        public CurrentTripViewModel(IRepositoryFactory repositoryFactory)
         {
-            _tripRepository = RepositoryFactory.TripRepository;
+            if (repositoryFactory == null)
+                throw new ArgumentNullException("repositoryFactory");
+
+            _repositoryFactory = repositoryFactory;
+            _tripRepository = repositoryFactory.TripRepository;
 
             InitializeCommands();
         }
@@ -125,7 +131,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             base.OnNavigatedTo(e);
 
-            _tripRepository = RepositoryFactory.TripRepository;
+            _tripRepository = _repositoryFactory.TripRepository;
         }
     }
 }
