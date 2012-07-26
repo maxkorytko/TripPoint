@@ -227,8 +227,9 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             get
             {
-                return new DatabaseTripRepository(
-                    new TripPointDataContext(TripPointDataContext.ConnectionString));
+                var dataContext = new TripPointDataContext(TripPointDataContext.ConnectionString);
+                //dataContext.Log = new TripPoint.Model.Utils.DebugStreamWriter();
+                return new DatabaseTripRepository(dataContext);
             }
         }
     }
