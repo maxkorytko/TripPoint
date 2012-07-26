@@ -8,6 +8,7 @@ using Microsoft.Phone.Shell;
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data;
 using TripPoint.Model.Data.Repository;
+using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
 
@@ -29,6 +30,9 @@ namespace TripPoint.WindowsPhone
             // Global handler for uncaught exceptions. 
             UnhandledException += Application_UnhandledException;
 
+            // Wires up dependencies
+            InitializeDI();
+
             // Creates a dabase if necessary
             // Must be called before InitializeComponent
             InitializeDatastore();
@@ -39,7 +43,8 @@ namespace TripPoint.WindowsPhone
             // Phone-specific initialization
             InitializePhoneApplication();
 
-            SetStartupPage();
+            // Application-specific initialization
+            BootstrapPhoneApplication();
 
             // Show graphics profiling information while debugging.
             if (System.Diagnostics.Debugger.IsAttached)
@@ -126,12 +131,6 @@ namespace TripPoint.WindowsPhone
             // Handle navigation failures
             RootFrame.NavigationFailed += RootFrame_NavigationFailed;
 
-            // Set custom uri mapper
-            RootFrame.UriMapper = TripPointNavigation.UriMapper;
-
-            // Set Navigated event listener
-            RootFrame.Navigated += TripPointNavigation.Navigated;
-
             // Ensure we don't initialize again
             phoneApplicationInitialized = true;
         }
@@ -149,12 +148,15 @@ namespace TripPoint.WindowsPhone
 
         #endregion
 
+        private void InitializeDI()
+        {
+            RepositoryFactory.Initialize(new DatabaseRepositoryFactory());
+        }
+
         private void InitializeDatastore()
         {
             using (var dataContext = new TripPointDataContext(TripPointDataContext.ConnectionString))
             {
-                dataContext.Log = new TripPoint.Model.Utils.DebugStreamWriter();
-
                 if (!dataContext.DatabaseExists())
                 {
                     dataContext.CreateDatabase();
@@ -166,19 +168,26 @@ namespace TripPoint.WindowsPhone
             }
         }
 
+        private void BootstrapPhoneApplication()
+        {
+            InitializeNavigation();
+            SetStartupPage();
+        }
+
+        private void InitializeNavigation()
+        {
+            // Set custom uri mapper
+            RootFrame.UriMapper = TripPointNavigation.UriMapper;
+
+            // Set Navigated event listener
+            RootFrame.Navigated += TripPointNavigation.Navigated;
+        }
+
         private void SetStartupPage()
         {
-            Trip currentTrip = null;
+            var tripRepository = RepositoryFactory.Create().TripRepository;
 
-            // TODO: replace with a factory or DI
-            using (var dataContext = new TripPointDataContext(TripPointDataContext.ConnectionString))
-            {
-                dataContext.DeferredLoadingEnabled = false;
-
-                var tripRepository = new DatabaseTripRepository(dataContext);
-
-                currentTrip = tripRepository.CurrentTrip;
-            }
+            var currentTrip = tripRepository.CurrentTrip;
 
             if (currentTrip != null)
                 TripPointNavigation.Navigate("/Trip/Current");
