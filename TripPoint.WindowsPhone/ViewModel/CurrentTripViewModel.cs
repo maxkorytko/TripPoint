@@ -15,14 +15,11 @@ namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CurrentTripViewModel : TripPointViewModelBase
     {
-        ITripRepository _tripRepository;
+        private ITripRepository _tripRepository;
 
-        public CurrentTripViewModel(ITripRepository tripRepository)
+        public CurrentTripViewModel()
         {
-            if (tripRepository == null)
-                throw new ArgumentNullException("tripRepository");
-
-            _tripRepository = tripRepository;
+            _tripRepository = RepositoryFactory.TripRepository;
 
             InitializeCommands();
         }
@@ -122,6 +119,13 @@ namespace TripPoint.WindowsPhone.ViewModel
             // TODO: implement
             TripPointNavigation.Navigate(string.Format("/Trip/{0}/Checkpoints/{1}/Details",
                 tripID, checkpointID));
+        }
+
+        public override void OnNavigatedTo(TripPointNavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            _tripRepository = RepositoryFactory.TripRepository;
         }
     }
 }
