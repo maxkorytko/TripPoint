@@ -2,18 +2,11 @@
 {
     public class DatabaseRepositoryFactory : IRepositoryFactory
     {
-        private TripPointDataContext _dataContext;
-
         private TripPointDataContext DataContext
         {
             get
             {
-                if (_dataContext != null)
-                    _dataContext.Dispose();
-
-                _dataContext = new TripPointDataContext(TripPointDataContext.ConnectionString);
-
-                return _dataContext;
+                return new TripPointDataContext(TripPointDataContext.ConnectionString);
             }
         }
 

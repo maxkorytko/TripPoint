@@ -31,7 +31,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static void InitializeTripListViewModel()
         {
             if (_tripListViewModel == null)
-                _tripListViewModel = new TripListViewModel(RepositoryFactory.Create().TripRepository);
+                _tripListViewModel = new TripListViewModel(RepositoryFactory.Create());
         }
 
         public static TripListViewModel TripListViewModelStatic
@@ -62,7 +62,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static void InitializeCreateTripViewModel()
         {
             if (_createTripViewModel == null)
-                _createTripViewModel = new CreateTripViewModel(RepositoryFactory.Create().TripRepository);
+                _createTripViewModel = new CreateTripViewModel(RepositoryFactory.Create());
         }
 
         public static CreateTripViewModel CreateTripViewModelStatic
@@ -126,7 +126,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static void InitializeTripDetailsViewModel()
         {
             if (_tripDetailsViewModel == null)
-                _tripDetailsViewModel = new TripDetailsViewModel(RepositoryFactory.Create().TripRepository);
+                _tripDetailsViewModel = new TripDetailsViewModel(RepositoryFactory.Create());
         }
 
         public static TripDetailsViewModel TripDetailsViewModelStatic
@@ -188,7 +188,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static void InitializeCheckpointAddNotesViewModel()
         {
             if (_checkpointAddNotesViewModel == null)
-                _checkpointAddNotesViewModel = new CheckpointAddNotesViewModel(RepositoryFactory.Create().TripRepository);
+                _checkpointAddNotesViewModel = new CheckpointAddNotesViewModel(RepositoryFactory.Create());
         }
 
         public static CheckpointAddNotesViewModel CheckpointAddNotesViewModelStatic

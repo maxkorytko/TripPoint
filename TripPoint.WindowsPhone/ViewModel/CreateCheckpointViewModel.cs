@@ -15,16 +15,12 @@ using TripPoint.WindowsPhone.Navigation;
 namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CreateCheckpointViewModel : TripPointViewModelBase
-    {
-        private IRepositoryFactory _repositoryFactory;
+    {  
         private ITripRepository _tripRepository;
 
         public CreateCheckpointViewModel(IRepositoryFactory repositoryFactory)
+            : base(repositoryFactory)
         {
-            if (repositoryFactory == null)
-                throw new ArgumentNullException("repositoryFactory");
-
-            _repositoryFactory = repositoryFactory;
             _tripRepository = repositoryFactory.TripRepository;
 
             Checkpoint = new Checkpoint
@@ -83,7 +79,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             base.OnNavigatedTo(e);
 
-            _tripRepository = _repositoryFactory.TripRepository;
+            _tripRepository = RepositoryFactory.TripRepository;
         }
     }
 }

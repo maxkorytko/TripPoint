@@ -16,15 +16,14 @@ namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CurrentTripViewModel : TripPointViewModelBase
     {
-        private IRepositoryFactory _repositoryFactory;
         private ITripRepository _tripRepository;
 
         public CurrentTripViewModel(IRepositoryFactory repositoryFactory)
+            : base(repositoryFactory)
         {
             if (repositoryFactory == null)
                 throw new ArgumentNullException("repositoryFactory");
 
-            _repositoryFactory = repositoryFactory;
             _tripRepository = repositoryFactory.TripRepository;
 
             InitializeCommands();
@@ -131,7 +130,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             base.OnNavigatedTo(e);
 
-            _tripRepository = _repositoryFactory.TripRepository;
+            _tripRepository = RepositoryFactory.TripRepository;
         }
     }
 }

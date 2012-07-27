@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using TripPoint.WindowsPhone.Navigation;
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
+using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using GalaSoft.MvvmLight.Command;
 
@@ -21,12 +22,10 @@ namespace TripPoint.WindowsPhone.ViewModel
         /// </summary>
         private ITripRepository _tripRepository;
 
-        public CreateTripViewModel(ITripRepository tripRepository)
+        public CreateTripViewModel(IRepositoryFactory repositoryFactory)
+                : base(repositoryFactory)
         {
-            if (tripRepository == null)
-                throw new ArgumentNullException("tripRepository");
-
-            _tripRepository = tripRepository;
+            _tripRepository = RepositoryFactory.TripRepository;
 
             Trip = new Trip();
             SaveTripCommand = new RelayCommand(SaveTripAction);

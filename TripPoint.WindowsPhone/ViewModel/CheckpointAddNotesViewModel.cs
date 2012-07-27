@@ -7,6 +7,7 @@ using Microsoft.Phone.Controls;
 
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
+using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
 using GalaSoft.MvvmLight.Command;
@@ -19,12 +20,10 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private int _checkpointIndex;
 
-        public CheckpointAddNotesViewModel(ITripRepository tripRepository)
+        public CheckpointAddNotesViewModel(IRepositoryFactory repositoryFactory)
+            : base(repositoryFactory)
         {
-            if (tripRepository == null)
-                throw new ArgumentNullException("tripRepository");
-
-            _tripRepository = tripRepository;
+            _tripRepository = repositoryFactory.TripRepository;
 
             InitializeCommands();
         }

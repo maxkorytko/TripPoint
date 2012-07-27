@@ -5,6 +5,7 @@ using Microsoft.Phone.Controls;
 
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
+using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
 
@@ -14,12 +15,10 @@ namespace TripPoint.WindowsPhone.ViewModel
     {
         private ITripRepository _tripRepository;
 
-        public TripDetailsViewModel(ITripRepository tripRepository)
+        public TripDetailsViewModel(IRepositoryFactory repositoryFactory)
+            : base(repositoryFactory)
         {
-            if (tripRepository == null)
-                throw new ArgumentNullException("tripRepository");
-
-            _tripRepository = tripRepository;
+            _tripRepository = repositoryFactory.TripRepository;
 
             Trip = new Trip();
         }
