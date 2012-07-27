@@ -157,7 +157,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static void InitializeCreateCheckpointViewModel()
         {
             if (_createCheckpointViewModel == null)
-                _createCheckpointViewModel = new CreateCheckpointViewModel(TripRepository);
+                _createCheckpointViewModel = new CreateCheckpointViewModel(RepositoryFactory.Create());
         }
 
         public static CreateCheckpointViewModel CreateCheckpointViewModelStatic

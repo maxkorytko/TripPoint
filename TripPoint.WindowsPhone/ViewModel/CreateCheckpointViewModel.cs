@@ -1,7 +1,6 @@
 ﻿#region SDK Usings
 
 using System;
-using System.Windows;
 using System.Windows.Input;
 
 #endregion
@@ -9,6 +8,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
+using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
 
@@ -16,14 +16,16 @@ namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CreateCheckpointViewModel : TripPointViewModelBase
     {
+        private IRepositoryFactory _repositoryFactory;
         private ITripRepository _tripRepository;
 
-        public CreateCheckpointViewModel(ITripRepository tripRepository)
+        public CreateCheckpointViewModel(IRepositoryFactory repositoryFactory)
         {
-            if (tripRepository == null)
-                throw new ArgumentNullException("tripRepository");
+            if (repositoryFactory == null)
+                throw new ArgumentNullException("repositoryFactory");
 
-            _tripRepository = tripRepository;
+            _repositoryFactory = repositoryFactory;
+            _tripRepository = repositoryFactory.TripRepository;
 
             Checkpoint = new Checkpoint
             {
@@ -75,6 +77,13 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void AddPicturesAction()
         {
             Logger.Log(this, "Add pictures");
+        }
+
+        public override void OnNavigatedTo(TripPointNavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            _tripRepository = _repositoryFactory.TripRepository;
         }
     }
 }
