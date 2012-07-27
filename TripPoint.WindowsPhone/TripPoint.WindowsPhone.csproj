@@ -84,8 +84,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Navigation\INavigator.cs" />
     <Compile Include="Navigation\TripPointNavigation.cs" />
     <Compile Include="Navigation\TripPointNavigationEventArgs.cs" />
+    <Compile Include="Navigation\TripPointNavigator.cs" />
     <Compile Include="Navigation\TripPointUriMappings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\CheckpointAddNotesViewModel.cs" />
