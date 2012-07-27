@@ -1,42 +1,30 @@
 ﻿#region SDK Usings
 
 using System;
-using System.Windows;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 
 #endregion
 
-using TripPoint.Model.Utils;
-using TripPoint.WindowsPhone;
 using TripPoint.WindowsPhone.ViewModel;
 
 namespace TripPoint.WindowsPhone.Navigation
 {
-    /// <summary>
-    /// Navigation facade for the application
-    /// </summary>
     public class TripPointNavigation
     {
-        /// <summary>
-        /// Navigates to a previous page if possible
-        /// </summary>
-        public static void GoBack()
+        private static INavigator _navigator;
+
+        public static void Initialize(INavigator navigator)
         {
-            if ((Application.Current as App).RootFrame.CanGoBack)
-                (Application.Current as App).RootFrame.GoBack();
+            if (navigator == null)
+                throw new ArgumentNullException("navigator");
+
+            _navigator = navigator;
         }
 
-        /// <summary>
-        /// Navigates to a given URI
-        /// </summary>
-        /// <param name="uri">URI to navigate to</param>
-        /// <returns>true if navigation is successful</returns>
-        public static bool Navigate(string uri)
+        public static INavigator Navigator
         {
-            var rootFrame = (Application.Current as App).RootFrame;
-
-            return rootFrame.Navigate(new Uri(uri, UriKind.Relative));
+            get { return _navigator; }
         }
 
         /// <summary>

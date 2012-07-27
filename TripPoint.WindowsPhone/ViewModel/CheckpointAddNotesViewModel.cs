@@ -1,7 +1,6 @@
 ﻿#region SDK Usings
 using System;
 using System.Linq;
-using System.Windows;
 using System.Windows.Input;
 using Microsoft.Phone.Controls;
 #endregion
@@ -45,7 +44,7 @@ namespace TripPoint.WindowsPhone.ViewModel
                 AddNotesToCheckpoint(_checkpointIndex, note);
             }
 
-            TripPointNavigation.GoBack();
+            Navigator.GoBack();
         }
 
         private void AddNotesToCheckpoint(int checkpointIndex, Note note)
@@ -76,7 +75,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void CancelAddNotesAction()
         {
-            TripPointNavigation.GoBack();
+            Navigator.GoBack();
         }
 
         public override void OnNavigatedTo(TripPointNavigationEventArgs e)

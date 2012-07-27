@@ -42,7 +42,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             Logger.Log(this, "View trip: {0}", trip);
 
-            TripPointNavigation.Navigate(
+            Navigator.Navigate(
                 string.Format("/Trip/{0}/Details", trip.ID));
         }
 

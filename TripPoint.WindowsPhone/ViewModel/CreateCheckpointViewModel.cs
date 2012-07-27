@@ -66,12 +66,12 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             _tripRepository.SaveTrip(trip);
 
-            TripPointNavigation.Navigate("/Trip/Current");
+            Navigator.Navigate("/Trip/Current");
         }
 
         private void CancelCreateCheckpointAction()
         {
-            TripPointNavigation.GoBack();
+            Navigator.GoBack();
         }
 
         private void AddPicturesAction()

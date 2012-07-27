@@ -20,6 +20,14 @@ namespace TripPoint.WindowsPhone.ViewModel
         }
 
         /// <summary>
+        /// Navigation service allowing view models to navigate between pages
+        /// </summary>
+        protected INavigator Navigator
+        {
+            get { return TripPointNavigation.Navigator; }
+        }
+
+        /// <summary>
         /// Called when a view managed by this view model has been navigated to
         /// </summary>
         /// <param name="e"></param>

@@ -59,7 +59,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             SaveTrip();
             
-            TripPointNavigation.Navigate("/Trip/Current");
+            Navigator.Navigate("/Trip/Current");
         }
 
         private void SaveTrip()

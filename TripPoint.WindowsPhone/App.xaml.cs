@@ -183,6 +183,9 @@ namespace TripPoint.WindowsPhone
 
             RootFrame.UriMapper = uriMapper;
 
+            // Set navigator instance
+            TripPointNavigation.Initialize(new TripPointNavigator());
+
             // Set Navigated event listener
             RootFrame.Navigated += TripPointNavigation.Navigated;
         }
@@ -194,9 +197,9 @@ namespace TripPoint.WindowsPhone
             var currentTrip = tripRepository.CurrentTrip;
 
             if (currentTrip != null)
-                TripPointNavigation.Navigate("/Trip/Current");
+                TripPointNavigation.Navigator.Navigate("/Trip/Current");
             else
-                TripPointNavigation.Navigate("/Trip/Create");
+                TripPointNavigation.Navigator.Navigate("/Trip/Create");
         }
     }
 }

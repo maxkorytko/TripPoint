@@ -95,18 +95,18 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void PastTripsAction()
         {
-            TripPointNavigation.Navigate("/Trips");
+            Navigator.Navigate("/Trips");
         }
 
         private void CreateCheckpointAction()
         {
-            TripPointNavigation.Navigate(
+            Navigator.Navigate(
                 string.Format("/Trip/{0}/Checkpoints/Create", CurrentTrip.ID));
         }
 
         private void AddNotesAction()
         {
-            TripPointNavigation.Navigate(
+            Navigator.Navigate(
                 string.Format("/Trip/{0}/Checkpoints/{1}/Add/Notes", CurrentTrip.ID, 0));
         }
 
@@ -123,7 +123,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             var checkpointID = "0";
 
             // TODO: implement
-            TripPointNavigation.Navigate(string.Format("/Trip/{0}/Checkpoints/{1}/Details",
+            Navigator.Navigate(string.Format("/Trip/{0}/Checkpoints/{1}/Details",
                 tripID, checkpointID));
         }
 
