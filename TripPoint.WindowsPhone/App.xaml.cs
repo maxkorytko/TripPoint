@@ -29,12 +29,13 @@ namespace TripPoint.WindowsPhone
         {
             // Global handler for uncaught exceptions. 
             UnhandledException += Application_UnhandledException;
-
-            WireUpDependencies();
+            
+            // Wire up dependencies
+            RepositoryFactory.Initialize(new DatabaseRepositoryFactory());
 
             // Creates a dabase if necessary
             // Must be called before InitializeComponent
-            InitializeDatastore();
+            InitializeDatabase();
 
             // Standard Silverlight initialization
             InitializeComponent();
@@ -147,13 +148,7 @@ namespace TripPoint.WindowsPhone
 
         #endregion
 
-        private void WireUpDependencies()
-        {
-            RepositoryFactory.Initialize(new DatabaseRepositoryFactory());
-            TripPointNavigation.Initialize(new TripPointNavigator());
-        }
-
-        private void InitializeDatastore()
+        private void InitializeDatabase()
         {
             using (var dataContext = new TripPointDataContext(TripPointDataContext.ConnectionString))
             {
@@ -176,6 +171,8 @@ namespace TripPoint.WindowsPhone
 
         private void InitializeNavigation()
         {
+            TripPointNavigation.Initialize(new TripPointNavigator());
+
             // Set custom URI mapper
             var uriMapper = new UriMapper();
             foreach (var uriMapping in TripPointUriMappings.UriMappings)
