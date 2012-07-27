@@ -30,8 +30,7 @@ namespace TripPoint.WindowsPhone
             // Global handler for uncaught exceptions. 
             UnhandledException += Application_UnhandledException;
 
-            // Wires up dependencies
-            InitializeDI();
+            WireUpDependencies();
 
             // Creates a dabase if necessary
             // Must be called before InitializeComponent
@@ -148,9 +147,10 @@ namespace TripPoint.WindowsPhone
 
         #endregion
 
-        private void InitializeDI()
+        private void WireUpDependencies()
         {
             RepositoryFactory.Initialize(new DatabaseRepositoryFactory());
+            TripPointNavigation.Initialize(new TripPointNavigator());
         }
 
         private void InitializeDatastore()
@@ -182,9 +182,6 @@ namespace TripPoint.WindowsPhone
                 uriMapper.UriMappings.Add(uriMapping);
 
             RootFrame.UriMapper = uriMapper;
-
-            // Set navigator instance
-            TripPointNavigation.Initialize(new TripPointNavigator());
 
             // Set Navigated event listener
             RootFrame.Navigated += TripPointNavigation.Navigated;

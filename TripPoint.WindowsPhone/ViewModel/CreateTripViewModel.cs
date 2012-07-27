@@ -28,11 +28,6 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             _tripRepository = tripRepository;
 
-            InitProperties();
-        }
-
-        private void InitProperties()
-        {
             Trip = new Trip();
             SaveTripCommand = new RelayCommand(SaveTripAction);
         }
