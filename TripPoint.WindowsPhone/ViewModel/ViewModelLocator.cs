@@ -31,7 +31,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static void InitializeTripListViewModel()
         {
             if (_tripListViewModel == null)
-                _tripListViewModel = new TripListViewModel(TripRepository);
+                _tripListViewModel = new TripListViewModel(RepositoryFactory.Create().TripRepository);
         }
 
         public static TripListViewModel TripListViewModelStatic
@@ -62,7 +62,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static void InitializeCreateTripViewModel()
         {
             if (_createTripViewModel == null)
-                _createTripViewModel = new CreateTripViewModel(TripRepository);
+                _createTripViewModel = new CreateTripViewModel(RepositoryFactory.Create().TripRepository);
         }
 
         public static CreateTripViewModel CreateTripViewModelStatic
@@ -126,7 +126,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static void InitializeTripDetailsViewModel()
         {
             if (_tripDetailsViewModel == null)
-                _tripDetailsViewModel = new TripDetailsViewModel(TripRepository);
+                _tripDetailsViewModel = new TripDetailsViewModel(RepositoryFactory.Create().TripRepository);
         }
 
         public static TripDetailsViewModel TripDetailsViewModelStatic
@@ -188,7 +188,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static void InitializeCheckpointAddNotesViewModel()
         {
             if (_checkpointAddNotesViewModel == null)
-                _checkpointAddNotesViewModel = new CheckpointAddNotesViewModel(TripRepository);
+                _checkpointAddNotesViewModel = new CheckpointAddNotesViewModel(RepositoryFactory.Create().TripRepository);
         }
 
         public static CheckpointAddNotesViewModel CheckpointAddNotesViewModelStatic
@@ -224,16 +224,6 @@ namespace TripPoint.WindowsPhone.ViewModel
             ClearCurrentTripViewModel();
             ClearCreateCheckpointViewModel();
             ClearCheckpointAddNotesViewModel();
-        }
-
-        private static ITripRepository TripRepository
-        {
-            get
-            {
-                var dataContext = new TripPointDataContext(TripPointDataContext.ConnectionString);
-                //dataContext.Log = new TripPoint.Model.Utils.DebugStreamWriter();
-                return new DatabaseTripRepository(dataContext);
-            }
         }
     }
 }
