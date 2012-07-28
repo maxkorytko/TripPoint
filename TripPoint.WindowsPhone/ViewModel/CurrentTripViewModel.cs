@@ -118,12 +118,11 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             Logger.Log(this, "view checkpoint: {0}", checkpoint);
 
-            var tripID = "0";
             var checkpointID = "0";
 
             // TODO: implement
-            Navigator.Navigate(string.Format("/Trip/{0}/Checkpoints/{1}/Details",
-                tripID, checkpointID));
+            Navigator.Navigate(string.Format("/Checkpoints/{0}/Details", ""));
+            //Navigator.Navigate("/View/Checkpoint/CheckpointDetailsView.xaml");
         }
 
         public override void OnNavigatedTo(TripPointNavigationEventArgs e)
