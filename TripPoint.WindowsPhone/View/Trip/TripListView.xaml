@@ -36,7 +36,7 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <ListBox x:Name="TripList" ItemsSource="{Binding Trips}">
                 <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
+                    <i:EventTrigger EventName="MouseLeftButtonUp">
                         <mvvmlightcommand:EventToCommand Command="{Binding ViewTripDetailsCommand}"
                                                          CommandParameter="{Binding SelectedItem, ElementName=TripList}" />
                     </i:EventTrigger>

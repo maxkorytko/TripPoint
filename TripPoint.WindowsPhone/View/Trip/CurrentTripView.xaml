@@ -89,7 +89,7 @@
             <controls:PanoramaItem Header="Checkpoints">
                 <ListBox x:Name="CheckpointList" ItemsSource="{Binding CurrentTrip.Checkpoints}">
                     <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
+                        <i:EventTrigger EventName="MouseLeftButtonUp">
                             <mvvmlightcommand:EventToCommand Command="{Binding ViewCheckpointDetailsCommand}"
                                                          CommandParameter="{Binding SelectedItem, ElementName=CheckpointList}" />
                         </i:EventTrigger>
