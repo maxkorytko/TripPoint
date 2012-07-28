@@ -101,6 +101,9 @@
     <Compile Include="View\Checkpoint\CheckpointAddNotesView.xaml.cs">
       <DependentUpon>CheckpointAddNotesView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Checkpoint\CheckpointDetailsView.xaml.cs">
+      <DependentUpon>CheckpointDetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Checkpoint\CreateCheckpointView.xaml.cs">
       <DependentUpon>CreateCheckpointView.xaml</DependentUpon>
     </Compile>
@@ -124,6 +127,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="View\Checkpoint\CheckpointAddNotesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Checkpoint\CheckpointDetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
