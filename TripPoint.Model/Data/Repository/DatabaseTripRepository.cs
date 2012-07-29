@@ -1,30 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Data.Linq;
 
 using TripPoint.Model.Domain;
-using TripPoint.Model.Utils;
 
 namespace TripPoint.Model.Data.Repository
 {
-    public class DatabaseTripRepository : ITripRepository
+    public class DatabaseTripRepository : DatabaseRepository, ITripRepository
     {
-        TripPointDataContext _dataContext;
-
         public DatabaseTripRepository(TripPointDataContext dataContext)
+            : base(dataContext)
         {
-            if (dataContext == null)
-                throw new ArgumentNullException("dataContext");
-
-            _dataContext = dataContext;
+   
         }
 
         public IEnumerable<Trip> Trips
         {
             get 
             {
-                var trips = from trip in _dataContext.Trips
+                var trips = from trip in DataContext.Trips
                             select trip;
 
                 return trips;
@@ -50,20 +44,15 @@ namespace TripPoint.Model.Data.Repository
 
             if (isNewTrip)
             {
-                _dataContext.Trips.InsertOnSubmit(trip);
+                DataContext.Trips.InsertOnSubmit(trip);
             }
-            //else
-            //{
-            //    var originalTrip = FindTrip(trip.ID);
-            //    originalTrip = trip;
-            //}
 
-            _dataContext.SubmitChanges();
+            DataContext.SubmitChanges();
         }
 
         public Trip FindTrip(int tripID)
         {
-            var trip = (from t in _dataContext.Trips
+            var trip = (from t in DataContext.Trips
                         where t.ID == tripID
                         select t)
                        .SingleOrDefault();
@@ -79,8 +68,8 @@ namespace TripPoint.Model.Data.Repository
 
             if (tripToDelete == null) return;
 
-            _dataContext.Trips.DeleteOnSubmit(tripToDelete);
-            _dataContext.SubmitChanges();
+            DataContext.Trips.DeleteOnSubmit(tripToDelete);
+            DataContext.SubmitChanges();
         }
     }
 }

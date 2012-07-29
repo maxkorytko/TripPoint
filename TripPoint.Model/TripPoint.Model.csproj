@@ -50,11 +50,14 @@
     <Reference Include="mscorlib.extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Repository\DatabaseCheckpointRepository.cs" />
+    <Compile Include="Data\Repository\DatabaseRepository.cs" />
     <Compile Include="Data\Repository\DatabaseTripRepository.cs" />
     <Compile Include="Data\Repository\Factory\DatabaseRepositoryFactory.cs" />
     <Compile Include="Data\Repository\Factory\IRepositoryFactory.cs" />
     <Compile Include="Data\Repository\Factory\NullRepositoryFactory.cs" />
     <Compile Include="Data\Repository\Factory\RepositoryFactory.cs" />
+    <Compile Include="Data\Repository\ICheckpointRepository.cs" />
     <Compile Include="Data\Repository\ITripRepository.cs" />
     <Compile Include="Data\TripPointDataContext.cs">
       <SubType>Code</SubType>
