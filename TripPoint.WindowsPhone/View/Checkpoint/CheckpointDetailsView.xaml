@@ -79,11 +79,11 @@
         <appBar:BindableApplicationBar IsVisible="True">
             <appBar:BindableApplicationBarButton Text="Edit"
                                                  IconUri="/Assets/Images/Dark/appbar.edit.rest.png" 
-                                                 />
+                                                 Command="{Binding EditCheckpointCommand}" />
 
             <appBar:BindableApplicationBarButton Text="Delete"
                                                  IconUri="/Assets/Images/Dark/appbar.delete.rest.png" 
-                                                 />
+                                                 Command="{Binding DeleteCheckpointCommand}" />
         </appBar:BindableApplicationBar>
     </appBar:Bindable.ApplicationBar>
 

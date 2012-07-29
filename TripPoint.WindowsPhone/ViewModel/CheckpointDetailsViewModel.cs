@@ -13,6 +13,7 @@ using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.ViewModel;
+using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
@@ -22,9 +23,31 @@ namespace TripPoint.WindowsPhone.ViewModel
             : base(repositoryFactory)
         {
             Checkpoint = new Checkpoint();
+
+            InitializeCommands();
+        }
+
+        private void InitializeCommands()
+        {
+            EditCheckpointCommand = new RelayCommand(EditCheckpointAction);
+            DeleteCheckpointCommand = new RelayCommand(DeleteCheckpointAction);
         }
 
         public Checkpoint Checkpoint { get; private set; }
+
+        public ICommand EditCheckpointCommand { get; private set; }
+
+        public ICommand DeleteCheckpointCommand { get; private set; }
+
+        private void EditCheckpointAction()
+        {
+            Logger.Log(this, "Edit checkpoint");
+        }
+
+        private void DeleteCheckpointAction()
+        {
+            Logger.Log(this, "Delete checkpoint");
+        }
 
         public override void OnNavigatedTo(Navigation.TripPointNavigationEventArgs e)
         {
