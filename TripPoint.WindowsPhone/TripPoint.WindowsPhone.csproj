@@ -164,6 +164,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Images\Dark\appbar.check.rest.png" />
+    <Content Include="Assets\Images\Dark\appbar.delete.rest.png" />
+    <Content Include="Assets\Images\Dark\appbar.edit.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.new.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.save.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.stop.rest.png" />
