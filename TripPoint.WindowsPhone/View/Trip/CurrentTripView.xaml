@@ -6,7 +6,6 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:appBar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
-    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:mvvmlightcommand="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
     xmlns:convert="clr-namespace:TripPoint.WindowsPhone.Converters;assembly=TripPoint"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -87,14 +86,8 @@
             
             <!-- Checkpoints item -->
             <controls:PanoramaItem Header="Checkpoints">
-                <ListBox x:Name="CheckpointList" ItemsSource="{Binding CurrentTrip.Checkpoints}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonUp">
-                            <mvvmlightcommand:EventToCommand Command="{Binding ViewCheckpointDetailsCommand}"
-                                                         CommandParameter="{Binding SelectedItem, ElementName=CheckpointList}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                    
+                <ListBox x:Name="CheckpointList" ItemsSource="{Binding CurrentTrip.Checkpoints}"
+                         SelectionChanged="CheckpointList_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,25,0,25">
