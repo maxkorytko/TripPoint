@@ -13,6 +13,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static TripDetailsViewModel _tripDetailsViewModel;
         private static CreateCheckpointViewModel _createCheckpointViewModel;
         private static CheckpointAddNotesViewModel _checkpointAddNotesViewModel;
+        private static CheckpointDetailsViewModel _checkpointDetailsViewModel;
 
         /// <summary>
         /// Initializes a new instance of the GlobalViewModelLocator class.
@@ -25,6 +26,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             InitializeTripDetailsViewModel();
             InitializeCreateCheckpointViewModel();
             InitializeCheckpointAddNotesViewModel();
+            InitializeCheckpointDetailsViewModel();
         }
 
         #region TripListViewModel
@@ -215,6 +217,37 @@ namespace TripPoint.WindowsPhone.ViewModel
         }
         #endregion
 
+        #region CheckpointDetailsViewModel
+        private static void InitializeCheckpointDetailsViewModel()
+        {
+            if (_checkpointDetailsViewModel == null)
+                _checkpointDetailsViewModel = new CheckpointDetailsViewModel(RepositoryFactory.Create());
+        }
+
+        public static CheckpointDetailsViewModel CheckpointDetailsViewModelStatic
+        {
+            get
+            {
+                InitializeCheckpointDetailsViewModel();
+                return _checkpointDetailsViewModel;
+            }
+        }
+
+        public CheckpointDetailsViewModel CheckpointDetailsViewModel
+        {
+            get
+            {
+                return CheckpointDetailsViewModelStatic;
+            }
+        }
+
+        private static void ClearCheckpointDetailsViewModel()
+        {
+            _checkpointDetailsViewModel.Cleanup();
+            _checkpointDetailsViewModel = null;
+        }
+        #endregion
+
         /// <summary>
         /// Cleans up all the resources.
         /// </summary>
@@ -224,6 +257,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             ClearCurrentTripViewModel();
             ClearCreateCheckpointViewModel();
             ClearCheckpointAddNotesViewModel();
+            ClearCheckpointDetailsViewModel();
         }
     }
 }
