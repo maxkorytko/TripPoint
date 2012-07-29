@@ -20,13 +20,14 @@
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <controls:Pivot>
             
-            <controls:PivotItem Header="Details">
+            <controls:PivotItem Header="{Binding Localization.Resources.Details}">
                 <Grid Name="CheckpointDetailsLayout">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     
+                    <!-- Title -->
                     <StackPanel Grid.Row="0" Margin="0,25,0,50">
                         <TextBlock Style="{StaticResource PhoneTextTitle2Style}" Text="Lookout by the Highway" 
                                    HorizontalAlignment="Stretch"/>
@@ -44,10 +45,14 @@
                             <RowDefinition Height="2*" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PhoneTextTitle2Style}" Text="Pictures" />
+                        <!-- Pictures -->
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PhoneTextTitle2Style}"
+                                   Text="{Binding Localization.Resources.Pictures}" />
                         <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource PhoneTextTitle2Style}" Text="13" />
-
-                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PhoneTextTitle2Style}" Text="Notes" />
+    
+                        <!-- Notes -->
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PhoneTextTitle2Style}"
+                                   Text="{Binding Localization.Resources.Notes}" />
                         <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource PhoneTextTitle2Style}" Text="29" />
 
                     </Grid>
@@ -55,11 +60,11 @@
                 </Grid>
             </controls:PivotItem>
             
-            <controls:PivotItem Header="Pictures">
+            <controls:PivotItem Header="{Binding Localization.Resources.Pictures}">
                 
             </controls:PivotItem>
             
-            <controls:PivotItem Header="Notes">
+            <controls:PivotItem Header="{Binding Localization.Resources.Notes}">
                 <ListBox>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -77,11 +82,11 @@
 
     <appBar:Bindable.ApplicationBar>
         <appBar:BindableApplicationBar IsVisible="True">
-            <appBar:BindableApplicationBarButton Text="Edit"
+            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Edit_AppBar}"
                                                  IconUri="/Assets/Images/Dark/appbar.edit.rest.png" 
                                                  Command="{Binding EditCheckpointCommand}" />
 
-            <appBar:BindableApplicationBarButton Text="Delete"
+            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Delete_AppBar}"
                                                  IconUri="/Assets/Images/Dark/appbar.delete.rest.png" 
                                                  Command="{Binding DeleteCheckpointCommand}" />
         </appBar:BindableApplicationBar>

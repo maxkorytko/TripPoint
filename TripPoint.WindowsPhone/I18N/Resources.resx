@@ -144,6 +144,15 @@
   <data name="CreateTripPageTitle" xml:space="preserve">
     <value>Create Trip</value>
   </data>
+  <data name="Delete_AppBar" xml:space="preserve">
+    <value>delete</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Edit_AppBar" xml:space="preserve">
+    <value>edit</value>
+  </data>
   <data name="FinishTrip_AppBar" xml:space="preserve">
     <value>finish trip</value>
   </data>
@@ -158,6 +167,9 @@
   </data>
   <data name="PastTrips_AppBar" xml:space="preserve">
     <value>past trips</value>
+  </data>
+  <data name="Pictures" xml:space="preserve">
+    <value>Pictures</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>

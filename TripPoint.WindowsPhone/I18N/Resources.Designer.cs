@@ -142,6 +142,33 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to delete.
+        /// </summary>
+        public static string Delete_AppBar {
+            get {
+                return ResourceManager.GetString("Delete_AppBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to edit.
+        /// </summary>
+        public static string Edit_AppBar {
+            get {
+                return ResourceManager.GetString("Edit_AppBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to finish trip.
         /// </summary>
         public static string FinishTrip_AppBar {
@@ -183,6 +210,15 @@ namespace TripPoint.WindowsPhone.I18N {
         public static string PastTripsViewTitle {
             get {
                 return ResourceManager.GetString("PastTripsViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pictures.
+        /// </summary>
+        public static string Pictures {
+            get {
+                return ResourceManager.GetString("Pictures", resourceCulture);
             }
         }
         
