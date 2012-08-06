@@ -29,9 +29,9 @@
                     
                     <!-- Title -->
                     <StackPanel Grid.Row="0" Margin="0,25,0,50">
-                        <TextBlock Style="{StaticResource PhoneTextTitle2Style}" Text="Lookout by the Highway" 
+                        <TextBlock Style="{StaticResource PhoneTextTitle2Style}" Text="{Binding Checkpoint.Title}" 
                                    HorizontalAlignment="Stretch"/>
-                        <TextBlock Style="{StaticResource PhoneTextBlockBase}" Text="09/30/2011" />
+                        <TextBlock Style="{StaticResource PhoneTextBlockBase}" Text="{Binding Checkpoint.Timestamp}" />
                     </StackPanel>
                     
                     <Grid Grid.Row="1">
@@ -53,7 +53,8 @@
                         <!-- Notes -->
                         <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PhoneTextTitle2Style}"
                                    Text="{Binding Localization.Resources.Notes}" />
-                        <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource PhoneTextTitle2Style}" Text="29" />
+                        <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource PhoneTextTitle2Style}"
+                                   Text="{Binding Checkpoint.Notes.Count}" />
 
                     </Grid>
                     

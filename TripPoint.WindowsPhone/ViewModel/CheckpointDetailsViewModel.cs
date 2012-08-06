@@ -1,18 +1,10 @@
-﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+﻿using System.Windows.Input;
+using Microsoft.Phone.Controls;
 
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
-using TripPoint.WindowsPhone.ViewModel;
+using TripPoint.WindowsPhone.Navigation;
 using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
@@ -49,11 +41,32 @@ namespace TripPoint.WindowsPhone.ViewModel
             Logger.Log(this, "Delete checkpoint");
         }
 
-        public override void OnNavigatedTo(Navigation.TripPointNavigationEventArgs e)
+        public override void OnNavigatedTo(TripPointNavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
             Logger.Log(this, "checkpoint ID: {0}", e.View.TryGetQueryStringParameter("checkpointID"));
+
+            var checkpointID = GetCheckpointID(e.View);
+            var checkpoint = GetCheckpoint(checkpointID);
+
+            if (checkpoint != null)
+                Checkpoint = checkpoint;
+        }
+
+        private static int GetCheckpointID(PhoneApplicationPage view)
+        {
+            if (view == null)
+                return -1;
+
+            var parameter = view.TryGetQueryStringParameter("checkpointID");
+
+            return TripPointConvert.ToInt32(parameter);
+        }
+
+        private Checkpoint GetCheckpoint(int checkpointID)
+        {
+            return RepositoryFactory.CheckpointRepository.FindCheckpoint(checkpointID);
         }
     }
 }
