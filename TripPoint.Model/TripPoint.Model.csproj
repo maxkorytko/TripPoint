@@ -69,6 +69,7 @@
     <Compile Include="Domain\Trip.cs" />
     <Compile Include="Utils\DebugStreamWriter.cs" />
     <Compile Include="Utils\Logger.cs" />
+    <Compile Include="Utils\TripPointConvert.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
