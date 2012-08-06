@@ -7,11 +7,16 @@ namespace TripPoint.Model.Data.Repository.Factory
 {
     public class NullRepositoryFactory : IRepositoryFactory
     {
-        ITripRepository _tripRepository = new NullTripRepository();
+        private ITripRepository _tripRepository = new NullTripRepository();
 
         public ITripRepository TripRepository
         {
             get { return _tripRepository; }
+        }
+
+        public ICheckpointRepository CheckpointRepository
+        {
+            get { return null; }
         }
     }
 

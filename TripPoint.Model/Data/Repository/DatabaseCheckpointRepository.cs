@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 using TripPoint.Model.Domain;
 
@@ -9,12 +10,16 @@ namespace TripPoint.Model.Data.Repository
         public DatabaseCheckpointRepository(TripPointDataContext dataContext)
             : base(dataContext)
         {
-
         }
 
         public Checkpoint FindCheckpoint(int checkpointID)
         {
-            throw new NotImplementedException();
+            var checkpoint = (from c in DataContext.Checkpoints
+                              where c.ID == checkpointID
+                              select c)
+                             .SingleOrDefault();
+
+            return checkpoint;
         }
     }
 }

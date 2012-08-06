@@ -4,18 +4,17 @@
     {
         private TripPointDataContext DataContext
         {
-            get
-            {
-                return new TripPointDataContext(TripPointDataContext.ConnectionString);
-            }
+            get { return new TripPointDataContext(TripPointDataContext.ConnectionString); }
         }
 
         public ITripRepository TripRepository
         {
-            get
-            {
-                return new DatabaseTripRepository(DataContext);
-            }
+            get { return new DatabaseTripRepository(DataContext); }
+        }
+
+        public ICheckpointRepository CheckpointRepository
+        {
+            get { return new DatabaseCheckpointRepository(DataContext); }
         }
     }
 }

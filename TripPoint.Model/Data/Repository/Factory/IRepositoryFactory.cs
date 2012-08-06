@@ -3,5 +3,7 @@
     public interface IRepositoryFactory
     {
         ITripRepository TripRepository { get; }
+
+        ICheckpointRepository CheckpointRepository { get; }
     }
 }
