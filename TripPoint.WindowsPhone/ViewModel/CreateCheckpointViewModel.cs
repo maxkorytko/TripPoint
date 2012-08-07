@@ -50,19 +50,33 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void CreateCheckpointAction()
         {
-            Logger.Log(this, "{0}", Checkpoint);
+            SetupCheckpoint();
+            SaveCheckpoint();
+
+            Navigator.Navigate("/Trip/Current");
+        }
+
+        private void SetupCheckpoint()
+        {
+            AddNotesToCheckpoint();
+        }
+
+        private void AddNotesToCheckpoint()
+        {
+            if (string.IsNullOrEmpty(Notes)) return;
 
             Checkpoint.Notes.Add(
-                new Note { Text = Notes }
-                );
+               new Note { Text = Notes }
+            );
+        }
 
+        public void SaveCheckpoint()
+        {
             var trip = _tripRepository.CurrentTrip;
 
             trip.Checkpoints.Add(Checkpoint);
 
             _tripRepository.SaveTrip(trip);
-
-            Navigator.Navigate("/Trip/Current");
         }
 
         private void CancelCreateCheckpointAction()
