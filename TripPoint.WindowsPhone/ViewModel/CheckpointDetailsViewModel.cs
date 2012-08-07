@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using Microsoft.Phone.Controls;
 
 using TripPoint.Model.Domain;
@@ -38,7 +39,18 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void DeleteCheckpointAction()
         {
-            Logger.Log(this, "Delete checkpoint");
+            var caption = "";
+            var message = "Are you sure you want to delete this checkpoint?";
+
+            var userDecision = MessageBox.Show(message, caption, MessageBoxButton.OKCancel);
+
+            if (userDecision == MessageBoxResult.OK)
+                DeleteCheckpoint();
+        }
+
+        private void DeleteCheckpoint()
+        {
+            
         }
 
         public override void OnNavigatedTo(TripPointNavigationEventArgs e)
