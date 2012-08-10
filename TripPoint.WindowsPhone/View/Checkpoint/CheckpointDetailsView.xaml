@@ -66,12 +66,15 @@
             </controls:PivotItem>
             
             <controls:PivotItem Header="{Binding Localization.Resources.Notes}">
-                <ListBox>
+                <ListBox ItemsSource="{Binding Checkpoint.Notes}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Style="{StaticResource PhoneTextTitle2Style}" Text="Note Text" />
-                                <TextBlock Style="{StaticResource PhoneTextBlockBase}" Text="05/23/2011" />
+                            <StackPanel Margin="0,15,0,15">
+                                <TextBlock Style="{StaticResource PhoneTextTitle2Style}"
+                                           Text="{Binding Text}" />
+                                
+                                <TextBlock Style="{StaticResource PhoneTextBlockBase}"
+                                           Text="{Binding Timestamp}" />
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
