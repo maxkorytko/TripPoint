@@ -21,5 +21,12 @@ namespace TripPoint.Model.Data.Repository
 
             return checkpoint;
         }
+
+        public void SaveCheckpoint(Checkpoint checkpoint)
+        {
+            if (checkpoint == null) return;
+
+            DataContext.SubmitChanges();
+        }
     }
 }

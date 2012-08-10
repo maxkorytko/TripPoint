@@ -105,8 +105,10 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void AddNotesAction()
         {
+            var checkpoint = CurrentTrip.Checkpoints.FirstOrDefault<Checkpoint>();
+
             Navigator.Navigate(
-                string.Format("/Trip/{0}/Checkpoints/{1}/Add/Notes", CurrentTrip.ID, 0));
+                string.Format("/Checkpoints/{0}/Add/Notes", checkpoint.ID));
         }
 
         private void AddPicturesAction()

@@ -10,5 +10,7 @@ namespace TripPoint.Model.Data.Repository
     public interface ICheckpointRepository
     {
         Checkpoint FindCheckpoint(int checkpointID);
+
+        void SaveCheckpoint(Checkpoint checkpoint);
     }
 }
