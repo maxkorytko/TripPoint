@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
+using Microsoft.Phone.Data.Linq.Mapping;
 
 namespace TripPoint.Model.Domain
 {
@@ -9,6 +10,7 @@ namespace TripPoint.Model.Domain
     /// A note with the ability to track the time and date it was taken on
     /// </summary>
     [Table]
+    [Index(Columns="Timestamp DESC")]
     public class Note : INotifyPropertyChanging, INotifyPropertyChanged
     {
         private int _noteID;

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
+using Microsoft.Phone.Data.Linq.Mapping;
 
 namespace TripPoint.Model.Domain
 {
@@ -9,6 +10,7 @@ namespace TripPoint.Model.Domain
     /// Represents a checkpoint along the trip route
     /// </summary>
     [Table]
+    [Index(Columns="Timestamp DESC")]
     public class Checkpoint : INotifyPropertyChanging, INotifyPropertyChanged
     {
         private int _checkpointID;

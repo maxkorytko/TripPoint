@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
+using Microsoft.Phone.Data.Linq.Mapping;
 
 namespace TripPoint.Model.Domain
 {
@@ -9,6 +10,7 @@ namespace TripPoint.Model.Domain
     /// Represents a trip
     /// </summary>
     [Table]
+    [Index(Columns="EndDate DESC")]
     public class Trip : INotifyPropertyChanging, INotifyPropertyChanged
     {
         private int _tripID;
