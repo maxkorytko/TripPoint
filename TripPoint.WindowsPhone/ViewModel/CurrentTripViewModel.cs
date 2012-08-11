@@ -71,7 +71,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             {
                 if (CurrentTripHasNoCheckpoints) return null;
 
-                return CurrentTrip.Checkpoints.LastOrDefault();
+                return CurrentTrip.Checkpoints.First();
             }
         }
 

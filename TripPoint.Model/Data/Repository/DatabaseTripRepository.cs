@@ -11,7 +11,14 @@ namespace TripPoint.Model.Data.Repository
         public DatabaseTripRepository(TripPointDataContext dataContext)
             : base(dataContext)
         {
-   
+            // configure the data context to load associated checkpoints in a specific order
+
+            var loadOptions = new DataLoadOptions();
+
+            loadOptions.AssociateWith<Trip>(trip => trip.Checkpoints.OrderByDescending(
+                checkpoint => checkpoint.Timestamp));
+
+            DataContext.LoadOptions = loadOptions;
         }
 
         public IEnumerable<Trip> Trips
