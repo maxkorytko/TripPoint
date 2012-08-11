@@ -28,5 +28,21 @@ namespace TripPoint.Model.Data.Repository
 
             DataContext.SubmitChanges();
         }
+
+        public void DeleteCheckpoint(Checkpoint checkpoint)
+        {
+            if (checkpoint == null) return;
+
+            // ensure checkpoint is attached to the data context
+            var checkpointEntity = FindCheckpoint(checkpoint.ID);
+
+            if (checkpointEntity == null) return;
+
+            checkpointEntity.Trip = null;
+            DataContext.Notes.DeleteAllOnSubmit(checkpointEntity.Notes);
+            DataContext.Checkpoints.DeleteOnSubmit(checkpointEntity);
+            
+            DataContext.SubmitChanges();
+        }
     }
 }

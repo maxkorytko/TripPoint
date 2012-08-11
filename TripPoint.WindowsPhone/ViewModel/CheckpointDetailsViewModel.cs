@@ -3,6 +3,7 @@ using System.Windows.Input;
 using Microsoft.Phone.Controls;
 
 using TripPoint.Model.Domain;
+using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
@@ -12,9 +13,13 @@ namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CheckpointDetailsViewModel : TripPointViewModelBase
     {
+        ICheckpointRepository _checkpointRepository;
+
         public CheckpointDetailsViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
+            _checkpointRepository = repositoryFactory.CheckpointRepository;
+
             Checkpoint = new Checkpoint();
 
             InitializeCommands();
@@ -50,7 +55,9 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void DeleteCheckpoint()
         {
+            _checkpointRepository.DeleteCheckpoint(Checkpoint);
             
+            Navigator.GoBack();
         }
 
         public override void OnNavigatedTo(TripPointNavigationEventArgs e)
@@ -68,8 +75,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private static int GetCheckpointID(PhoneApplicationPage view)
         {
-            if (view == null)
-                return -1;
+            if (view == null) return -1;
 
             var parameter = view.TryGetQueryStringParameter("checkpointID");
 
@@ -78,7 +84,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private Checkpoint GetCheckpoint(int checkpointID)
         {
-            return RepositoryFactory.CheckpointRepository.FindCheckpoint(checkpointID);
+            return _checkpointRepository.FindCheckpoint(checkpointID);
         }
     }
 }

@@ -24,8 +24,7 @@ namespace TripPoint.Model.Domain
         {
             Timestamp = DateTime.Now;
             Location = new GeoLocation();
-            _notes = new EntitySet<Note>(
-                AddNoteAction, RemoveNoteAction);
+            _notes = new EntitySet<Note>(AddNoteAction, RemoveNoteAction);
         }
 
         #region ID
