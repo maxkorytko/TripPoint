@@ -130,33 +130,24 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             base.OnNavigatedTo(e);
 
-            SetCurrentTrip();
-            SetLatestCheckpoint();
-            SetCurrentTripHasCheckpoints();
+            InitializeCurrentTrip();
+            InitializeLatestCheckpoint();
+            InitializeCurrentTripHasCheckpoints();
         }
 
-        private void SetCurrentTrip()
+        private void InitializeCurrentTrip()
         {
-            var tripRepository = RepositoryFactory.TripRepository;
-            
-            if (tripRepository == null) return;
-
-            var trip = tripRepository.CurrentTrip;
-
-            if (trip == null)
-                trip = new Trip();
-
-            CurrentTrip = trip;
+            CurrentTrip = RepositoryFactory.TripRepository.CurrentTrip;
         }
 
-        private void SetLatestCheckpoint()
+        private void InitializeLatestCheckpoint()
         {
             if (CurrentTrip == null) return;
 
             LatestCheckpoint = CurrentTrip.Checkpoints.FirstOrDefault();
         }
 
-        private void SetCurrentTripHasCheckpoints()
+        private void InitializeCurrentTripHasCheckpoints()
         {
             if (CurrentTrip == null) return;
 
