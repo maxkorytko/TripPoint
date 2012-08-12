@@ -2,6 +2,7 @@
 
 using System;
 using System.Windows.Input;
+using Microsoft.Phone.Controls;
 
 #endregion
 
@@ -15,19 +16,14 @@ using TripPoint.WindowsPhone.Navigation;
 namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CreateCheckpointViewModel : TripPointViewModelBase
-    {  
-        private ITripRepository _tripRepository;
-
+    {
+        private int _tripID = -1;
+        private Checkpoint _checkpoint;
+        private string _notes;
+        
         public CreateCheckpointViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
-            _tripRepository = repositoryFactory.TripRepository;
-
-            Checkpoint = new Checkpoint
-            {
-                Timestamp = DateTime.Now
-            };
-
             InitializeCommands();
         }
 
@@ -38,9 +34,29 @@ namespace TripPoint.WindowsPhone.ViewModel
             AddPicturesCommand = new RelayCommand(AddPicturesAction);
         }
 
-        public Checkpoint Checkpoint { get; private set; }
+        public Checkpoint Checkpoint 
+        {
+            get { return _checkpoint; }
+            private set
+            {
+                if (_checkpoint == value) return;
 
-        public string Notes { get; set; }
+                _checkpoint = value;
+                RaisePropertyChanged("Checkpoint");
+            }
+        }
+
+        public string Notes
+        {
+            get { return _notes; }
+            set
+            {
+                if (_notes == value) return;
+
+                _notes = value;
+                RaisePropertyChanged("Notes");
+            }
+        }
 
         public ICommand CreateCheckpointCommand { get; private set; }
 
@@ -50,15 +66,14 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void CreateCheckpointAction()
         {
-            SetupCheckpoint();
-            SaveCheckpoint();
+            if (Checkpoint != null)
+            {
+                AddNotesToCheckpoint();
+                SaveCheckpoint();
+            }
 
-            Navigator.Navigate("/Trip/Current");
-        }
-
-        private void SetupCheckpoint()
-        {
-            AddNotesToCheckpoint();
+            ResetViewModel();
+            Navigator.GoBack();
         }
 
         private void AddNotesToCheckpoint()
@@ -70,17 +85,26 @@ namespace TripPoint.WindowsPhone.ViewModel
             );
         }
 
-        public void SaveCheckpoint()
+        private void SaveCheckpoint()
         {
-            var trip = _tripRepository.CurrentTrip;
+            var tripRepository = RepositoryFactory.TripRepository;
+            var trip = tripRepository.FindTrip(_tripID);
+
+            if (trip == null) return;
 
             trip.Checkpoints.Add(Checkpoint);
+            tripRepository.SaveTrip(trip);
+        }
 
-            _tripRepository.SaveTrip(trip);
+        private void ResetViewModel()
+        {
+            Checkpoint = null;
+            Notes = string.Empty;
         }
 
         private void CancelCreateCheckpointAction()
         {
+            ResetViewModel();
             Navigator.GoBack();
         }
 
@@ -93,7 +117,29 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             base.OnNavigatedTo(e);
 
-            _tripRepository = RepositoryFactory.TripRepository;
+            InitializeTripID(e.View);
+            InitializeCheckpoint();
+        }
+
+        private void InitializeTripID(PhoneApplicationPage view)
+        {
+            if (view == null) return;
+
+            var tripID = view.TryGetQueryStringParameter("tripID");
+
+            if (string.IsNullOrWhiteSpace(tripID)) return;
+
+            _tripID = TripPointConvert.ToInt32(tripID);
+        }
+
+        private void InitializeCheckpoint()
+        {
+            if (Checkpoint != null) return;
+
+            Checkpoint = new Checkpoint
+            {
+                Timestamp = DateTime.Now
+            };
         }
     }
 }
