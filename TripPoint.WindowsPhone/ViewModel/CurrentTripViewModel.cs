@@ -1,12 +1,9 @@
 ﻿#region SDK Usings
-using System;
-using System.Windows;
 using System.Windows.Input;
 using System.Linq;
 #endregion
 
 using TripPoint.Model.Domain;
-using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
@@ -16,16 +13,14 @@ namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CurrentTripViewModel : TripPointViewModelBase
     {
-        private ITripRepository _tripRepository;
-
+        private Trip _currentTrip;
+        private Checkpoint _latestCheckpoint;
+        private bool _currentTripHasCheckpoints;
+        private bool _currentTripHasNoCheckpoints;
+        
         public CurrentTripViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
-            if (repositoryFactory == null)
-                throw new ArgumentNullException("repositoryFactory");
-
-            _tripRepository = repositoryFactory.TripRepository;
-
             InitializeCommands();
         }
 
@@ -41,37 +36,49 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         public Trip CurrentTrip
         {
-            get
+            get { return _currentTrip; }
+            private set
             {
-                var currentTrip = _tripRepository.CurrentTrip;
+                if (_currentTrip == value) return;
 
-                return currentTrip != null ? currentTrip : new Trip();
-            }
-        }
-
-        public bool CurrentTripHasCheckpoints
-        {
-            get
-            {
-                return CurrentTrip.Checkpoints.Count > 0;
-            }
-        }
-
-        public bool CurrentTripHasNoCheckpoints
-        {
-            get
-            {
-                return !CurrentTripHasCheckpoints;
+                _currentTrip = value;
+                RaisePropertyChanged("CurrentTrip");
             }
         }
 
         public Checkpoint LatestCheckpoint
         {
-            get
+            get { return _latestCheckpoint; }
+            private set
             {
-                if (CurrentTripHasNoCheckpoints) return null;
+                if (_latestCheckpoint == value) return;
 
-                return CurrentTrip.Checkpoints.First();
+                _latestCheckpoint = value;
+                RaisePropertyChanged("LatestCheckpoint");
+            }
+        }
+
+        public bool CurrentTripHasCheckpoints
+        {
+            get { return _currentTripHasCheckpoints; }
+            private set
+            {
+                if (_currentTripHasCheckpoints == value) return;
+
+                _currentTripHasCheckpoints = value;
+                RaisePropertyChanged("CurrentTripHasCheckpoints");
+            }
+        }
+
+        public bool CurrentTripHasNoCheckpoints
+        {
+            get { return _currentTripHasNoCheckpoints; }
+            private set
+            {
+                if (_currentTripHasNoCheckpoints == value) return;
+
+                _currentTripHasNoCheckpoints = value;
+                RaisePropertyChanged("CurrentTripHasNoCheckpoints");
             }
         }
 
@@ -105,10 +112,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void AddNotesAction()
         {
-            var checkpoint = CurrentTrip.Checkpoints.FirstOrDefault<Checkpoint>();
-
             Navigator.Navigate(
-                string.Format("/Checkpoints/{0}/Add/Notes", checkpoint.ID));
+                string.Format("/Checkpoints/{0}/Add/Notes", LatestCheckpoint.ID));
         }
 
         private void AddPicturesAction()
@@ -118,8 +123,6 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void ViewCheckpointDetailsAction(Checkpoint checkpoint)
         {
-            Logger.Log(this, "view checkpoint: {0}", checkpoint);
-
             Navigator.Navigate(string.Format("/Checkpoints/{0}/Details", checkpoint.ID));
         }
 
@@ -127,7 +130,38 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             base.OnNavigatedTo(e);
 
-            _tripRepository = RepositoryFactory.TripRepository;
+            SetCurrentTrip();
+            SetLatestCheckpoint();
+            SetCurrentTripHasCheckpoints();
+        }
+
+        private void SetCurrentTrip()
+        {
+            var tripRepository = RepositoryFactory.TripRepository;
+            
+            if (tripRepository == null) return;
+
+            var trip = tripRepository.CurrentTrip;
+
+            if (trip == null)
+                trip = new Trip();
+
+            CurrentTrip = trip;
+        }
+
+        private void SetLatestCheckpoint()
+        {
+            if (CurrentTrip == null) return;
+
+            LatestCheckpoint = CurrentTrip.Checkpoints.FirstOrDefault();
+        }
+
+        private void SetCurrentTripHasCheckpoints()
+        {
+            if (CurrentTrip == null) return;
+
+            CurrentTripHasCheckpoints = CurrentTrip.Checkpoints.Count > 0;
+            CurrentTripHasNoCheckpoints = !CurrentTripHasCheckpoints;
         }
     }
 }
