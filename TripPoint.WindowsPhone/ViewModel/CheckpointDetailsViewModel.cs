@@ -13,13 +13,12 @@ namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CheckpointDetailsViewModel : TripPointViewModelBase
     {
+        Checkpoint _checkpoint;
         ICheckpointRepository _checkpointRepository;
 
         public CheckpointDetailsViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
-            _checkpointRepository = repositoryFactory.CheckpointRepository;
-
             Checkpoint = new Checkpoint();
 
             InitializeCommands();
@@ -31,7 +30,17 @@ namespace TripPoint.WindowsPhone.ViewModel
             DeleteCheckpointCommand = new RelayCommand(DeleteCheckpointAction);
         }
 
-        public Checkpoint Checkpoint { get; private set; }
+        public Checkpoint Checkpoint 
+        {
+            get { return _checkpoint; }
+            private set
+            {
+                if (_checkpoint == value) return;
+
+                _checkpoint = value;
+                RaisePropertyChanged("Checkpoint");
+            }
+        }
 
         public ICommand EditCheckpointCommand { get; private set; }
 
@@ -64,13 +73,10 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             base.OnNavigatedTo(e);
 
-            Logger.Log(this, "checkpoint ID: {0}", e.View.TryGetQueryStringParameter("checkpointID"));
+            _checkpointRepository = RepositoryFactory.CheckpointRepository;
 
             var checkpointID = GetCheckpointID(e.View);
-            var checkpoint = GetCheckpoint(checkpointID);
-
-            if (checkpoint != null)
-                Checkpoint = checkpoint;
+            InitializeCheckpoint(checkpointID);
         }
 
         private static int GetCheckpointID(PhoneApplicationPage view)
@@ -80,6 +86,14 @@ namespace TripPoint.WindowsPhone.ViewModel
             var parameter = view.TryGetQueryStringParameter("checkpointID");
 
             return TripPointConvert.ToInt32(parameter);
+        }
+
+        private void InitializeCheckpoint(int checkpointID)
+        {
+            var checkpoint = _checkpointRepository.FindCheckpoint(checkpointID);
+
+            if (checkpoint != null)
+                Checkpoint = checkpoint;
         }
 
         private Checkpoint GetCheckpoint(int checkpointID)
