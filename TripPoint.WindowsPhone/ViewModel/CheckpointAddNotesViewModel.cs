@@ -16,15 +16,13 @@ namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CheckpointAddNotesViewModel : TripPointViewModelBase
     {
-        private Checkpoint _checkpoint;
-
+        private int _checkpointID;
+        private string _notes;
         private ICheckpointRepository _checkpointRepository;
 
         public CheckpointAddNotesViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
-            _checkpointRepository = RepositoryFactory.CheckpointRepository;
-
             InitializeCommands();
         }
 
@@ -34,33 +32,59 @@ namespace TripPoint.WindowsPhone.ViewModel
             CancelAddNotesCommand = new RelayCommand(CancelAddNotesAction);
         }
 
+        public string Notes 
+        {
+            get { return _notes; }
+            set
+            {
+                if (_notes == value) return;
+
+                _notes = value;
+                RaisePropertyChanged("Notes");
+            }
+        }
+
+        public ICommand AddNotesCommand { get; private set; }
+
+        public ICommand CancelAddNotesCommand { get; private set; }
+
         private void AddNotesAction()
         {
-            if (_checkpoint == null) return;
-            if (string.IsNullOrEmpty(Notes)) return;
+            if (string.IsNullOrWhiteSpace(Notes)) return;
 
-            AddNotesToCheckpoint(new Note { Text = Notes });
-            SaveCheckpoint();
+            var checkpoint = _checkpointRepository.FindCheckpoint(_checkpointID);
 
+            AddNotesToCheckpoint(checkpoint);
+            SaveCheckpoint(checkpoint);
+
+            ResetViewModel();
             Navigator.GoBack();
         }
 
-        private void AddNotesToCheckpoint(Note note)
+        private void AddNotesToCheckpoint(Checkpoint checkpoint)
         {
-            if (note == null) return;
+            if (checkpoint == null) return;
 
-            Logger.Log(this, string.Format("checkpoint {0}, note {1}", _checkpoint, note));
+            var note = new Note { Text = Notes };
 
-            _checkpoint.Notes.Add(note);
+            checkpoint.Notes.Add(note);
         }
 
-        private void SaveCheckpoint()
+        private void SaveCheckpoint(Checkpoint checkpoint)
         {
-            _checkpointRepository.SaveCheckpoint(_checkpoint);
+            if (checkpoint == null) return;
+
+            _checkpointRepository.SaveCheckpoint(checkpoint);
+        }
+
+        private void ResetViewModel()
+        {
+            Notes = string.Empty;
         }
 
         private void CancelAddNotesAction()
         {
+            ResetViewModel();
             Navigator.GoBack();
         }
 
@@ -68,15 +92,10 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             base.OnNavigatedTo(e);
 
-            var checkpointID = GetCheckpointID(e.View);
-            _checkpoint = GetCheckpoint(checkpointID);
+            _checkpointRepository = RepositoryFactory.CheckpointRepository;
+            _checkpointID = GetCheckpointID(e.View);
         }
 
-        /// <summary>
-        /// Extracts the index of the checkpoint being updated
-        /// The index must be passed to the view as a parameter (e.g. a query string)
-        /// </summary>
-        /// <returns></returns>
         private static int GetCheckpointID(PhoneApplicationPage view)
         {
             if (view == null) return -1;
@@ -85,16 +104,5 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             return TripPointConvert.ToInt32(checkpointIdParameter);
         }
-
-        private Checkpoint GetCheckpoint(int checkpointID)
-        {
-            return _checkpointRepository.FindCheckpoint(checkpointID);
-        }
-
-        public string Notes { get; set; }
-
-        public ICommand AddNotesCommand { get; private set; }
-
-        public ICommand CancelAddNotesCommand { get; private set; }
     }
 }
