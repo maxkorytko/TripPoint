@@ -63,7 +63,12 @@
         <appBar:BindableApplicationBar IsVisible="True">
             <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Save}"
                                                  IconUri="/Assets/Images/Dark/appbar.save.rest.png" 
-                                                 Command="{Binding SaveTripCommand}"/>
+                                                 Command="{Binding SaveTripCommand}" />
+
+            <appBar:BindableApplicationBarButton IsEnabled="False" 
+                                                 Text="{Binding Localization.Resources.Cancel}"
+                                                 IconUri="/Assets/Images/Dark/appbar.stop.rest.png"
+                                                 Command="{Binding CancelCreateTripCommand}" />
         </appBar:BindableApplicationBar>
     </appBar:Bindable.ApplicationBar>
 

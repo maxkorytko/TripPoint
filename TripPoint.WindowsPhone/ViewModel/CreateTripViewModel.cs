@@ -1,45 +1,33 @@
 ﻿#region SDK Usings
-
-using System;
 using System.Windows;
-using Microsoft.Phone.Controls;
-
+using System.Windows.Input;
+using System.Linq;
 #endregion
 
-using TripPoint.WindowsPhone.Navigation;
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
-using TripPoint.Model.Utils;
 using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CreateTripViewModel : TripPointViewModelBase
     {
-        /// <summary>
-        /// The repository for persisting trips
-        /// </summary>
+        private Trip _trip;
+        private bool _canCancelCreateTrip;
         private ITripRepository _tripRepository;
 
         public CreateTripViewModel(IRepositoryFactory repositoryFactory)
                 : base(repositoryFactory)
         {
-            _tripRepository = RepositoryFactory.TripRepository;
-
-            Trip = new Trip();
-            SaveTripCommand = new RelayCommand(SaveTripAction);
+            InitializeCommands();
         }
 
-        /// <summary>
-        /// The trip being created
-        /// </summary>
-        public Trip Trip { get; private set; }
-
-        /// <summary>
-        /// Command invoked on trip save action
-        /// </summary>
-        public RelayCommand SaveTripCommand { get; private set; }
+        private void InitializeCommands()
+        {
+            SaveTripCommand = new RelayCommand(SaveTripAction);
+            CancelCreateTripCommand = new RelayCommand(CancelCreateTripAction);
+        }
 
         private void SaveTripAction()
         {
@@ -52,15 +40,72 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
 
             SaveTrip();
-            
+
             Navigator.Navigate("/Trip/Current");
         }
 
         private void SaveTrip()
         {
-            _tripRepository.SaveTrip(Trip);
+            if (_tripRepository == null) return;
 
-            Logger.Log("Persisted trip: {0}", Trip);
+            _tripRepository.SaveTrip(Trip);
+        }
+
+        private void CancelCreateTripAction()
+        {
+            Navigator.GoBack();
+        }
+
+        public Trip Trip
+        {
+            get { return _trip; }
+            set
+            {
+                if (_trip == value) return;
+
+                _trip = value;
+                RaisePropertyChanged("Trip");
+            }
+        }
+
+        public bool CanCancelCreateTrip
+        {
+            get { return _canCancelCreateTrip; }
+            set
+            {
+                if (_canCancelCreateTrip == value) return;
+
+                _canCancelCreateTrip = value;
+                RaisePropertyChanged("CanCancelCreateTrip");
+            }
+        }
+
+        public ICommand SaveTripCommand { get; private set; }
+
+        public ICommand CancelCreateTripCommand { get; private set; }
+
+        public override void OnNavigatedTo(Navigation.TripPointNavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            _tripRepository = RepositoryFactory.TripRepository;
+
+            InitializeTrip();
+            InitializeCanCancelCreateTrip();
+        }
+
+        private void InitializeTrip()
+        {
+            Trip = new Trip();
+        }
+
+        private void InitializeCanCancelCreateTrip()
+        {
+            if (_tripRepository == null) return;
+
+            var trips = _tripRepository.Trips;
+
+            CanCancelCreateTrip = trips != null && trips.Count() > 0;
         }
     }
 }
