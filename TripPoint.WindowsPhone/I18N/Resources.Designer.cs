@@ -106,11 +106,29 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete this checkpoint?.
         /// </summary>
         public static string ConfirmDeleteCheckpoint {
             get {
                 return ResourceManager.GetString("ConfirmDeleteCheckpoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to finish the trip?.
+        /// </summary>
+        public static string ConfirmFinishTrip {
+            get {
+                return ResourceManager.GetString("ConfirmFinishTrip", resourceCulture);
             }
         }
         

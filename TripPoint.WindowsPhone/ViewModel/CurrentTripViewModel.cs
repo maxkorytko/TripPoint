@@ -1,18 +1,23 @@
 ﻿#region SDK Usings
+using System;
+using System.Windows;
 using System.Windows.Input;
 using System.Linq;
 #endregion
 
 using TripPoint.Model.Domain;
+using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
+using TripPoint.WindowsPhone.I18N;
 using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CurrentTripViewModel : TripPointViewModelBase
     {
+        private ITripRepository _tripRepository;
         private Trip _currentTrip;
         private Checkpoint _latestCheckpoint;
         private bool _currentTripHasCheckpoints;
@@ -96,7 +101,19 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void FinishTripAction()
         {
-            Logger.Log(this, "Finish Trip");
+            var userDecision = MessageBox.Show(Resources.ConfirmFinishTrip, Resources.Confirm,
+                MessageBoxButton.OKCancel);
+
+            if (userDecision == MessageBoxResult.OK)
+                FinishCurrentTrip();
+        }
+
+        private void FinishCurrentTrip()
+        {
+            CurrentTrip.EndDate = DateTime.Now;
+            _tripRepository.SaveTrip(CurrentTrip);
+
+            Navigator.Navigate("/Trips");
         }
 
         private void PastTripsAction()
@@ -130,6 +147,8 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             base.OnNavigatedTo(e);
 
+            _tripRepository = RepositoryFactory.TripRepository;
+
             InitializeCurrentTrip();
             InitializeLatestCheckpoint();
             InitializeCurrentTripHasCheckpoints();
@@ -137,7 +156,9 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void InitializeCurrentTrip()
         {
-            CurrentTrip = RepositoryFactory.TripRepository.CurrentTrip;
+            if (_tripRepository == null) return;
+
+            CurrentTrip = _tripRepository.CurrentTrip;
         }
 
         private void InitializeLatestCheckpoint()
