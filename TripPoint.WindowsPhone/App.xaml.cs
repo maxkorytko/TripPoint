@@ -188,10 +188,13 @@ namespace TripPoint.WindowsPhone
         {
             var tripRepository = RepositoryFactory.Create().TripRepository;
 
+            var trips = tripRepository.Trips;
             var currentTrip = tripRepository.CurrentTrip;
 
             if (currentTrip != null)
                 TripPointNavigation.Navigator.Navigate("/Trip/Current");
+            else if (trips != null && trips.Count() > 0)
+                TripPointNavigation.Navigator.Navigate("/Trips");
             else
                 TripPointNavigation.Navigator.Navigate("/Trip/Create");
         }
