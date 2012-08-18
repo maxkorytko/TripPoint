@@ -12,7 +12,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True"
     DataContext="{Binding TripListViewModel, Source={StaticResource Locator}}">
 
@@ -60,7 +60,8 @@
     </Grid>
 
     <appBar:Bindable.ApplicationBar>
-        <appBar:BindableApplicationBar IsVisible="True">
+        <!-- The user should not be able to start a new trip until they finish the current one -->
+        <appBar:BindableApplicationBar IsVisible="{Binding NoCurrentTrip}">
             <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.CreateTrip_AppBar}"
                                                  IconUri="/Assets/Images/Dark/appbar.new.rest.png" 
                                                  Command="{Binding CreateTripCommand}" />

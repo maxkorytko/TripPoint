@@ -15,6 +15,7 @@ namespace TripPoint.WindowsPhone.ViewModel
     public class TripListViewModel : TripPointViewModelBase
     {
         private ITripRepository _tripRepository;
+        private bool _noCurrentTrip;
 
         public TripListViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
@@ -40,6 +41,21 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         public ObservableCollection<Trip> Trips { get; private set; }
 
+        /// <summary>
+        /// Flag property for hiding/showing the application bar
+        /// </summary>
+        public bool NoCurrentTrip
+        {
+            get { return _noCurrentTrip; }
+            set
+            {
+                if (_noCurrentTrip == value) return;
+
+                _noCurrentTrip = value;
+                RaisePropertyChanged("NoCurrentTrip");
+            }
+        }
+
         public ICommand CreateTripCommand { get; private set; }
 
         public ICommand ViewTripDetailsCommand { get; private set; }
@@ -51,6 +67,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             _tripRepository = RepositoryFactory.TripRepository;
 
             InitializeTrips();
+            InitializeNoCurrentTrip();
         }
 
         private void InitializeTrips()
@@ -63,6 +80,13 @@ namespace TripPoint.WindowsPhone.ViewModel
                         .OrderByDescending(t => t.EndDate);
 
             Trips = new ObservableCollection<Trip>(trips);
+        }
+
+        private void InitializeNoCurrentTrip()
+        {
+            if (_tripRepository == null) return;
+
+            NoCurrentTrip = _tripRepository.CurrentTrip == null;
         }
     }
 }
