@@ -153,6 +153,9 @@
   <data name="CreateTripPageTitle" xml:space="preserve">
     <value>Create Trip</value>
   </data>
+  <data name="CreateTrip_AppBar" xml:space="preserve">
+    <value>trip</value>
+  </data>
   <data name="Delete_AppBar" xml:space="preserve">
     <value>delete</value>
   </data>

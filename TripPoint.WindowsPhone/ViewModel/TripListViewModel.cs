@@ -24,7 +24,13 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void InitializeCommands()
         {
+            CreateTripCommand = new RelayCommand(CreateTripAction);
             ViewTripDetailsCommand = new RelayCommand<Trip>(ViewTripDetailsAction);
+        }
+
+        private void CreateTripAction()
+        {
+            Navigator.Navigate("/Trip/Create");
         }
 
         private void ViewTripDetailsAction(Trip trip)
@@ -33,6 +39,8 @@ namespace TripPoint.WindowsPhone.ViewModel
         }
 
         public ObservableCollection<Trip> Trips { get; private set; }
+
+        public ICommand CreateTripCommand { get; private set; }
 
         public ICommand ViewTripDetailsCommand { get; private set; }
 

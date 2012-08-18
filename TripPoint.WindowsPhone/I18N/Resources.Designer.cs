@@ -160,6 +160,15 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to trip.
+        /// </summary>
+        public static string CreateTrip_AppBar {
+            get {
+                return ResourceManager.GetString("CreateTrip_AppBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Trip.
         /// </summary>
         public static string CreateTripPageTitle {
