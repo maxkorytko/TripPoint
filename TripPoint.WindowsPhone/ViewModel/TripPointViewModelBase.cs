@@ -26,10 +26,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         public Localization Localization
         {
-            get 
-            { 
-                return _localization; 
-            }
+            get { return _localization; }
         }
 
         /// <summary>

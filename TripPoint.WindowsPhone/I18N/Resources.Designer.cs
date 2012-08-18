@@ -106,6 +106,15 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this checkpoint?.
+        /// </summary>
+        public static string ConfirmDeleteCheckpoint {
+            get {
+                return ResourceManager.GetString("ConfirmDeleteCheckpoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Checkpoint.
         /// </summary>
         public static string CreateCheckpoint {
@@ -147,6 +156,15 @@ namespace TripPoint.WindowsPhone.I18N {
         public static string Delete_AppBar {
             get {
                 return ResourceManager.GetString("Delete_AppBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleting.
+        /// </summary>
+        public static string Deleting {
+            get {
+                return ResourceManager.GetString("Deleting", resourceCulture);
             }
         }
         

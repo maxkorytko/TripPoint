@@ -17,10 +17,7 @@ namespace TripPoint.WindowsPhone.I18N
 
         public Resources Resources
         {
-            get
-            {
-                return _resources;
-            }
+            get { return _resources; }
         }
     }
 }

@@ -7,6 +7,7 @@ using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
+using TripPoint.WindowsPhone.I18N;
 using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
@@ -53,10 +54,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void DeleteCheckpointAction()
         {
-            var caption = "";
-            var message = "Are you sure you want to delete this checkpoint?";
-
-            var userDecision = MessageBox.Show(message, caption, MessageBoxButton.OKCancel);
+            var userDecision = MessageBox.Show(Resources.ConfirmDeleteCheckpoint, Resources.Deleting,
+                MessageBoxButton.OKCancel);
 
             if (userDecision == MessageBoxResult.OK)
                 DeleteCheckpoint();
