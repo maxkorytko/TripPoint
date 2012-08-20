@@ -63,4 +63,12 @@
         </controls:Panorama>
     </Grid>
 
+    <appBar:Bindable.ApplicationBar>
+        <appBar:BindableApplicationBar IsVisible="True">
+            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Delete_AppBar}"
+                                                 IconUri="/Assets/Images/Dark/appbar.delete.rest.png" 
+                                                 Command="{Binding DeleteTripCommand}" />
+        </appBar:BindableApplicationBar>
+    </appBar:Bindable.ApplicationBar>
+
 </phone:PhoneApplicationPage>

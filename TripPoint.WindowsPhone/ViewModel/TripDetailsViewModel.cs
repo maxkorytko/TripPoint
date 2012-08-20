@@ -1,5 +1,7 @@
 ﻿#region SDK Usings
 using System;
+using System.Windows;
+using System.Windows.Input;
 using Microsoft.Phone.Controls;
 #endregion
 
@@ -8,33 +10,68 @@ using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
+using TripPoint.WindowsPhone.I18N;
+using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
     public class TripDetailsViewModel : TripPointViewModelBase
     {
+        private Trip _trip;
         private ITripRepository _tripRepository;
 
         public TripDetailsViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
-            _tripRepository = repositoryFactory.TripRepository;
-
-            Trip = new Trip();
+            InitializeCommands();
         }
+
+        private void InitializeCommands()
+        {
+            DeleteTripCommand = new RelayCommand(DeleteTripAction);
+        }
+
+        private void DeleteTripAction()
+        {
+            var userDecision = MessageBox.Show(Resources.ConfirmDeleteTrip, Resources.Deleting,
+                MessageBoxButton.OKCancel);
+
+            if (userDecision == MessageBoxResult.OK)
+                DeleteTrip();
+        }
+
+        private void DeleteTrip()
+        {
+            if (_tripRepository != null)
+            {
+                _tripRepository.DeleteTrip(Trip);
+            }
+
+            Navigator.GoBack();
+        }
+
+        public Trip Trip
+        {
+            get { return _trip; }
+            set
+            {
+                if (_trip == value) return;
+
+                _trip = value;
+                RaisePropertyChanged("Trip");
+            }
+        }
+
+        public ICommand DeleteTripCommand { get; private set; }
 
         public override void OnNavigatedTo(TripPointNavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
+            _tripRepository = RepositoryFactory.TripRepository;
+
             var tripID = GetTripID(e.View);
-            
-            var trip = GetTrip(tripID);
-
-            if (trip != null)
-                Trip = trip;
-
-            Logger.Log(this, "Trip has been initialized. {0}", Trip);
+            InitializeTrip(tripID);
         }
 
         private static int GetTripID(PhoneApplicationPage view)
@@ -47,11 +84,16 @@ namespace TripPoint.WindowsPhone.ViewModel
             return tripID;
         }
 
+        private void InitializeTrip(int tripID)
+        {
+            if (_tripRepository == null) return;
+
+            Trip = _tripRepository.FindTrip(tripID);
+        }
+
         private Trip GetTrip(int tripID)
         {
             return _tripRepository.FindTrip(tripID);
         }
-
-        public Trip Trip { get; private set; }
     }
 }

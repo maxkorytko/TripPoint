@@ -15,6 +15,7 @@ namespace TripPoint.WindowsPhone.ViewModel
     public class TripListViewModel : TripPointViewModelBase
     {
         private ITripRepository _tripRepository;
+        ObservableCollection<Trip> _trips;
         private bool _noCurrentTrip;
 
         public TripListViewModel(IRepositoryFactory repositoryFactory)
@@ -39,7 +40,17 @@ namespace TripPoint.WindowsPhone.ViewModel
             Navigator.Navigate(string.Format("/Trip/{0}/Details", trip.ID));
         }
 
-        public ObservableCollection<Trip> Trips { get; private set; }
+        public ObservableCollection<Trip> Trips
+        {
+            get { return _trips; }
+            set
+            {
+                if (_trips == value) return;
+
+                _trips = value;
+                RaisePropertyChanged("Trips");
+            }
+        }
 
         /// <summary>
         /// Flag property for hiding/showing the application bar

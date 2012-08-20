@@ -138,6 +138,9 @@
   <data name="ConfirmDeleteCheckpoint" xml:space="preserve">
     <value>Are you sure you want to delete this checkpoint?</value>
   </data>
+  <data name="ConfirmDeleteTrip" xml:space="preserve">
+    <value>Are you sure you want to delete this trip?</value>
+  </data>
   <data name="ConfirmFinishTrip" xml:space="preserve">
     <value>Are you sure you want to finish the trip?</value>
   </data>

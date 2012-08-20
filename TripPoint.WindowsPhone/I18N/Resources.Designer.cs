@@ -124,6 +124,15 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this trip?.
+        /// </summary>
+        public static string ConfirmDeleteTrip {
+            get {
+                return ResourceManager.GetString("ConfirmDeleteTrip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to finish the trip?.
         /// </summary>
         public static string ConfirmFinishTrip {
