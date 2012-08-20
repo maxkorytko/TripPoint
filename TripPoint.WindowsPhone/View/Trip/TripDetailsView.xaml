@@ -40,7 +40,8 @@
 
             <!-- Checkpoints items -->
             <controls:PanoramaItem Header="Checkpoints">
-                <ListBox x:Name="CheckpointList" ItemsSource="{Binding Trip.Checkpoints}">
+                <ListBox x:Name="CheckpointList" ItemsSource="{Binding Trip.Checkpoints}"
+                         SelectionChanged="CheckpointList_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,25,0,25">

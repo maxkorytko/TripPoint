@@ -28,7 +28,13 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void InitializeCommands()
         {
+            ViewCheckpointDetailsCommand = new RelayCommand<Checkpoint>(ViewCheckpointDetailsAction);
             DeleteTripCommand = new RelayCommand(DeleteTripAction);
+        }
+
+        private void ViewCheckpointDetailsAction(Checkpoint checkpoint)
+        {
+            Navigator.Navigate(string.Format("/Checkpoints/{0}/Details", checkpoint.ID));
         }
 
         private void DeleteTripAction()
@@ -61,6 +67,8 @@ namespace TripPoint.WindowsPhone.ViewModel
                 RaisePropertyChanged("Trip");
             }
         }
+
+        public ICommand ViewCheckpointDetailsCommand { get; private set; }
 
         public ICommand DeleteTripCommand { get; private set; }
 
