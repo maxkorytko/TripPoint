@@ -171,7 +171,7 @@ namespace TripPoint.WindowsPhone
 
         private void InitializeNavigation()
         {
-            TripPointNavigation.Initialize(new TripPointNavigator());
+            TripPointNavigation.Initialize(new TripPointNavigator(RootFrame));
 
             // Set custom URI mapper
             var uriMapper = new UriMapper();

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Windows;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 
@@ -11,32 +10,104 @@ namespace TripPoint.WindowsPhone.Navigation
     public class TripPointNavigator : INavigator
     {
         private PhoneApplicationFrame _rootFrame;
+        
+        private delegate void TripPointNavigatedEventHandler(NavigationEventArgs args);
 
-        public TripPointNavigator()
+        public TripPointNavigator(PhoneApplicationFrame rootFrame)
         {
-            _rootFrame = (Application.Current as App).RootFrame;
+            if (rootFrame == null)
+                throw new ArgumentNullException("rootFrame");
 
-            if (_rootFrame == null)
-                throw new InvalidOperationException("Application RootFrame is null");
+            _rootFrame = rootFrame;
+        }
+
+        public void GoBack()
+        {
+            PerformBackNavigation(args =>
+            {
+                TripPointNavigator.NotifyViewModelIfPossible(args);
+            });
+        }
+
+        /// <summary>
+        /// Moves back once in navigation history
+        /// Fires the passed in event handler when navigation is completed
+        /// </summary>
+        /// <param name="eventHandler"></param>
+        private void PerformBackNavigation(TripPointNavigatedEventHandler eventHandler)
+        {
+            if (!_rootFrame.CanGoBack) return;
+
+            NavigatedEventHandler navigatedEventHandler = null;
+            navigatedEventHandler = (sender, args) =>
+            {
+                _rootFrame.Navigated -= navigatedEventHandler;
+
+                if (eventHandler != null)
+                    eventHandler(args);
+            };
+
+            _rootFrame.Navigated += navigatedEventHandler;
+
+            _rootFrame.GoBack();
         }
 
         public bool Navigate(string uri)
         {
-            _rootFrame.Navigated += new NavigatedEventHandler(Navigated);
+            return PerformNavigation(uri, args =>
+            {
+                TripPointNavigator.NotifyViewModelIfPossible(args);
+            });
+        }
 
-            return _rootFrame.Navigate(new Uri(uri, UriKind.Relative));
+        public bool NavigateWithoutHistory(string uri)
+        {
+            return PerformNavigation(uri, args =>
+            {
+                RemoveBackStackEntry();
+                TripPointNavigator.NotifyViewModelIfPossible(args);
+            });
         }
 
         /// <summary>
-        /// Listener for the Navigated event
-        /// Passes navigation event handling to the view model of the page for which navigation event has been raised
+        /// Navigates to a given URI
+        /// Fires the passed in event handler when navigation is completed
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Navigated(object sender, NavigationEventArgs e)
+        /// <param name="uri"></param>
+        /// <param name="eventHandler"></param>
+        /// <returns></returns>
+        private bool PerformNavigation(string uri, TripPointNavigatedEventHandler eventHandler)
         {
-            PrintBackStack();
+            if (string.IsNullOrWhiteSpace(uri)) return false;
 
+            NavigatedEventHandler navigatedEventHandler = null;
+            navigatedEventHandler = (sender, args) =>
+            {
+                _rootFrame.Navigated -= navigatedEventHandler;
+
+                PrintBackStack();
+
+                if (eventHandler != null)
+                    eventHandler(args);
+            };
+
+            _rootFrame.Navigated += navigatedEventHandler;
+
+            var success = _rootFrame.Navigate(new Uri(uri, UriKind.Relative));
+
+            if (!success)
+                _rootFrame.Navigated -= navigatedEventHandler;
+
+            return success;
+        }
+
+        /// <summary>
+        /// Notifies the view model of the navigation event
+        /// If the data context of the navigated view is the view model, invokes the hook method
+        /// </summary>
+        /// <param name="e"></param>
+        private static void NotifyViewModelIfPossible(NavigationEventArgs e)
+        {
             PhoneApplicationPage page = null;
 
             if (!(e.Content is PhoneApplicationPage)) return;
@@ -49,25 +120,29 @@ namespace TripPoint.WindowsPhone.Navigation
 
                 (page.DataContext as TripPointViewModelBase).OnNavigatedTo(navigationEventArgs);
             }
-
-            _rootFrame.Navigated -= Navigated;
         }
 
-        // TODO: remove; this is here for debugging only
+        /// <summary>
+        /// Removes one entry from the back navigation history
+        /// </summary>
+        private void RemoveBackStackEntry()
+        {
+            if (_rootFrame.BackStack.Count() > 0)
+                _rootFrame.RemoveBackEntry();
+        }
+
         private void PrintBackStack()
         {
+            if (_rootFrame.BackStack == null) return;
+
+            TripPoint.Model.Utils.Logger.Log("\n*****");
+
             foreach (var entry in _rootFrame.BackStack)
             {
-                TripPoint.Model.Utils.Logger.Log("Entry: " + entry.Source.OriginalString);
+                TripPoint.Model.Utils.Logger.Log(entry.Source.OriginalString);
             }
 
             TripPoint.Model.Utils.Logger.Log("*****\n");
-        }
-
-        public void GoBack()
-        {
-            if (_rootFrame.CanGoBack)
-                _rootFrame.GoBack();
         }
     }
 }
