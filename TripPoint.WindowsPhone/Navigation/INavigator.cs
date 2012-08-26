@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace TripPoint.WindowsPhone.Navigation
+﻿namespace TripPoint.WindowsPhone.Navigation
 {
     /// <summary>
     /// Navigation facade for the application
@@ -25,6 +20,11 @@ namespace TripPoint.WindowsPhone.Navigation
         /// <param name="uri">URI to navigate to</param>
         /// <returns>true if navigation is successful</returns>
         bool NavigateWithoutHistory(string uri);
+
+        /// <summary>
+        /// Removes all entries from the navigation history
+        /// </summary>
+        void ClearHistory();
 
         /// <summary>
         /// Navigates to a previous page in the navigation history

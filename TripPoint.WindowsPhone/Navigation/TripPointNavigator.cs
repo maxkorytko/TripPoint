@@ -21,6 +21,14 @@ namespace TripPoint.WindowsPhone.Navigation
             _rootFrame = rootFrame;
         }
 
+        public void ClearHistory()
+        {
+            while (_rootFrame.BackStack.Count() > 0)
+            {
+                _rootFrame.RemoveBackEntry();
+            }
+        }
+
         public void GoBack()
         {
             PerformBackNavigation(args =>
