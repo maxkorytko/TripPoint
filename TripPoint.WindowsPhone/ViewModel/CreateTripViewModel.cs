@@ -41,7 +41,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             SaveTrip();
 
-            Navigator.Navigate("/Trip/Current");
+            Navigator.ClearHistory();
+            Navigator.NavigateWithoutHistory("/Trip/Current");
         }
 
         private void SaveTrip()
