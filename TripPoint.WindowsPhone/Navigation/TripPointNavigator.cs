@@ -93,8 +93,6 @@ namespace TripPoint.WindowsPhone.Navigation
             {
                 _rootFrame.Navigated -= navigatedEventHandler;
 
-                PrintBackStack();
-
                 if (eventHandler != null)
                     eventHandler(args);
             };
@@ -139,6 +137,9 @@ namespace TripPoint.WindowsPhone.Navigation
                 _rootFrame.RemoveBackEntry();
         }
 
+        /// <summary>
+        /// Provides debugging information
+        /// </summary>
         private void PrintBackStack()
         {
             if (_rootFrame.BackStack == null) return;
