@@ -69,6 +69,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\DataContextTest.cs" />
+    <Compile Include="Data\Repository\DatabaseCheckpointRepositoryTest.cs" />
     <Compile Include="Data\Repository\DatabaseTripRepositoryTest.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

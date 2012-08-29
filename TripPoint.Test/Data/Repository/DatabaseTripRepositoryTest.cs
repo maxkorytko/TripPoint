@@ -12,7 +12,7 @@ namespace TripPoint.Test.Data.Repository
     [TestClass]
     public class DatabaseTripRepositoryTest
     {
-        public static readonly string ConnectionString = "Data Source=isostore:/TripPointTest.sdf";
+        public static readonly string ConnectionString = "Data Source=isostore:/DatabaseTripRepositoryTest.sdf";
 
         TripPointDataContext _dataContext;
         DatabaseTripRepository _tripRepository;

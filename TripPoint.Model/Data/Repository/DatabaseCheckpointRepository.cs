@@ -26,6 +26,11 @@ namespace TripPoint.Model.Data.Repository
         {
             if (checkpoint == null) return;
 
+            var isNewCheckpoint = FindCheckpoint(checkpoint.ID) == null;
+
+            if (isNewCheckpoint)
+                DataContext.Checkpoints.InsertOnSubmit(checkpoint);
+
             DataContext.SubmitChanges();
         }
 
