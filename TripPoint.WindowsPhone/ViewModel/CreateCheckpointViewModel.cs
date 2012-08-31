@@ -93,7 +93,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             if (trip == null) return;
 
             trip.Checkpoints.Add(Checkpoint);
-            tripRepository.SaveTrip(trip);
+            tripRepository.UpdateTrip(trip);
         }
 
         /// <summary>

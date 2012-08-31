@@ -80,7 +80,7 @@ namespace TripPoint.Test.Data.Repository
 
             trip.Name = "New Trip";
 
-            _tripRepository.SaveTrip(trip);
+            _tripRepository.UpdateTrip(trip);
 
             trip = _dataContext.Trips.First();
 
@@ -92,7 +92,7 @@ namespace TripPoint.Test.Data.Repository
         {
             _tripA.Checkpoints.Add(new Checkpoint { Title = "Checkpoint" });
 
-            _tripRepository.SaveTrip(_tripA);
+            _tripRepository.UpdateTrip(_tripA);
 
             _tripA = _dataContext.Trips.Where(t => t.ID == _tripA.ID).FirstOrDefault();
 

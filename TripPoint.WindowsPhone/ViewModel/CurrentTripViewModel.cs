@@ -111,7 +111,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void FinishCurrentTrip()
         {
             CurrentTrip.EndDate = DateTime.Now;
-            _tripRepository.SaveTrip(CurrentTrip);
+            _tripRepository.UpdateTrip(CurrentTrip);
 
             Navigator.NavigateWithoutHistory("/Trips");
         }

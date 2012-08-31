@@ -10,6 +10,8 @@ namespace TripPoint.Model.Data.Repository
 
         Trip CurrentTrip { get; }
 
+        Trip FindTrip(int tripID);
+
         /// <summary>
         /// Creates a trip in the data store
         /// Updates the trip if it already exists
@@ -17,7 +19,7 @@ namespace TripPoint.Model.Data.Repository
         /// <param name="trip">Trip object to persist</param>
         void SaveTrip(Trip trip);
 
-        Trip FindTrip(int tripID);
+        void UpdateTrip(Trip trip);
 
         void DeleteTrip(Trip trip);
     }

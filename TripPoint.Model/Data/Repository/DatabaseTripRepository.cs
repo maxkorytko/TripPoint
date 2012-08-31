@@ -43,28 +43,29 @@ namespace TripPoint.Model.Data.Repository
             }
         }
 
-        public void SaveTrip(Trip trip)
-        {
-            if (trip == null) return;
-
-            var isNewTrip = FindTrip(trip.ID) == null;
-
-            if (isNewTrip)
-            {
-                DataContext.Trips.InsertOnSubmit(trip);
-            }
-
-            DataContext.SubmitChanges();
-        }
-
         public Trip FindTrip(int tripID)
         {
             var trip = (from t in DataContext.Trips
                         where t.ID == tripID
                         select t)
                        .SingleOrDefault();
-            
+
             return trip;
+        }
+
+        public void SaveTrip(Trip trip)
+        {
+            if (trip == null) return;
+
+            DataContext.Trips.InsertOnSubmit(trip);
+            DataContext.SubmitChanges();
+        }
+
+        public void UpdateTrip(Trip trip)
+        {
+            if (trip == null) return;
+
+            DataContext.SubmitChanges();
         }
 
         public void DeleteTrip(Trip trip)
