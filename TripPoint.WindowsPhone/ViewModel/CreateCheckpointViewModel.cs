@@ -96,6 +96,10 @@ namespace TripPoint.WindowsPhone.ViewModel
             tripRepository.SaveTrip(trip);
         }
 
+        /// <summary>
+        /// Sets default values to properties intended for UI binding
+        /// This ensures that the user will not see previous values if he/she opens the view again
+        /// </summary>
         private void ResetViewModel()
         {
             Checkpoint = null;
