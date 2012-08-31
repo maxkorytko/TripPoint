@@ -10,6 +10,9 @@ using TripPoint.WindowsPhone.ViewModel;
 
 namespace TripPoint.WindowsPhone.Navigation
 {
+    /// <summary>
+    /// Gateway for obtaining an instance of INavigator
+    /// </summary>
     public class TripPointNavigation
     {
         private static INavigator _navigator;

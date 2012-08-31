@@ -10,9 +10,9 @@ namespace TripPoint.Model.Data.Repository.Factory
         private static IRepositoryFactory _repositoryFactory;
 
         /// <summary>
-        /// Wires up an implementation of IRepositoryFactory
+        /// Initializes abstract factory with a concrete factory
         /// </summary>
-        /// <param name="repositoryFactory"></param>
+        /// <param name="repositoryFactory">concrete factory</param>
         public static void Initialize(IRepositoryFactory repositoryFactory)
         {
             if (repositoryFactory == null)
@@ -21,6 +21,10 @@ namespace TripPoint.Model.Data.Repository.Factory
             _repositoryFactory = repositoryFactory;
         }
 
+        /// <summary>
+        /// Provides access to the concrete repository factory
+        /// </summary>
+        /// <returns>repository factory implementation</returns>
         public static IRepositoryFactory Create()
         {
             return _repositoryFactory;

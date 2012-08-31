@@ -8,6 +8,8 @@ namespace TripPoint.WindowsPhone.Navigation
     /// </summary>
     public class TripPointUriMappings
     {
+        // all URI mappings
+        // the order is important as the framework will pick the first matched URI
         private static UriMapping[] _uriMappings = new UriMapping[]
         {
             new UriMapping

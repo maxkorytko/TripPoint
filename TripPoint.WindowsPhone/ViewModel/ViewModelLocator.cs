@@ -253,8 +253,10 @@ namespace TripPoint.WindowsPhone.ViewModel
         /// </summary>
         public static void Cleanup()
         {
+            ClearTripListViewModel();
             ClearCreateTripViewModel();
             ClearCurrentTripViewModel();
+            ClearTripDetailsViewModel();
             ClearCreateCheckpointViewModel();
             ClearCheckpointAddNotesViewModel();
             ClearCheckpointDetailsViewModel();
