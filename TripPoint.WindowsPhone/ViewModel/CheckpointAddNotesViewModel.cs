@@ -55,7 +55,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             var checkpoint = _checkpointRepository.FindCheckpoint(_checkpointID);
 
             AddNotesToCheckpoint(checkpoint);
-            SaveCheckpoint(checkpoint);
+            UpdateCheckpoint(checkpoint);
 
             ResetViewModel();
             Navigator.GoBack();
@@ -70,11 +70,11 @@ namespace TripPoint.WindowsPhone.ViewModel
             checkpoint.Notes.Add(note);
         }
 
-        private void SaveCheckpoint(Checkpoint checkpoint)
+        private void UpdateCheckpoint(Checkpoint checkpoint)
         {
             if (checkpoint == null) return;
 
-            _checkpointRepository.SaveCheckpoint(checkpoint);
+            _checkpointRepository.UpdateCheckpoint(checkpoint);
         }
 
         private void ResetViewModel()

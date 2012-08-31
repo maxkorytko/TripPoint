@@ -105,7 +105,7 @@ namespace TripPoint.Test.Data.Repository
         {
             _checkpointA.Title = "New Title";
 
-            _checkpointRepository.SaveCheckpoint(_checkpointA);
+            _checkpointRepository.UpdateCheckpoint(_checkpointA);
 
             var updatedCheckpoint = _dataContext.Checkpoints.Where(c => c.ID == _checkpointA.ID).FirstOrDefault();
 

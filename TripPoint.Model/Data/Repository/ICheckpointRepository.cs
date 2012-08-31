@@ -13,6 +13,8 @@ namespace TripPoint.Model.Data.Repository
 
         void SaveCheckpoint(Checkpoint checkpoint);
 
+        void UpdateCheckpoint(Checkpoint checkpoint);
+
         void DeleteCheckpoint(Checkpoint checkpoint);
     }
 }
