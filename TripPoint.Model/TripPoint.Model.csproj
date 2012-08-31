@@ -55,7 +55,6 @@
     <Compile Include="Data\Repository\DatabaseTripRepository.cs" />
     <Compile Include="Data\Repository\Factory\DatabaseRepositoryFactory.cs" />
     <Compile Include="Data\Repository\Factory\IRepositoryFactory.cs" />
-    <Compile Include="Data\Repository\Factory\NullRepositoryFactory.cs" />
     <Compile Include="Data\Repository\Factory\RepositoryFactory.cs" />
     <Compile Include="Data\Repository\ICheckpointRepository.cs" />
     <Compile Include="Data\Repository\ITripRepository.cs" />
