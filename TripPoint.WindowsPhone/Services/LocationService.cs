@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Device.Location;
 
 namespace TripPoint.WindowsPhone.Services
@@ -7,33 +8,37 @@ namespace TripPoint.WindowsPhone.Services
     {
         private GeoCoordinateWatcher _geoCoordinateWatcher;
 
-        public LocationService()
-        {
-            _geoCoordinateWatcher = new GeoCoordinateWatcher();
-        }
+        public bool IsRunning { get { return _geoCoordinateWatcher != null; } }
 
-        public bool IsRunning { get; private set; }
-        
         public event EventHandler<GeoPositionChangedEventArgs<GeoCoordinate>> PositionChanged;
 
         public void Start()
         {
             if (IsRunning) return;
 
-            _geoCoordinateWatcher.MovementThreshold = 15.0;
-            _geoCoordinateWatcher.PositionChanged += PositionChanged;
+            _geoCoordinateWatcher = new GeoCoordinateWatcher(GeoPositionAccuracy.Default); 
+            _geoCoordinateWatcher.MovementThreshold = 20;
+            _geoCoordinateWatcher.PositionChanged += (sender, args) =>
+            {
+                TripPoint.Model.Utils.Logger.Log(
+                    "* Location: {0}, {1}, Timestamp: {2}",
+                    args.Position.Location.Latitude,
+                    args.Position.Location.Longitude,
+                    args.Position.Timestamp);
 
+                if (PositionChanged != null)
+                    PositionChanged(sender, args);
+            };
+            
             _geoCoordinateWatcher.Start();
-
-            IsRunning = true;
         }
 
         public void Stop()
         {
-            _geoCoordinateWatcher.Stop();
-            _geoCoordinateWatcher.PositionChanged -= PositionChanged;
+            if (_geoCoordinateWatcher == null) return;
 
-            IsRunning = false;
+            _geoCoordinateWatcher.Stop();
+            _geoCoordinateWatcher = null;
         }
     }
 }
