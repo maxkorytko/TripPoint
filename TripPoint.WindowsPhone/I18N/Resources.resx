@@ -177,6 +177,12 @@
   <data name="LatestCheckpoint" xml:space="preserve">
     <value>Latest Checkpoint</value>
   </data>
+  <data name="LocationServiceTurnedOffCaption" xml:space="preserve">
+    <value>Location service is turned off</value>
+  </data>
+  <data name="LocationServiceTurnedOffText" xml:space="preserve">
+    <value>The application could not determine your location. Please turn on location service in Settings</value>
+  </data>
   <data name="Notes" xml:space="preserve">
     <value>Notes</value>
   </data>

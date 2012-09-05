@@ -1,7 +1,6 @@
 ﻿#region SDK Usings
 
 using System;
-using System.Windows;
 using System.Windows.Input;
 using System.Device.Location;
 using Microsoft.Phone.Controls;
@@ -10,11 +9,9 @@ using Microsoft.Phone.Controls;
 
 using GalaSoft.MvvmLight.Command;
 using TripPoint.Model.Domain;
-using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
-using TripPoint.WindowsPhone.Services;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
@@ -23,13 +20,11 @@ namespace TripPoint.WindowsPhone.ViewModel
         private int _tripID = -1;
         private Checkpoint _checkpoint;
         private string _notes;
-        private LocationService _locationService;
         
         public CreateCheckpointViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
             InitializeCommands();
-            InitializeLocationService();
         }
 
         private void InitializeCommands()
@@ -37,25 +32,6 @@ namespace TripPoint.WindowsPhone.ViewModel
             CreateCheckpointCommand = new RelayCommand(CreateCheckpointAction);
             CancelCreateCheckpointCommand = new RelayCommand(CancelCreateCheckpointAction);
             AddPicturesCommand = new RelayCommand(AddPicturesAction);
-        }
-
-        private void InitializeLocationService()
-        {
-            if (_locationService != null) return;
-
-            _locationService = new LocationService();
-
-            EventHandler<GeoPositionChangedEventArgs<GeoCoordinate>> positionChangedEventHandler = null;
-            positionChangedEventHandler = (sender, args) =>
-            {
-                Deployment.Current.Dispatcher.BeginInvoke(() => 
-                {
-                    StopLocationService();
-                    SaveCheckpointLocation(args.Position.Location);
-                });
-            };
-            
-            _locationService.PositionChanged += positionChangedEventHandler;
         }
 
         public Checkpoint Checkpoint 
@@ -120,7 +96,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             tripRepository.UpdateTrip(trip);
         }
 
-        private void SaveCheckpointLocation(GeoCoordinate location)
+        public void SaveCheckpointLocation(GeoCoordinate location)
         {
             if (location == null) return;
 
@@ -154,13 +130,6 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             InitializeTripID(e.View);
             InitializeCheckpoint();
-
-            // start obtaining the location as soon as the view is ready,
-            // in order to speed up checkpoint creation
-            // there is a good chance that the location will have been obtained 
-            // by the time the user saves a checkpoint
-            //
-            StartLocationService();
         }
 
         private void InitializeTripID(PhoneApplicationPage view)
@@ -182,20 +151,6 @@ namespace TripPoint.WindowsPhone.ViewModel
             {
                 Timestamp = DateTime.Now
             };
-        }
-
-        private void StartLocationService()
-        {
-            if (_locationService == null) return;
-
-            _locationService.Start();
-        }
-
-        private void StopLocationService()
-        {
-            if (_locationService == null) return;
-
-            _locationService.Stop();
         }
     }
 }
