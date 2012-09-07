@@ -17,5 +17,7 @@ namespace TripPoint.Model.Data
         public Table<Checkpoint> Checkpoints;
 
         public Table<Note> Notes;
+
+        public Table<GeoLocation> Locations;
     }
 }

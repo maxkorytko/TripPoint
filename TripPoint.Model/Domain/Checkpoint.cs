@@ -19,11 +19,12 @@ namespace TripPoint.Model.Domain
         
         private EntitySet<Note> _notes;
         private EntityRef<Trip> _trip;
+        private EntityRef<GeoLocation> _location;
 
         public Checkpoint()
         {
             Timestamp = DateTime.Now;
-            Location = new GeoLocation();
+            Location = GeoLocation.Unknown;
             _notes = new EntitySet<Note>(AddNoteAction, RemoveNoteAction);
         }
 
@@ -52,11 +53,6 @@ namespace TripPoint.Model.Domain
             }
         }
         #endregion
-
-        /// <summary>
-        /// Geographical location of the checkpoint
-        /// </summary>
-        public GeoLocation Location { get; set; }
 
         #region Timestamp
         /// <summary>
@@ -143,6 +139,33 @@ namespace TripPoint.Model.Domain
                 NotifyPropertyChanged("Trip");
             }
         }
+        #endregion
+
+        #region Location
+        [Column]
+        internal int _locationID;
+
+        [Association(
+            Storage = "_locationID",
+            ThisKey = "_locationID",
+            OtherKey = "ID",
+            IsForeignKey = true
+        )]
+        public GeoLocation Location
+        {
+            get { return _location.Entity; }
+            set
+            {
+                NotifyPropertyChanging("Location");
+                _location.Entity = value;
+
+                if (value != null)
+                    _locationID = value.ID;
+
+                NotifyPropertyChanged("Location");
+            }
+        }
+
         #endregion
 
         #region Version
