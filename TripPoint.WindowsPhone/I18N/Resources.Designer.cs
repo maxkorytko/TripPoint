@@ -241,20 +241,20 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Location service is turned off.
+        ///   Looks up a localized string similar to Location not found.
         /// </summary>
-        public static string LocationServiceTurnedOffCaption {
+        public static string LocationNotFoundCaption {
             get {
-                return ResourceManager.GetString("LocationServiceTurnedOffCaption", resourceCulture);
+                return ResourceManager.GetString("LocationNotFoundCaption", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The application could not determine your location. Please turn on location service in Settings.
+        ///   Looks up a localized string similar to The application could not find your location. Please make sure location service is turned on..
         /// </summary>
-        public static string LocationServiceTurnedOffText {
+        public static string LocationNotFoundText {
             get {
-                return ResourceManager.GetString("LocationServiceTurnedOffText", resourceCulture);
+                return ResourceManager.GetString("LocationNotFoundText", resourceCulture);
             }
         }
         

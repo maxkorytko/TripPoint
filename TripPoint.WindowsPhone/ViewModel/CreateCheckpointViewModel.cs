@@ -1,6 +1,7 @@
 ﻿#region SDK Usings
 
 using System;
+using System.Windows;
 using System.Windows.Input;
 using System.Device.Location;
 using Microsoft.Phone.Controls;
@@ -12,6 +13,8 @@ using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
+using TripPoint.WindowsPhone.Services;
+using TripPoint.WindowsPhone.I18N;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
@@ -20,10 +23,13 @@ namespace TripPoint.WindowsPhone.ViewModel
         private int _tripID = -1;
         private Checkpoint _checkpoint;
         private string _notes;
+        private LocationService _locationService;
         
         public CreateCheckpointViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
+            _locationService = new LocationService();
+
             InitializeCommands();
         }
 
@@ -33,6 +39,8 @@ namespace TripPoint.WindowsPhone.ViewModel
             CancelCreateCheckpointCommand = new RelayCommand(CancelCreateCheckpointAction);
             AddPicturesCommand = new RelayCommand(AddPicturesAction);
         }
+
+        public LocationService LocationService { get { return _locationService; } }
 
         public Checkpoint Checkpoint 
         {
@@ -66,14 +74,23 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void CreateCheckpointAction()
         {
-            if (Checkpoint != null)
+            if (Checkpoint == null)
             {
-                AddNotesToCheckpoint();
-                SaveCheckpoint();
+                CloseView();
+                return;
             }
+                
+            AddNotesToCheckpoint();
 
-            ResetViewModel();
-            Navigator.GoBack();
+            if (IsLocationReady())
+            {
+                SaveCheckpoint();
+                CloseView();
+            }
+            else if (LocationService.Permission == GeoPositionPermission.Denied)
+                DisplayLocationServiceDeniedMessage();
+            else
+                WaitUntilLocationIsReady(20);
         }
 
         private void AddNotesToCheckpoint()
@@ -83,6 +100,11 @@ namespace TripPoint.WindowsPhone.ViewModel
             Checkpoint.Notes.Add(
                new Note { Text = Notes }
             );
+        }
+
+        private bool IsLocationReady()
+        {
+            return Checkpoint.Location != null;
         }
 
         private void SaveCheckpoint()
@@ -96,11 +118,36 @@ namespace TripPoint.WindowsPhone.ViewModel
             tripRepository.UpdateTrip(trip);
         }
 
+        private void CloseView()
+        {
+            ResetViewModel();
+            Navigator.GoBack();
+        }
+
+        private static void DisplayLocationServiceDeniedMessage()
+        {
+            var resources = new Localization().Resources;
+
+            MessageBox.Show(I18N.Resources.LocationNotFoundText, I18N.Resources.LocationNotFoundCaption,
+                MessageBoxButton.OK);
+        }
+
+        private void WaitUntilLocationIsReady(int timeout)
+        {
+
+        }
+
         public void SaveCheckpointLocation(GeoCoordinate location)
         {
-            if (location == null) return;
+            if (location == null || location.IsUnknown) return;
 
             Logger.Log("Location: {0}, {1}", location.Latitude, location.Longitude);
+            
+            Checkpoint.Location = new GeoLocation
+            {
+                Latitude = location.Latitude,
+                Longitude = location.Longitude
+            };
         }
 
         /// <summary>
@@ -115,8 +162,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void CancelCreateCheckpointAction()
         {
-            ResetViewModel();
-            Navigator.GoBack();
+            CloseView();
         }
 
         private void AddPicturesAction()
