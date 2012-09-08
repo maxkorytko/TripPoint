@@ -146,7 +146,7 @@ namespace TripPoint.Model.Domain
         internal int _locationID;
 
         [Association(
-            Storage = "_locationID",
+            Storage = "_location",
             ThisKey = "_locationID",
             OtherKey = "ID",
             IsForeignKey = true
@@ -165,7 +165,6 @@ namespace TripPoint.Model.Domain
                 NotifyPropertyChanged("Location");
             }
         }
-
         #endregion
 
         #region Version

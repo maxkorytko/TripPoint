@@ -74,11 +74,18 @@ namespace TripPoint.Test.Data.Repository
             {
                 Name = "My Trip"
             };
-            
+
+            var location = new GeoLocation
+            {
+                Latitude = 43.8663,
+                Longitude = -79.5695
+            };
+
             var checkpoint = new Checkpoint
             {
                 Title = "Testing",
-                Trip = trip
+                Trip = trip,
+                Location = location
             };
 
             _checkpointRepository.SaveCheckpoint(checkpoint);
@@ -88,6 +95,7 @@ namespace TripPoint.Test.Data.Repository
             Assert.IsNotNull(savedCheckpoint, "Checkpoint was not saved");
             Assert.AreEqual<string>(checkpoint.Title, savedCheckpoint.Title, "Checkpoint was not saved");
             Assert.AreEqual<string>(checkpoint.Trip.Name, savedCheckpoint.Trip.Name, "Checkpoint was not saved");
+            Assert.AreEqual<double>(location.Latitude, savedCheckpoint.Location.Latitude, "Location was not saved");
         }
 
         [TestMethod]
@@ -115,11 +123,15 @@ namespace TripPoint.Test.Data.Repository
         [TestMethod]
         public void TestDeleteCheckpoint()
         {
+            var location = _checkpointA.Location;
+
             _checkpointRepository.DeleteCheckpoint(_checkpointA);
 
             var deletedCheckpoint = _dataContext.Checkpoints.Where(c => c.ID == _checkpointA.ID).FirstOrDefault();
+            var deletedLocation = _dataContext.Locations.Where(l => l.ID == location.ID).FirstOrDefault();
 
             Assert.IsNull(deletedCheckpoint, "Checkpoint was not deleted");
+            Assert.IsNull(deletedLocation, "Location was not deleted");
         }
 
         private void InsertTestCheckpoints()
@@ -129,7 +141,8 @@ namespace TripPoint.Test.Data.Repository
             _checkpointA = new Checkpoint
             {
                 Title = "Checkpoint A",
-                Trip = trip
+                Trip = trip,
+                Location = new GeoLocation { Latitude = 43.8663, Longitude = -79.5695 }
             };
             _checkpointA.Notes.Add(new Note 
             {
@@ -140,16 +153,17 @@ namespace TripPoint.Test.Data.Repository
             _checkpointB = new Checkpoint
             {
                 Title = "Checkpoint B",
-                Trip = trip
+                Trip = trip,
+                Location = new GeoLocation { Latitude = 12.5023, Longitude = -83.9375 }
             };
 
             _checkpointC = new Checkpoint
             {
                 Title = "Checkpoint C",
-                Trip = trip
+                Trip = trip,
+                Location = new GeoLocation { Latitude = 34.6334, Longitude = -45.1297 }
             };
 
-            _dataContext.Trips.InsertOnSubmit(trip);
             _dataContext.Checkpoints.InsertOnSubmit(_checkpointA);
             _dataContext.Checkpoints.InsertOnSubmit(_checkpointB);
             _dataContext.Checkpoints.InsertOnSubmit(_checkpointC);
@@ -163,7 +177,10 @@ namespace TripPoint.Test.Data.Repository
             _dataContext.Notes.DeleteAllOnSubmit(notes);
 
             var checkpoints = _dataContext.Checkpoints.Select(checkpoint => checkpoint);
+            var locations = checkpoints.Select(checkpoint => checkpoint.Location);
+            
             _dataContext.Checkpoints.DeleteAllOnSubmit(checkpoints);
+            _dataContext.Locations.DeleteAllOnSubmit(locations);
 
             var trips = _dataContext.Trips.Select(trip => trip);
             _dataContext.Trips.DeleteAllOnSubmit(trips);

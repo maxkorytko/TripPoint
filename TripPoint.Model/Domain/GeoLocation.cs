@@ -17,13 +17,7 @@ namespace TripPoint.Model.Domain
 
         public static GeoLocation Unknown
         {
-            get { return new GeoLocation(0.0, 0.0); }
-        }
-
-        public GeoLocation(double latitude, double longitude)
-        {
-            _latitude = latitude;
-            _longitude = longitude;
+            get { return new GeoLocation { Latitude = 0.0, Longitude = 0.0 }; }
         }
 
         #region ID
