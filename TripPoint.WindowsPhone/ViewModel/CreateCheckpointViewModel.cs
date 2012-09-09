@@ -14,6 +14,7 @@ using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
 using TripPoint.WindowsPhone.Services;
+using TripPoint.WindowsPhone.Utils;
 using TripPoint.WindowsPhone.I18N;
 
 namespace TripPoint.WindowsPhone.ViewModel
@@ -24,11 +25,13 @@ namespace TripPoint.WindowsPhone.ViewModel
         private Checkpoint _checkpoint;
         private string _notes;
         private LocationService _locationService;
+        private CountdownTimer _timer;
         
         public CreateCheckpointViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
             _locationService = new LocationService();
+            _timer = new CountdownTimer();
 
             InitializeCommands();
         }
@@ -88,9 +91,9 @@ namespace TripPoint.WindowsPhone.ViewModel
                 CloseView();
             }
             else if (LocationService.Permission == GeoPositionPermission.Denied)
-                DisplayLocationServiceDeniedMessage();
+                DisplayLocationNotFoundMessage();
             else
-                WaitUntilLocationIsReady(20);
+                WaitUntilLocationIsReady(10);
         }
 
         private void AddNotesToCheckpoint()
@@ -124,7 +127,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             Navigator.GoBack();
         }
 
-        private void DisplayLocationServiceDeniedMessage()
+        private void DisplayLocationNotFoundMessage()
         {
             var resources = new Localization().Resources;
 
@@ -140,7 +143,17 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void WaitUntilLocationIsReady(int timeout)
         {
+            _timer.Stop();
 
+            _timer.Interval = TimeSpan.FromSeconds(timeout);
+            _timer.OnExplode = () =>
+            {
+                if (!IsViewTopMost) return;
+
+                DisplayLocationNotFoundMessage();
+            };
+
+            _timer.Start();
         }
 
         public void SaveCheckpointLocation(GeoCoordinate location)
@@ -180,6 +193,8 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             base.OnNavigatedTo(e);
 
+            _timer.Stop();
+            
             InitializeTripID(e.View);
             InitializeCheckpoint();
         }
