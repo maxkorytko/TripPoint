@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Windows;
+using Microsoft.Phone.Controls;
 
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.WindowsPhone.I18N;
@@ -51,5 +53,20 @@ namespace TripPoint.WindowsPhone.ViewModel
         /// </summary>
         /// <param name="e"></param>
         public virtual void OnNavigatedTo(TripPointNavigationEventArgs e) { }
+
+        public bool IsViewTopMost
+        {
+            get
+            {
+                Object dataContext = null;
+
+                var content = (Application.Current as App).RootFrame.Content;
+                
+                if (content is PhoneApplicationPage)
+                    dataContext = (content as PhoneApplicationPage).DataContext;
+
+                return dataContext == this;
+            }
+        }
     }
 }
