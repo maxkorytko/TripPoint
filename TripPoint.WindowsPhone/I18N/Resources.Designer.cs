@@ -250,7 +250,9 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The application could not find your location. Please make sure location service is turned on..
+        ///   Looks up a localized string similar to The application could not find your location. Please make sure location service is turned on.
+        ///
+        ///Would you like to save this checkpoint?.
         /// </summary>
         public static string LocationNotFoundText {
             get {

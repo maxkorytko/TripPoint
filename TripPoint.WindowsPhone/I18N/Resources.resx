@@ -181,7 +181,9 @@
     <value>Location not found</value>
   </data>
   <data name="LocationNotFoundText" xml:space="preserve">
-    <value>The application could not find your location. Please make sure location service is turned on.</value>
+    <value>The application could not find your location. Please make sure location service is turned on.
+
+Would you like to save this checkpoint?</value>
   </data>
   <data name="Notes" xml:space="preserve">
     <value>Notes</value>

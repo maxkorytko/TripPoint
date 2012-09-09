@@ -124,12 +124,18 @@ namespace TripPoint.WindowsPhone.ViewModel
             Navigator.GoBack();
         }
 
-        private static void DisplayLocationServiceDeniedMessage()
+        private void DisplayLocationServiceDeniedMessage()
         {
             var resources = new Localization().Resources;
 
-            MessageBox.Show(I18N.Resources.LocationNotFoundText, I18N.Resources.LocationNotFoundCaption,
-                MessageBoxButton.OK);
+            var userDecision = MessageBox.Show(I18N.Resources.LocationNotFoundText,
+                I18N.Resources.LocationNotFoundCaption,
+                MessageBoxButton.OKCancel);
+
+            if (userDecision == MessageBoxResult.OK)
+                SaveCheckpoint();
+
+            CloseView();
         }
 
         private void WaitUntilLocationIsReady(int timeout)
