@@ -24,6 +24,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private int _tripID = -1;
         private Checkpoint _checkpoint;
         private string _notes;
+        private bool _isWaitingForLocationService;
         private LocationService _locationService;
         private CountdownTimer _timer;
         
@@ -66,6 +67,18 @@ namespace TripPoint.WindowsPhone.ViewModel
 
                 _notes = value;
                 RaisePropertyChanged("Notes");
+            }
+        }
+
+        public bool IsWaitingForLocationService
+        {
+            get { return _isWaitingForLocationService; }
+            set
+            {
+                if (_isWaitingForLocationService == value) return;
+
+                _isWaitingForLocationService = value;
+                RaisePropertyChanged("IsWaitingForLocationService");
             }
         }
 
@@ -150,10 +163,13 @@ namespace TripPoint.WindowsPhone.ViewModel
             {
                 if (!IsViewTopMost) return;
 
+                IsWaitingForLocationService = false;
                 DisplayLocationNotFoundMessage();
             };
 
             _timer.Start();
+
+            IsWaitingForLocationService = true;
         }
 
         public void SaveCheckpointLocation(GeoCoordinate location)
@@ -177,6 +193,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             Checkpoint = null;
             Notes = string.Empty;
+            IsWaitingForLocationService = false;
         }
 
         private void CancelCreateCheckpointAction()
@@ -194,7 +211,8 @@ namespace TripPoint.WindowsPhone.ViewModel
             base.OnNavigatedTo(e);
 
             _timer.Stop();
-            
+
+            ResetViewModel();
             InitializeTripID(e.View);
             InitializeCheckpoint();
         }

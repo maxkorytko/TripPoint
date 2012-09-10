@@ -6,6 +6,8 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:appBar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:coding4Fun="clr-namespace:Coding4Fun.Phone.Controls;assembly=Coding4Fun.Phone.Controls"
+    xmlns:convert="clr-namespace:TripPoint.WindowsPhone.Converters;assembly=TripPoint"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -15,6 +17,10 @@
     mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True"
     DataContext="{Binding CreateCheckpointViewModel, Source={StaticResource Locator}}">
+
+    <phone:PhoneApplicationPage.Resources>
+        <convert:BoolToVisibilityConverter x:Key="BoolToVisibility" />
+    </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -61,6 +67,17 @@
                         Command="{Binding AddPicturesCommand}" />
             </StackPanel>
         </Grid>
+        
+        <coding4Fun:ProgressOverlay Grid.RowSpan="2" 
+                                    Visibility="{Binding IsWaitingForLocationService, Converter={StaticResource BoolToVisibility}}">
+            <coding4Fun:ProgressOverlay.Content>
+                <StackPanel>
+                    <toolkit:PerformanceProgressBar IsIndeterminate="True" />
+                    <TextBlock Text="finding your location" HorizontalAlignment="Center" />
+                </StackPanel>
+            </coding4Fun:ProgressOverlay.Content>
+        </coding4Fun:ProgressOverlay>
+        
     </Grid>
 
     <appBar:Bindable.ApplicationBar>
