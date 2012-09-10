@@ -51,6 +51,9 @@
     <Reference Include="BindableApplicationBar">
       <HintPath>Lib\BindableApplicationBar.dll</HintPath>
     </Reference>
+    <Reference Include="Coding4Fun.Phone.Controls">
+      <HintPath>Lib\Coding4Fun.Phone.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight.Extras.WP71">
       <HintPath>Lib\GalaSoft.MvvmLight.Extras.WP71.dll</HintPath>
     </Reference>
