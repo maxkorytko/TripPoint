@@ -54,6 +54,9 @@ namespace TripPoint.WindowsPhone.ViewModel
         /// <param name="e"></param>
         public virtual void OnNavigatedTo(TripPointNavigationEventArgs e) { }
 
+        /// <summary>
+        /// Determines if the view, which the view model is bound to, is on top of the navigation stack
+        /// </summary>
         public bool IsViewTopMost
         {
             get

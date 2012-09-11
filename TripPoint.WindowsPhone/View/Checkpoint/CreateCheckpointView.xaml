@@ -69,11 +69,11 @@
         </Grid>
         
         <coding4Fun:ProgressOverlay Grid.RowSpan="2" 
-                                    Visibility="{Binding IsWaitingForLocationService, Converter={StaticResource BoolToVisibility}}">
+                                    Visibility="{Binding IsWaitingForLocation, Converter={StaticResource BoolToVisibility}}">
             <coding4Fun:ProgressOverlay.Content>
                 <StackPanel>
                     <toolkit:PerformanceProgressBar IsIndeterminate="True" />
-                    <TextBlock Text="finding your location" HorizontalAlignment="Center" />
+                    <TextBlock Text="Finding Your Location" HorizontalAlignment="Center" Margin="10,0,0,0" />
                 </StackPanel>
             </coding4Fun:ProgressOverlay.Content>
         </coding4Fun:ProgressOverlay>

@@ -22,7 +22,7 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
                 {
                     if (ViewModel != null)
                     {
-                        ViewModel.SaveCheckpointLocation(args.Position.Location);
+                        ViewModel.OnLocationObtained(args.Position.Location);
                     }
                 });
             };

@@ -24,7 +24,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private int _tripID = -1;
         private Checkpoint _checkpoint;
         private string _notes;
-        private bool _isWaitingForLocationService;
+        private bool _isWaitingForLocation;
         private LocationService _locationService;
         private CountdownTimer _timer;
         
@@ -70,15 +70,15 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
-        public bool IsWaitingForLocationService
+        public bool IsWaitingForLocation
         {
-            get { return _isWaitingForLocationService; }
+            get { return _isWaitingForLocation; }
             set
             {
-                if (_isWaitingForLocationService == value) return;
+                if (_isWaitingForLocation == value) return;
 
-                _isWaitingForLocationService = value;
-                RaisePropertyChanged("IsWaitingForLocationService");
+                _isWaitingForLocation = value;
+                RaisePropertyChanged("IsWaitingForLocation");
             }
         }
 
@@ -98,7 +98,7 @@ namespace TripPoint.WindowsPhone.ViewModel
                 
             AddNotesToCheckpoint();
 
-            if (IsLocationReady())
+            if (IsLocationObtained())
             {
                 SaveCheckpoint();
                 CloseView();
@@ -106,9 +106,12 @@ namespace TripPoint.WindowsPhone.ViewModel
             else if (LocationService.Permission == GeoPositionPermission.Denied)
                 DisplayLocationNotFoundMessage();
             else
-                WaitUntilLocationIsReady(10);
+                WaitUntilLocationIsObtained(10);
         }
 
+        /// <summary>
+        /// Assigns notes, if any, to the checkpoint being created
+        /// </summary>
         private void AddNotesToCheckpoint()
         {
             if (string.IsNullOrEmpty(Notes)) return;
@@ -118,7 +121,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             );
         }
 
-        private bool IsLocationReady()
+        private bool IsLocationObtained()
         {
             return Checkpoint.Location != null;
         }
@@ -154,8 +157,10 @@ namespace TripPoint.WindowsPhone.ViewModel
             CloseView();
         }
 
-        private void WaitUntilLocationIsReady(int timeout)
+        private void WaitUntilLocationIsObtained(int timeout)
         {
+            IsWaitingForLocation = true;
+
             _timer.Stop();
 
             _timer.Interval = TimeSpan.FromSeconds(timeout);
@@ -163,15 +168,33 @@ namespace TripPoint.WindowsPhone.ViewModel
             {
                 if (!IsViewTopMost) return;
 
-                IsWaitingForLocationService = false;
+                IsWaitingForLocation = false;
                 DisplayLocationNotFoundMessage();
             };
 
             _timer.Start();
-
-            IsWaitingForLocationService = true;
         }
 
+        /// <summary>
+        /// A handler method which gets called when the location is available from the location service
+        /// </summary>
+        /// <param name="location"></param>
+        public void OnLocationObtained(GeoCoordinate location)
+        {
+            SaveCheckpointLocation(location);
+
+            if (IsWaitingForLocation)
+            {
+                StopWaitingForLocation();
+                SaveCheckpoint();
+                CloseView();
+            }
+        }
+
+        /// <summary>
+        /// Assigns the location to the checkpoint being created
+        /// </summary>
+        /// <param name="location"></param>
         public void SaveCheckpointLocation(GeoCoordinate location)
         {
             if (location == null || location.IsUnknown) return;
@@ -185,6 +208,12 @@ namespace TripPoint.WindowsPhone.ViewModel
             };
         }
 
+        private void StopWaitingForLocation()
+        {
+            _timer.Stop();
+            IsWaitingForLocation = false;
+        }
+
         /// <summary>
         /// Sets default values to properties intended for UI binding
         /// This ensures that the user will not see previous values if he/she opens the view again
@@ -193,7 +222,6 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             Checkpoint = null;
             Notes = string.Empty;
-            IsWaitingForLocationService = false;
         }
 
         private void CancelCreateCheckpointAction()
@@ -210,9 +238,8 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             base.OnNavigatedTo(e);
 
-            _timer.Stop();
-
-            ResetViewModel();
+            StopWaitingForLocation();
+            
             InitializeTripID(e.View);
             InitializeCheckpoint();
         }
