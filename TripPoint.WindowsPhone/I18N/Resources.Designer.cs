@@ -223,6 +223,15 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finding Your Location.
+        /// </summary>
+        public static string FindingYourLocation {
+            get {
+                return ResourceManager.GetString("FindingYourLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to finish trip.
         /// </summary>
         public static string FinishTrip_AppBar {
@@ -302,6 +311,15 @@ namespace TripPoint.WindowsPhone.I18N {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to settings.
+        /// </summary>
+        public static string Settings_AppBar {
+            get {
+                return ResourceManager.GetString("Settings_AppBar", resourceCulture);
             }
         }
         
