@@ -37,6 +37,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             AddNotesCommand = new RelayCommand(AddNotesAction);
             AddPicturesCommand = new RelayCommand(AddPicturesAction);
             ViewCheckpointDetailsCommand = new RelayCommand<Checkpoint>(ViewCheckpointDetailsAction);
+            SettingsCommand = new RelayCommand(SettingsAction);
         }
 
         public Trip CurrentTrip
@@ -99,6 +100,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         public ICommand ViewCheckpointDetailsCommand { get; private set; }
 
+        public ICommand SettingsCommand { get; private set; }
+
         private void FinishTripAction()
         {
             var userDecision = MessageBox.Show(Resources.ConfirmFinishTrip, Resources.Confirm,
@@ -141,6 +144,11 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void ViewCheckpointDetailsAction(Checkpoint checkpoint)
         {
             Navigator.Navigate(string.Format("/Checkpoints/{0}/Details", checkpoint.ID));
+        }
+
+        private void SettingsAction()
+        {
+            Navigator.Navigate("/Application/Settings");
         }
 
         public override void OnNavigatedTo(TripPointNavigationEventArgs e)

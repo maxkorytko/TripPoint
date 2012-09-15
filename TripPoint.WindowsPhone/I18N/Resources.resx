@@ -188,6 +188,12 @@
 
 Would you like to save this checkpoint?</value>
   </data>
+  <data name="LocationServiceOffSettingDescription" xml:space="preserve">
+    <value>Application does not have access to your location</value>
+  </data>
+  <data name="LocationServiceOnSettingDescription" xml:space="preserve">
+    <value>Application has access to your location</value>
+  </data>
   <data name="Notes" xml:space="preserve">
     <value>Notes</value>
   </data>
@@ -200,8 +206,17 @@ Would you like to save this checkpoint?</value>
   <data name="Pictures" xml:space="preserve">
     <value>Pictures</value>
   </data>
+  <data name="PrivacyPolicyLinkContent" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
+  <data name="PrivacyPolicyViewTitle" xml:space="preserve">
+    <value>privacy policy</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>settings</value>
   </data>
   <data name="Settings_AppBar" xml:space="preserve">
     <value>settings</value>

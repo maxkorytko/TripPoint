@@ -18,6 +18,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private Localization _localization = new Localization();
 
+        public TripPointViewModelBase() { }
+
         public TripPointViewModelBase(IRepositoryFactory repositoryFactory)
         {
             if (repositoryFactory == null)

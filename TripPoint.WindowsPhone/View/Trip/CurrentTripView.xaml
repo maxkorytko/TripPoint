@@ -121,6 +121,9 @@
 
                 <appBar:BindableApplicationBarMenuItem Text="{Binding Localization.Resources.PastTrips_AppBar}"
                                                        Command="{Binding PastTripsCommand}" />
+                
+                <appBar:BindableApplicationBarMenuItem Text="{Binding Localization.Resources.Settings_AppBar}"
+                                                       Command="{Binding SettingsCommand}" />
             </appBar:BindableApplicationBar.MenuItems>
         </appBar:BindableApplicationBar>
     </appBar:Bindable.ApplicationBar>

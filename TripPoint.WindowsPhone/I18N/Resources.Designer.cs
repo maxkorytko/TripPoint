@@ -270,6 +270,24 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Application does not have access to your location.
+        /// </summary>
+        public static string LocationServiceOffSettingDescription {
+            get {
+                return ResourceManager.GetString("LocationServiceOffSettingDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Application has access to your location.
+        /// </summary>
+        public static string LocationServiceOnSettingDescription {
+            get {
+                return ResourceManager.GetString("LocationServiceOnSettingDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notes.
         /// </summary>
         public static string Notes {
@@ -306,6 +324,24 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Privacy Policy.
+        /// </summary>
+        public static string PrivacyPolicyLinkContent {
+            get {
+                return ResourceManager.GetString("PrivacyPolicyLinkContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to privacy policy.
+        /// </summary>
+        public static string PrivacyPolicyViewTitle {
+            get {
+                return ResourceManager.GetString("PrivacyPolicyViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {
@@ -320,6 +356,15 @@ namespace TripPoint.WindowsPhone.I18N {
         public static string Settings_AppBar {
             get {
                 return ResourceManager.GetString("Settings_AppBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to settings.
+        /// </summary>
+        public static string SettingsTitle {
+            get {
+                return ResourceManager.GetString("SettingsTitle", resourceCulture);
             }
         }
         

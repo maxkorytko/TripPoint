@@ -145,10 +145,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void DisplayLocationNotFoundMessage()
         {
-            var resources = new Localization().Resources;
-
-            var userDecision = MessageBox.Show(I18N.Resources.LocationNotFoundText,
-                I18N.Resources.LocationNotFoundCaption,
+            var userDecision = MessageBox.Show(Resources.LocationNotFoundText,
+                Resources.LocationNotFoundCaption,
                 MessageBoxButton.OKCancel);
 
             if (userDecision == MessageBoxResult.OK)

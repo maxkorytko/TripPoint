@@ -96,6 +96,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\LocationService.cs" />
     <Compile Include="Utils\CountdownTimer.cs" />
+    <Compile Include="ViewModel\ApplicationSettingsViewModel.cs" />
     <Compile Include="ViewModel\CheckpointAddNotesViewModel.cs" />
     <Compile Include="ViewModel\CheckpointDetailsViewModel.cs" />
     <Compile Include="ViewModel\CreateCheckpointViewModel.cs" />
@@ -113,6 +114,12 @@
     </Compile>
     <Compile Include="View\Checkpoint\CreateCheckpointView.xaml.cs">
       <DependentUpon>CreateCheckpointView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings\ApplicationSettingsView.xaml.cs">
+      <DependentUpon>ApplicationSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings\PrivacyPolicyView.xaml.cs">
+      <DependentUpon>PrivacyPolicyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Trip\CreateTripView.xaml.cs">
       <DependentUpon>CreateTripView.xaml</DependentUpon>
@@ -142,6 +149,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Checkpoint\CreateCheckpointView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Settings\ApplicationSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Settings\PrivacyPolicyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -200,6 +215,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

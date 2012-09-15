@@ -4,7 +4,9 @@ using System.Windows.Navigation;
 using System.Device.Location;
 using Microsoft.Phone.Controls;
 
+using TripPoint.Model.Settings;
 using TripPoint.WindowsPhone.ViewModel;
+using TripPoint.WindowsPhone.Services;
 
 namespace TripPoint.WindowsPhone.View.Checkpoint
 {
@@ -46,8 +48,20 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
             // there is a good chance that the location will have been obtained 
             // by the time the user saves a checkpoint
             //
-            if (ViewModel.LocationService.Permission == GeoPositionPermission.Granted)
+            if (IsLocationServiceUsable(ViewModel.LocationService))
                 ViewModel.LocationService.Start();
+            else
+                TripPoint.Model.Utils.Logger.Log(this, "Location Service is off");
+        }
+
+        private static bool IsLocationServiceUsable(LocationService service)
+        {
+            var serviceIsEnabled = ApplicationSettings.Instance.GetSetting<bool>(LocationService.ENABLED_SETTING_KEY,
+                LocationService.ENABLED_SETTING_DEFAULT_VALUE);
+
+            var serviceIsAccessible = service.Permission == GeoPositionPermission.Granted;
+
+            return serviceIsEnabled && serviceIsAccessible;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

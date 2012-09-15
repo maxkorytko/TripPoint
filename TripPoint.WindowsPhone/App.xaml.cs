@@ -4,8 +4,10 @@ using System.Windows.Navigation;
 using System.Data.Linq;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using System.IO.IsolatedStorage;
 
 using TripPoint.Model.Domain;
+using TripPoint.Model.Settings;
 using TripPoint.Model.Data;
 using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
@@ -36,6 +38,10 @@ namespace TripPoint.WindowsPhone
             // Creates a dabase if necessary
             // Must be called before InitializeComponent
             InitializeDatabase();
+
+            // Initializes application settings store
+            // Must be called before InitializeComponent
+            InitializeApplicationSettings();
 
             // Standard Silverlight initialization
             InitializeComponent();
@@ -163,6 +169,13 @@ namespace TripPoint.WindowsPhone
             }
         }
 
+        private static void InitializeApplicationSettings()
+        {
+            var settingsStore = IsolatedStorageSettings.ApplicationSettings;
+
+            ApplicationSettings.Initialize(settingsStore);
+        }
+
         private void BootstrapPhoneApplication()
         {
             InitializeNavigation();
@@ -181,7 +194,7 @@ namespace TripPoint.WindowsPhone
             RootFrame.UriMapper = uriMapper;
         }
 
-        private void SetStartupPage()
+        private static void SetStartupPage()
         {
             var tripRepository = RepositoryFactory.Create().TripRepository;
 

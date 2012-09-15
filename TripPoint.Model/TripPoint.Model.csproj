@@ -66,6 +66,7 @@
     <Compile Include="Domain\Note.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Trip.cs" />
+    <Compile Include="Settings\ApplicationSettings.cs" />
     <Compile Include="Utils\DebugStreamWriter.cs" />
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\TripPointConvert.cs" />

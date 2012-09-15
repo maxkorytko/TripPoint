@@ -6,6 +6,9 @@ namespace TripPoint.WindowsPhone.Services
 {
     public class LocationService
     {
+        public const string ENABLED_SETTING_KEY             = "LocationService.IsEnabled";
+        public const bool   ENABLED_SETTING_DEFAULT_VALUE   = true;
+
         private GeoCoordinateWatcher _geoCoordinateWatcher;
 
         public LocationService()

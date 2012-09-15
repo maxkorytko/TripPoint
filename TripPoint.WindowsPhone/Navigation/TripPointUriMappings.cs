@@ -48,6 +48,16 @@ namespace TripPoint.WindowsPhone.Navigation
                 Uri = new Uri("/Checkpoints/{checkpointID}/Add/Notes", UriKind.Relative),
                 MappedUri = new Uri("/View/Checkpoint/CheckpointAddNotesView.xaml?checkpointID={checkpointID}",
                     UriKind.Relative)
+            },
+            new UriMapping
+            {
+                Uri = new Uri("/Application/Settings", UriKind.Relative),
+                MappedUri = new Uri("/View/Settings/ApplicationSettingsView.xaml", UriKind.Relative)
+            },
+            new UriMapping
+            {
+                Uri = new Uri("/Privacy", UriKind.Relative),
+                MappedUri = new Uri("/View/Settings/PrivacyPolicyView.xaml", UriKind.Relative)
             }
         };
 
