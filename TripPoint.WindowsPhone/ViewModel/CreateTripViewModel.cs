@@ -71,14 +71,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         public bool CanCancelCreateTrip
         {
-            get { return _canCancelCreateTrip; }
-            set
-            {
-                if (_canCancelCreateTrip == value) return;
-
-                _canCancelCreateTrip = value;
-                RaisePropertyChanged("CanCancelCreateTrip");
-            }
+            get { return Navigator.CanGoBack; }
         }
 
         public ICommand SaveTripCommand { get; private set; }
@@ -92,21 +85,11 @@ namespace TripPoint.WindowsPhone.ViewModel
             _tripRepository = RepositoryFactory.TripRepository;
 
             InitializeTrip();
-            InitializeCanCancelCreateTrip();
         }
 
         private void InitializeTrip()
         {
             Trip = new Trip();
-        }
-
-        private void InitializeCanCancelCreateTrip()
-        {
-            if (_tripRepository == null) return;
-
-            var trips = _tripRepository.Trips;
-
-            CanCancelCreateTrip = trips != null && trips.Count() > 0;
         }
     }
 }

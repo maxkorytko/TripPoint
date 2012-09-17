@@ -27,6 +27,11 @@
         void ClearHistory();
 
         /// <summary>
+        /// Indicates whether back navigation is possible
+        /// </summary>
+        bool CanGoBack { get; }
+
+        /// <summary>
         /// Navigates to a previous page in the navigation history
         /// Does nothing if navigation history is empty
         /// </summary>

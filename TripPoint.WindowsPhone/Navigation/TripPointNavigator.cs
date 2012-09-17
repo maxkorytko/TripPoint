@@ -29,6 +29,11 @@ namespace TripPoint.WindowsPhone.Navigation
             }
         }
 
+        public bool CanGoBack
+        {
+            get { return _rootFrame.CanGoBack; }
+        }
+
         public void GoBack()
         {
             PerformBackNavigation(args =>
