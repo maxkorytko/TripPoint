@@ -15,12 +15,14 @@ namespace TripPoint.WindowsPhone.ViewModel
     public class CheckpointDetailsViewModel : TripPointViewModelBase
     {
         Checkpoint _checkpoint;
+        bool _shouldShowCheckpointMap;
         ICheckpointRepository _checkpointRepository;
 
         public CheckpointDetailsViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
             Checkpoint = new Checkpoint();
+            ShouldShowCheckpointMap = false;
 
             InitializeCommands();
         }
@@ -40,6 +42,24 @@ namespace TripPoint.WindowsPhone.ViewModel
 
                 _checkpoint = value;
                 RaisePropertyChanged("Checkpoint");
+            }
+        }
+
+        public bool ShouldShowCheckpointMap
+        {
+            get { return _shouldShowCheckpointMap; }
+            set
+            {
+                // not checking if value has been updated
+                // this is to ensures the map can be hidden by default
+
+                var oldValue = _shouldShowCheckpointMap;
+                _shouldShowCheckpointMap = value;
+
+                // broadcast property changed message
+                // the message will be caught in the code behind in order to update the UI
+                //
+                RaisePropertyChanged("ShouldShowCheckpointMap", oldValue, value, true);
             }
         }
 
@@ -76,6 +96,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             var checkpointID = GetCheckpointID(e.View);
             InitializeCheckpoint(checkpointID);
+            DetermineCheckpointMapAvailability();
         }
 
         private static int GetCheckpointID(PhoneApplicationPage view)
@@ -95,9 +116,10 @@ namespace TripPoint.WindowsPhone.ViewModel
                 Checkpoint = checkpoint;
         }
 
-        private Checkpoint GetCheckpoint(int checkpointID)
+        private void DetermineCheckpointMapAvailability()
         {
-            return _checkpointRepository.FindCheckpoint(checkpointID);
+            // display the map provided that checkpoint location is available
+            ShouldShowCheckpointMap = Checkpoint.Location != null && !Checkpoint.Location.IsUnknown;
         }
     }
 }

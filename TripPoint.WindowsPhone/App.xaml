@@ -5,10 +5,11 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:vm="clr-namespace:TripPoint.WindowsPhone.ViewModel"
-    >
+    xmlns:core="clr-namespace:System;assembly=mscorlib">
 
     <!--Application Resources-->
     <Application.Resources>
+        <core:String x:Key="BingMapsKey">ApZs4BwJrG3d81SRc4_4OaRynkUcyiK3U_Ftfj9lxPr-kQRWTwR8oDy28hwNp3po</core:String>
         <vm:ViewModelLocator x:Key="Locator" />
     </Application.Resources>
 

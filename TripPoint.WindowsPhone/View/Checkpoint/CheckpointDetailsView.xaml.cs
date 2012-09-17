@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Phone.Controls;
+﻿using Microsoft.Phone.Controls;
+
+using GalaSoft.MvvmLight.Messaging;
 
 namespace TripPoint.WindowsPhone.View.Checkpoint
 {
@@ -18,6 +9,49 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
         public CheckpointDetailsView()
         {
             InitializeComponent();
+            RegisterMessages();
+            Unloaded += (sender, args) => OnUnloaded();
+        }
+
+        private void RegisterMessages()
+        {
+            Messenger.Default.Register<PropertyChangedMessage<bool>>(this, message =>
+            {
+                if (message.PropertyName.Equals("ShouldShowCheckpointMap"))
+                {
+                    UpdateCheckpointMapVisibility(message.NewValue);
+                }
+            });
+        }
+
+        private void UpdateCheckpointMapVisibility(bool isVisible)
+        {
+            TripPoint.Model.Utils.Logger.Log(this, "Map is visible: {0}", isVisible);
+
+            if (isVisible)
+                ShowPivotItem(CheckpointMap);
+            else
+                HidePivotItem(CheckpointMap);
+        }
+
+        private void ShowPivotItem(PivotItem item)
+        {
+            if (item == null) return;
+
+            if (CheckpointDetails.Items.IndexOf(item) == -1)
+                CheckpointDetails.Items.Add(item);
+        }
+
+        private void HidePivotItem(PivotItem item)
+        {
+            if (item == null) return;
+
+            CheckpointDetails.Items.Remove(item);
+        }
+
+        private void OnUnloaded()
+        {
+            Messenger.Default.Unregister(this);
         }
     }
 }

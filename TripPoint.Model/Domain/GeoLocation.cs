@@ -1,6 +1,7 @@
-﻿using System.ComponentModel;
-using System.Data.Linq;
+﻿using System.Data.Linq;
 using System.Data.Linq.Mapping;
+using System.ComponentModel;
+using System.Device.Location;
 
 namespace TripPoint.Model.Domain
 {
@@ -82,6 +83,16 @@ namespace TripPoint.Model.Domain
         [Column(IsVersion = true)]
         private Binary _version;
         #endregion
+
+        public bool IsUnknown
+        {
+            get { return Latitude == 0.0 && Longitude == 0.0; }
+        }
+
+        public GeoCoordinate GeoCoordinate
+        {
+            get { return new GeoCoordinate(Latitude, Longitude); }
+        }
 
         #region INotifyPropertyChanged Members
 
