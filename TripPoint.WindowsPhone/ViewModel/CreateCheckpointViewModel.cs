@@ -41,7 +41,6 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             CreateCheckpointCommand = new RelayCommand(CreateCheckpointAction);
             CancelCreateCheckpointCommand = new RelayCommand(CancelCreateCheckpointAction);
-            AddPicturesCommand = new RelayCommand(AddPicturesAction);
         }
 
         public LocationService LocationService { get { return _locationService; } }
@@ -85,8 +84,6 @@ namespace TripPoint.WindowsPhone.ViewModel
         public ICommand CreateCheckpointCommand { get; private set; }
 
         public ICommand CancelCreateCheckpointCommand { get; private set; }
-
-        public ICommand AddPicturesCommand { get; private set; }
 
         private void CreateCheckpointAction()
         {
@@ -225,11 +222,6 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void CancelCreateCheckpointAction()
         {
             CloseView();
-        }
-
-        private void AddPicturesAction()
-        {
-            Logger.Log(this, "Add pictures");
         }
 
         public override void OnNavigatedTo(TripPointNavigationEventArgs e)

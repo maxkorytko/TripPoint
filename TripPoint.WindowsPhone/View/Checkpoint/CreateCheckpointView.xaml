@@ -61,11 +61,6 @@
                 <TextBlock Text="{Binding Localization.Resources.Notes}" />
                 <TextBox Text="{Binding Notes, Mode=TwoWay}"/>
             </StackPanel>
-
-            <StackPanel Grid.Row="3">
-                <Button Content="{Binding Localization.Resources.AddPictures}"
-                        Command="{Binding AddPicturesCommand}" />
-            </StackPanel>
         </Grid>
         
         <coding4Fun:ProgressOverlay Grid.RowSpan="2" 
