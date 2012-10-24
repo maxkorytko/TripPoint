@@ -3,6 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Linq;
+using Microsoft.Phone.Tasks;
 #endregion
 
 using TripPoint.Model.Domain;
@@ -22,6 +23,8 @@ namespace TripPoint.WindowsPhone.ViewModel
         private Checkpoint _latestCheckpoint;
         private bool _currentTripHasCheckpoints;
         private bool _currentTripHasNoCheckpoints;
+
+        private CameraCaptureTask _cameraCaptureTask;
         
         public CurrentTripViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
@@ -138,7 +141,27 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void AddPicturesAction()
         {
-            Logger.Log(this, "Add Pictures");
+            InitializeCameraCaptureTask();
+            ShowCameraCaptureTask();
+        }
+
+        private void InitializeCameraCaptureTask()
+        {
+            if (_cameraCaptureTask != null) return;
+
+            _cameraCaptureTask = new CameraCaptureTask();
+
+            _cameraCaptureTask.Completed += (sender, e) =>
+            {
+                if (e.TaskResult != TaskResult.OK || e.ChosenPhoto == null) return;
+
+                Logger.Log("Picture has been chosen");
+            };
+        }
+
+        private void ShowCameraCaptureTask()
+        {
+            _cameraCaptureTask.Show();
         }
 
         private void ViewCheckpointDetailsAction(Checkpoint checkpoint)
