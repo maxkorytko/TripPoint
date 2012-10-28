@@ -124,9 +124,6 @@
     <Compile Include="View\Checkpoint\CreateCheckpointView.xaml.cs">
       <DependentUpon>CreateCheckpointView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Picture\CreatePictureView.xaml.cs">
-      <DependentUpon>CreatePictureView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Settings\ApplicationSettingsView.xaml.cs">
       <DependentUpon>ApplicationSettingsView.xaml</DependentUpon>
     </Compile>
@@ -167,10 +164,6 @@
     <Page Include="View\Checkpoint\CreateCheckpointView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Picture\CreatePictureView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Settings\ApplicationSettingsView.xaml">
       <SubType>Designer</SubType>
