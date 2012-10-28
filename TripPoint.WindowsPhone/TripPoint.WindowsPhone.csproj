@@ -103,6 +103,7 @@
     <Compile Include="Utils\StateManager.cs" />
     <Compile Include="ViewModel\ApplicationSettingsViewModel.cs" />
     <Compile Include="ViewModel\CheckpointAddNotesViewModel.cs" />
+    <Compile Include="ViewModel\CheckpointAddPictureViewModel.cs" />
     <Compile Include="ViewModel\CheckpointDetailsViewModel.cs" />
     <Compile Include="ViewModel\CreateCheckpointViewModel.cs" />
     <Compile Include="ViewModel\CreateTripViewModel.cs" />
@@ -113,6 +114,9 @@
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\Checkpoint\CheckpointAddNotesView.xaml.cs">
       <DependentUpon>CheckpointAddNotesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Checkpoint\CheckpointAddPictureView.xaml.cs">
+      <DependentUpon>CheckpointAddPictureView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Checkpoint\CheckpointDetailsView.xaml.cs">
       <DependentUpon>CheckpointDetailsView.xaml</DependentUpon>
@@ -152,6 +156,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Checkpoint\CheckpointAddPictureView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Checkpoint\CheckpointDetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -161,8 +169,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Picture\CreatePictureView.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Settings\ApplicationSettingsView.xaml">
       <SubType>Designer</SubType>
