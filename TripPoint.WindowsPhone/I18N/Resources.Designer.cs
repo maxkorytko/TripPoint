@@ -106,6 +106,15 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to new picture.
+        /// </summary>
+        public static string CheckpointAddPicturesViewTitle {
+            get {
+                return ResourceManager.GetString("CheckpointAddPicturesViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
         public static string Confirm {

@@ -132,6 +132,9 @@
   <data name="CheckpointAddNotesViewTitle" xml:space="preserve">
     <value>new note</value>
   </data>
+  <data name="CheckpointAddPicturesViewTitle" xml:space="preserve">
+    <value>new picture</value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
