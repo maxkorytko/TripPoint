@@ -155,7 +155,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             {
                 if (e.TaskResult != TaskResult.OK || e.ChosenPhoto == null) return;
 
-                StateManager.Instance.Set<CapturedPicture>(CheckpointAddPictureViewModel.CAPTURED_PICTURE,
+                StateManager.Instance.Set<CapturedPicture>(CheckpointAddPicturesViewModel.CAPTURED_PICTURE,
                     new CapturedPicture(e.ChosenPhoto));
             };
         }
@@ -216,7 +216,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static bool ReturningFromCameraCaptureTask()
         {
             return StateManager.Instance.Get<CapturedPicture>(
-                CheckpointAddPictureViewModel.CAPTURED_PICTURE) != null;
+                CheckpointAddPicturesViewModel.CAPTURED_PICTURE) != null;
         }
     }
 }
