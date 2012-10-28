@@ -9,9 +9,9 @@ using Microsoft.Phone.Tasks;
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
-using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
 using TripPoint.WindowsPhone.I18N;
+using TripPoint.WindowsPhone.State;
 using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
@@ -155,7 +155,8 @@ namespace TripPoint.WindowsPhone.ViewModel
             {
                 if (e.TaskResult != TaskResult.OK || e.ChosenPhoto == null) return;
 
-                Logger.Log("Picture has been chosen");
+                StateManager.Instance.Set<CapturedPicture>(CheckpointAddPictureViewModel.CAPTURED_PICTURE,
+                    new CapturedPicture(e.ChosenPhoto));
             };
         }
 
@@ -183,6 +184,11 @@ namespace TripPoint.WindowsPhone.ViewModel
             InitializeCurrentTrip();
             InitializeLatestCheckpoint();
             InitializeCurrentTripHasCheckpoints();
+
+            if (ReturningFromCameraCaptureTask())
+            {
+                Navigator.Navigate(string.Format("/Checkpoints/{0}/Add/Picture", LatestCheckpoint.ID));
+            }
         }
 
         private void InitializeCurrentTrip()
@@ -205,6 +211,12 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             CurrentTripHasCheckpoints = CurrentTrip.Checkpoints.Count > 0;
             CurrentTripHasNoCheckpoints = !CurrentTripHasCheckpoints;
+        }
+
+        private static bool ReturningFromCameraCaptureTask()
+        {
+            return StateManager.Instance.Get<CapturedPicture>(
+                CheckpointAddPictureViewModel.CAPTURED_PICTURE) != null;
         }
     }
 }

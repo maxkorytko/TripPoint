@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Phone.Shell;
 
-namespace TripPoint.WindowsPhone.Utils
+namespace TripPoint.WindowsPhone.State
 {
     public class StateManager
     {
