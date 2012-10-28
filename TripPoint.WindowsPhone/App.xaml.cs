@@ -12,6 +12,7 @@ using TripPoint.Model.Data;
 using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
+using TripPoint.WindowsPhone.State;
 using TripPoint.WindowsPhone.Navigation;
 
 namespace TripPoint.WindowsPhone
@@ -180,6 +181,7 @@ namespace TripPoint.WindowsPhone
         {
             InitializeNavigation();
             SetStartupPage();
+            StateManager.Initialize(PhoneApplicationService.Current.State);
         }
 
         private void InitializeNavigation()
