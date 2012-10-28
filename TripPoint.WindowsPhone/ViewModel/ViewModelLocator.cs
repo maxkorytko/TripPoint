@@ -13,6 +13,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static TripDetailsViewModel _tripDetailsViewModel;
         private static CreateCheckpointViewModel _createCheckpointViewModel;
         private static CheckpointAddNotesViewModel _checkpointAddNotesViewModel;
+        private static CheckpointAddPicturesViewModel _checkpointAddPicturesViewModel;
         private static CheckpointDetailsViewModel _checkpointDetailsViewModel;
         private static ApplicationSettingsViewModel _applicationSettingsViewModel;
 
@@ -27,6 +28,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             InitializeTripDetailsViewModel();
             InitializeCreateCheckpointViewModel();
             InitializeCheckpointAddNotesViewModel();
+            InitializeCheckpointAddPicturesViewModel();
             InitializeCheckpointDetailsViewModel();
             InitializeApplicationSettingsViewModel();
         }
@@ -219,6 +221,37 @@ namespace TripPoint.WindowsPhone.ViewModel
         }
         #endregion
 
+        #region CheckpointAddPicturesViewModel
+        private static void InitializeCheckpointAddPicturesViewModel()
+        {
+            if (_checkpointAddPicturesViewModel == null)
+                _checkpointAddPicturesViewModel = new CheckpointAddPicturesViewModel();
+        }
+
+        public static CheckpointAddPicturesViewModel CheckpointAddPicturesViewModelStatic
+        {
+            get
+            {
+                InitializeCheckpointAddPicturesViewModel();
+                return _checkpointAddPicturesViewModel;
+            }
+        }
+
+        public CheckpointAddPicturesViewModel CheckpointAddPicturesViewModel
+        {
+            get
+            {
+                return CheckpointAddPicturesViewModelStatic;
+            }
+        }
+
+        private static void ClearCheckpointAddPicturesViewModel()
+        {
+            _checkpointAddPicturesViewModel.Cleanup();
+            _checkpointAddPicturesViewModel = null;
+        }
+        #endregion
+
         #region CheckpointDetailsViewModel
         private static void InitializeCheckpointDetailsViewModel()
         {
@@ -280,6 +313,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             _applicationSettingsViewModel = null;
         }
         #endregion
+        
         /// <summary>
         /// Cleans up all the resources.
         /// </summary>
@@ -291,6 +325,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             ClearTripDetailsViewModel();
             ClearCreateCheckpointViewModel();
             ClearCheckpointAddNotesViewModel();
+            ClearCheckpointAddPicturesViewModel();
             ClearCheckpointDetailsViewModel();
             ClearApplicationSettingsViewModel();
         }
