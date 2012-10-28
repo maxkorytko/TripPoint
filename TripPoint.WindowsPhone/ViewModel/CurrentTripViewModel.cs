@@ -30,6 +30,11 @@ namespace TripPoint.WindowsPhone.ViewModel
             : base(repositoryFactory)
         {
             InitializeCommands();
+
+            // it is important to initialize the camera capture task in the constructor
+            // to ensure the application receives the results of the task
+            // even when the application was deactivated and activated again
+            InitializeCameraCaptureTask();
         }
 
         private void InitializeCommands()
@@ -141,7 +146,6 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void AddPicturesAction()
         {
-            InitializeCameraCaptureTask();
             ShowCameraCaptureTask();
         }
 
@@ -153,7 +157,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             _cameraCaptureTask.Completed += (sender, e) =>
             {
-                if (e.TaskResult != TaskResult.OK || e.ChosenPhoto == null) return;
+                // TODO: uncomment
+                //if (e.TaskResult != TaskResult.OK || e.ChosenPhoto == null) return;
 
                 StateManager.Instance.Set<CapturedPicture>(CheckpointAddPicturesViewModel.CAPTURED_PICTURE,
                     new CapturedPicture(e.ChosenPhoto));
@@ -187,7 +192,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             if (ReturningFromCameraCaptureTask())
             {
-                Navigator.Navigate(string.Format("/Checkpoints/{0}/Add/Picture", LatestCheckpoint.ID));
+                Navigator.Navigate(string.Format("/Checkpoints/{0}/Add/Pictures", LatestCheckpoint.ID));
             }
         }
 
