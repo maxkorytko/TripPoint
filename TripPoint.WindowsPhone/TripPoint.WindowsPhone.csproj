@@ -70,6 +70,7 @@
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="system.data.linq" />
     <Reference Include="System.Device" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -116,8 +117,8 @@
     <Compile Include="View\Checkpoint\CheckpointAddNotesView.xaml.cs">
       <DependentUpon>CheckpointAddNotesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Checkpoint\CheckpointAddPictureView.xaml.cs">
-      <DependentUpon>CheckpointAddPictureView.xaml</DependentUpon>
+    <Compile Include="View\Checkpoint\CheckpointAddPicturesView.xaml.cs">
+      <DependentUpon>CheckpointAddPicturesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Checkpoint\CheckpointDetailsView.xaml.cs">
       <DependentUpon>CheckpointDetailsView.xaml</DependentUpon>
@@ -154,7 +155,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Checkpoint\CheckpointAddPictureView.xaml">
+    <Page Include="View\Checkpoint\CheckpointAddPicturesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
