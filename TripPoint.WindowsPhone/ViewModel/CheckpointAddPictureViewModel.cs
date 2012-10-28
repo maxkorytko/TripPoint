@@ -13,6 +13,6 @@ namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CheckpointAddPictureViewModel
     {
-
+        public static readonly string CAPTURED_PICTURE = "CheckpointAddPictureViewModel.CapturedPicture";
     }
 }
