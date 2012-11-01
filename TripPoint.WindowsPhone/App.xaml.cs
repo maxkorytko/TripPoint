@@ -172,15 +172,18 @@ namespace TripPoint.WindowsPhone
 
         private static void InitializeApplicationSettings()
         {
-            var settingsStore = IsolatedStorageSettings.ApplicationSettings;
-
-            ApplicationSettings.Initialize(settingsStore);
+            ApplicationSettings.Initialize(IsolatedStorageSettings.ApplicationSettings);
         }
 
         private void BootstrapPhoneApplication()
         {
+            InitializeStateManager();
             InitializeNavigation();
             SetStartupPage();
+        }
+
+        private static void InitializeStateManager()
+        {
             StateManager.Initialize(PhoneApplicationService.Current.State);
         }
 
