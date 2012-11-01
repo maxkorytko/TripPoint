@@ -225,7 +225,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static void InitializeCheckpointAddPicturesViewModel()
         {
             if (_checkpointAddPicturesViewModel == null)
-                _checkpointAddPicturesViewModel = new CheckpointAddPicturesViewModel();
+                _checkpointAddPicturesViewModel = new CheckpointAddPicturesViewModel(RepositoryFactory.Create());
         }
 
         public static CheckpointAddPicturesViewModel CheckpointAddPicturesViewModelStatic
