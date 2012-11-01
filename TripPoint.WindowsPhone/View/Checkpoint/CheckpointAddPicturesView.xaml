@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:appBar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
     xmlns:wpcontrols="clr-namespace:System.Windows.Controls;assembly=WindowsPhoneWatermarkTextBoxControl"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -43,4 +44,15 @@
         </Grid>
     </Grid>
 
+    <appBar:Bindable.ApplicationBar>
+        <appBar:BindableApplicationBar IsVisible="True" Mode="Minimized" Opacity="0.5">
+            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Save}"
+                                                 IconUri="/Assets/Images/Dark/appbar.save.rest.png" 
+                                                 Command="{Binding AddPictureCommand}" />
+
+            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Cancel}"
+                                                 IconUri="/Assets/Images/Dark/appbar.stop.rest.png" 
+                                                 Command="{Binding CancelAddPictureCommand}" />
+        </appBar:BindableApplicationBar>
+    </appBar:Bindable.ApplicationBar>
 </phone:PhoneApplicationPage>

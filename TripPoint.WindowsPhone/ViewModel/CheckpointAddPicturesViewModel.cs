@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Windows.Input;
 
+using TripPoint.Model.Utils;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.WindowsPhone.State;
+using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
@@ -20,7 +23,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void InitializeCommands()
         {
-   
+            AddPictureCommand = new RelayCommand(AddPictureAction);
+            CancelAddPictureCommand = new RelayCommand(CancelAddPictureAction);
         }
 
         public CapturedPicture Picture
@@ -45,6 +49,20 @@ namespace TripPoint.WindowsPhone.ViewModel
                 _pictureTitle = value;
                 RaisePropertyChanged("PictureTitle");
             }
+        }
+
+        public ICommand AddPictureCommand { get; private set; }
+
+        public ICommand CancelAddPictureCommand { get; private set; }
+
+        private void AddPictureAction()
+        {
+            Logger.Log("add picture");
+        }
+
+        private void CancelAddPictureAction()
+        {
+            Navigator.GoBack();
         }
 
         public override void OnNavigatedTo(Navigation.TripPointNavigationEventArgs e)
