@@ -1,7 +1,9 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 
 using TripPoint.WindowsPhone.ViewModel;
+using TripPoint.WindowsPhone.Navigation;
 
 namespace TripPoint.WindowsPhone.View.Trip
 {
@@ -10,6 +12,13 @@ namespace TripPoint.WindowsPhone.View.Trip
         public CurrentTripView()
         {
             InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            (DataContext as CurrentTripViewModel).OnNavigatedTo(new TripPointNavigationEventArgs(e));
         }
 
         /// <summary>

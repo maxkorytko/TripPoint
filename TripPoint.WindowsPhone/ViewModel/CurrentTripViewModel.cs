@@ -2,6 +2,7 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Resources;
 using System.Linq;
 using Microsoft.Phone.Tasks;
 #endregion
@@ -34,7 +35,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             // it is important to initialize the camera capture task in the constructor
             // to ensure the application receives the results of the task
             // even when the application was deactivated and activated again
-            InitializeCameraCaptureTask();
+            //InitializeCameraCaptureTask();
         }
 
         private void InitializeCommands()
@@ -146,6 +147,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void AddPicturesAction()
         {
+            InitializeCameraCaptureTask();
             ShowCameraCaptureTask();
         }
 
@@ -157,12 +159,25 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             _cameraCaptureTask.Completed += (sender, e) =>
             {
+                SaveDummyPicture();
+
                 // TODO: uncomment
+                
                 //if (e.TaskResult != TaskResult.OK || e.ChosenPhoto == null) return;
 
-                StateManager.Instance.Set<CapturedPicture>(CheckpointAddPicturesViewModel.CAPTURED_PICTURE,
-                    new CapturedPicture(e.ChosenPhoto));
+                //StateManager.Instance.Set<CapturedPicture>(CheckpointAddPicturesViewModel.CAPTURED_PICTURE,
+                //    new CapturedPicture(e.ChosenPhoto));
             };
+        }
+
+        // TODO: remove
+        private void SaveDummyPicture()
+        {
+            var pictureUri = new Uri("Assets/Photos/Cat.jpg", UriKind.Relative);
+            var resourceStream = Application.GetResourceStream(pictureUri);
+
+            StateManager.Instance.Set<CapturedPicture>(CheckpointAddPicturesViewModel.CAPTURED_PICTURE,
+                new CapturedPicture(resourceStream.Stream));
         }
 
         private void ShowCameraCaptureTask()
