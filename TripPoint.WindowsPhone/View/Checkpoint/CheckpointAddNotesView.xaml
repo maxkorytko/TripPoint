@@ -33,7 +33,8 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <wpcontrols:WatermarkTextBox WatermarkText="type a note" Text="{Binding Notes, Mode=TwoWay}"/>
+            <wpcontrols:WatermarkTextBox WatermarkText="{Binding Localization.Resources.TypeNote}" 
+                                         Text="{Binding Notes, Mode=TwoWay}"/>
         </Grid>
     </Grid>
 

@@ -79,6 +79,15 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to title.
+        /// </summary>
+        public static string AddPictureTitle {
+            get {
+                return ResourceManager.GetString("AddPictureTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trip Point.
         /// </summary>
         public static string AppTitle {
@@ -392,6 +401,15 @@ namespace TripPoint.WindowsPhone.I18N {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to type note.
+        /// </summary>
+        public static string TypeNote {
+            get {
+                return ResourceManager.GetString("TypeNote", resourceCulture);
             }
         }
     }

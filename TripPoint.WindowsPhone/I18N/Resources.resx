@@ -123,6 +123,9 @@
   <data name="AddPictures" xml:space="preserve">
     <value>Add Pictures</value>
   </data>
+  <data name="AddPictureTitle" xml:space="preserve">
+    <value>title</value>
+  </data>
   <data name="AppTitle" xml:space="preserve">
     <value>Trip Point</value>
   </data>
@@ -229,5 +232,8 @@ Would you like to save this checkpoint?</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
+  </data>
+  <data name="TypeNote" xml:space="preserve">
+    <value>type note</value>
   </data>
 </root>
