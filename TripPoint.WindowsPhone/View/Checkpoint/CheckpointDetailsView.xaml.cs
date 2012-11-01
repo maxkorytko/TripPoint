@@ -1,5 +1,7 @@
 ﻿using Microsoft.Phone.Controls;
+using System.Device.Location;
 
+using TripPoint.WindowsPhone.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 
 namespace TripPoint.WindowsPhone.View.Checkpoint
@@ -29,9 +31,21 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
             TripPoint.Model.Utils.Logger.Log(this, "Map is visible: {0}", isVisible);
 
             if (isVisible)
-                ShowPivotItem(CheckpointMap);
+                ShowCheckpointMap();
             else
-                HidePivotItem(CheckpointMap);
+                HideCheckpointMap();
+        }
+
+        private void ShowCheckpointMap()
+        {
+            var mapCenter = (DataContext as CheckpointDetailsViewModel).Checkpoint.Location.GeoCoordinate ??
+                            GeoCoordinate.Unknown;
+
+            // we don't want to display the map unless we known the checkpoint location
+            if (mapCenter == GeoCoordinate.Unknown) return;
+
+            CheckpointMap.MapCenter = mapCenter;
+            ShowPivotItem(CheckpointMapPivotItem);
         }
 
         private void ShowPivotItem(PivotItem item)
@@ -40,6 +54,12 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
 
             if (CheckpointDetails.Items.IndexOf(item) == -1)
                 CheckpointDetails.Items.Add(item);
+        }
+
+        private void HideCheckpointMap()
+        {
+            CheckpointMap.MapCenter = GeoCoordinate.Unknown;
+            HidePivotItem(CheckpointMapPivotItem);
         }
 
         private void HidePivotItem(PivotItem item)

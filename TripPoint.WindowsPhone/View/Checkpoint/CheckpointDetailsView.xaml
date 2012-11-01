@@ -83,11 +83,16 @@
                 </ListBox>
             </controls:PivotItem>
             
-            <controls:PivotItem Header="Map" x:Name="CheckpointMap">
-                <jwcontrols:StaticMap MapCenter="{Binding Checkpoint.Location.GeoCoordinate}"
-                                      Margin="-12,0,-12,0"
+            <controls:PivotItem Header="Map" x:Name="CheckpointMapPivotItem">
+                <!-- 
+                Do not bind MapCenter to Checkpoint.Location.GeoCoordinate
+                It will cause ArgumentException when checkpoint gets deleted
+                This is because Location will be set to null
+                -->
+                <jwcontrols:StaticMap Name="CheckpointMap" Margin="-12,0,-12,0"
                                       Provider="Bing" 
                                       ZoomLevel="15" />
+                
             </controls:PivotItem>
             
         </controls:Pivot>
