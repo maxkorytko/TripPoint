@@ -13,16 +13,23 @@ namespace TripPoint.WindowsPhone.State
     {
         private ImageSource _source;
 
-        public CapturedPicture(Stream picture)
+        public CapturedPicture(string fileName, Stream picture)
         {
+            if (String.IsNullOrWhiteSpace(fileName))
+                throw new ArgumentException("fileName");
+
             if (picture == null)
                 throw new ArgumentException("picture");
 
+            FileName = fileName;
             RawBytes = TripPointConvert.ToBytes(picture);
         }
 
         [DataMember]
         public byte[] RawBytes { get; set; }
+
+        [DataMember]
+        public string FileName { get; set; }
 
         [IgnoreDataMember]
         public ImageSource Source

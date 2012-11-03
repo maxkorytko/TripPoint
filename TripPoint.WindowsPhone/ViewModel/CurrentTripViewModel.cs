@@ -1,5 +1,6 @@
 ﻿#region SDK Usings
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Resources;
@@ -10,6 +11,7 @@ using Microsoft.Phone.Tasks;
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
+using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
 using TripPoint.WindowsPhone.I18N;
 using TripPoint.WindowsPhone.State;
@@ -159,26 +161,34 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             _cameraCaptureTask.Completed += (sender, e) =>
             {
-                SaveDummyPicture();
+                if (e.TaskResult != TaskResult.OK || e.ChosenPhoto == null) return;
 
-                // TODO: uncomment
-                
-                //if (e.TaskResult != TaskResult.OK || e.ChosenPhoto == null) return;
-
-                //StateManager.Instance.Set<CapturedPicture>(CheckpointAddPicturesViewModel.CAPTURED_PICTURE,
-                //    new CapturedPicture(e.ChosenPhoto));
+                SaveCapturedPhoto(e.OriginalFileName, e.ChosenPhoto);
             };
         }
 
-        // TODO: remove
-        private void SaveDummyPicture()
+        private static void SaveCapturedPhoto(string fileName, Stream photo)
         {
-            var pictureUri = new Uri("Assets/Photos/Cat.jpg", UriKind.Relative);
-            var resourceStream = Application.GetResourceStream(pictureUri);
-
-            StateManager.Instance.Set<CapturedPicture>(CheckpointAddPicturesViewModel.CAPTURED_PICTURE,
-                new CapturedPicture(resourceStream.Stream));
+            try
+            {
+                StateManager.Instance.Set<CapturedPicture>(CheckpointAddPicturesViewModel.CAPTURED_PICTURE,
+                    new CapturedPicture(fileName, photo));
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Failed to save captured photo - {0}", new String[]{ ex.Message });
+            }
         }
+
+        // TODO: remove
+        //private void SaveDummyPicture()
+        //{
+        //    var pictureUri = new Uri("Assets/Photos/Cat.jpg", UriKind.Relative);
+        //    var resourceStream = Application.GetResourceStream(pictureUri);
+
+        //    StateManager.Instance.Set<CapturedPicture>(CheckpointAddPicturesViewModel.CAPTURED_PICTURE,
+        //        new CapturedPicture(resourceStream.Stream));
+        //}
 
         private void ShowCameraCaptureTask()
         {
