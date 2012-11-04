@@ -69,6 +69,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             base.OnNavigatedTo(e);
 
+            ResetViewModel();
             InitializePicture();
         }
 
@@ -76,6 +77,12 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             Picture = StateManager.Instance.Get<CapturedPicture>(CAPTURED_PICTURE);
             StateManager.Instance.Remove(CAPTURED_PICTURE);
+        }
+
+        private void ResetViewModel()
+        {
+            Picture = null;
+            PictureTitle = String.Empty;
         }
     }
 }
