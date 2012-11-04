@@ -65,6 +65,7 @@
     <Compile Include="Domain\Checkpoint.cs" />
     <Compile Include="Domain\GeoLocation.cs" />
     <Compile Include="Domain\Note.cs" />
+    <Compile Include="Domain\Picture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Trip.cs" />
     <Compile Include="Settings\ApplicationSettings.cs" />

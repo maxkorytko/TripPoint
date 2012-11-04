@@ -19,5 +19,7 @@ namespace TripPoint.Model.Data
         public Table<Note> Notes;
 
         public Table<GeoLocation> Locations;
+
+        public Table<Picture> Pictures;
     }
 }

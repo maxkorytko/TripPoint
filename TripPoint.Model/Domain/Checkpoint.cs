@@ -18,6 +18,7 @@ namespace TripPoint.Model.Domain
         private string _title;
         
         private EntitySet<Note> _notes;
+        private EntitySet<Picture> _pictures;
         private EntityRef<Trip> _trip;
         private EntityRef<GeoLocation> _location;
 
@@ -25,7 +26,9 @@ namespace TripPoint.Model.Domain
         {
             Timestamp = DateTime.Now;
             Location = GeoLocation.Unknown;
+            
             _notes = new EntitySet<Note>(AddNoteAction, RemoveNoteAction);
+            _pictures = new EntitySet<Picture>(AddPictureAction, RemovePictureAction);
         }
 
         #region ID
@@ -112,6 +115,32 @@ namespace TripPoint.Model.Domain
         {
             NotifyPropertyChanging("Note");
             note.Checkpoint = null;
+        }
+        #endregion
+
+        #region Pictures
+        [Association(Storage = "_pictures", OtherKey = "_checkpointID", ThisKey = "ID")]
+        public EntitySet<Picture> Pictures
+        {
+            get { return _pictures; }
+            set
+            {
+                _pictures.Assign(value);
+            }
+        }
+
+        // Called during an add operation
+        private void AddPictureAction(Picture picture)
+        {
+            NotifyPropertyChanging("Picture");
+            picture.Checkpoint = this;
+        }
+
+        // Called during a remove operation
+        private void RemovePictureAction(Picture picture)
+        {
+            NotifyPropertyChanging("Picture");
+            picture.Checkpoint = null;
         }
         #endregion
 
