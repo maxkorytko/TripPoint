@@ -15,7 +15,7 @@ namespace TripPoint.Model.Domain
     {
         private int _checkpointID;
         private DateTime _timestamp;
-        private String _title;
+        private string _title;
         
         private EntitySet<Note> _notes;
         private EntityRef<Trip> _trip;
