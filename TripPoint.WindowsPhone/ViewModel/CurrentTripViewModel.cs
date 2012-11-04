@@ -3,7 +3,6 @@ using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Resources;
 using System.Linq;
 using Microsoft.Phone.Tasks;
 #endregion
@@ -15,6 +14,7 @@ using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
 using TripPoint.WindowsPhone.I18N;
 using TripPoint.WindowsPhone.State;
+using TripPoint.WindowsPhone.Utils;
 using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
@@ -163,7 +163,13 @@ namespace TripPoint.WindowsPhone.ViewModel
             {
                 if (e.TaskResult != TaskResult.OK || e.ChosenPhoto == null) return;
 
-                SaveCapturedPhoto(e.OriginalFileName, e.ChosenPhoto);
+                // the orientation of the photo taken by the phone camera
+                // will be different from the phone orientation
+                // ensure we always rotate the photo to portrait orientation
+                //
+                var photo = ImageUtils.RotateImageToPortrait(e.ChosenPhoto);
+                
+                SaveCapturedPhoto(e.OriginalFileName, photo);
             };
         }
 

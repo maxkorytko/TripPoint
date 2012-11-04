@@ -2,9 +2,9 @@
 using System.IO;
 using System.Runtime.Serialization;
 using System.Windows.Media;
-using Microsoft.Phone;
 
 using TripPoint.Model.Utils;
+using TripPoint.WindowsPhone.Utils;
 
 namespace TripPoint.WindowsPhone.State
 {
@@ -13,7 +13,11 @@ namespace TripPoint.WindowsPhone.State
     {
         private ImageSource _source;
 
-        public CapturedPicture(string fileName, Stream picture)
+        public CapturedPicture(string fileName, Stream picture) :
+            this(fileName, TripPointConvert.ToBytes(picture))
+        {   }
+
+        public CapturedPicture(string fileName, byte[] picture)
         {
             if (String.IsNullOrWhiteSpace(fileName))
                 throw new ArgumentException("fileName");
@@ -22,7 +26,7 @@ namespace TripPoint.WindowsPhone.State
                 throw new ArgumentException("picture");
 
             FileName = fileName;
-            RawBytes = TripPointConvert.ToBytes(picture);
+            RawBytes = picture;
         }
 
         [DataMember]
@@ -40,13 +44,12 @@ namespace TripPoint.WindowsPhone.State
                 {
                     using (var stream = new MemoryStream(RawBytes))
                     {
-                        _source = PictureDecoder.DecodeJpeg(stream);
+                        _source = ImageUtils.CreateWriteableBitmapFromStream(stream);
                     }
                 }
 
                 return _source;
             }
         }
-
     }
 }
