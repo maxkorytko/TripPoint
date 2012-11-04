@@ -81,6 +81,9 @@
     <Reference Include="WindowsPhoneWatermarkTextBoxControl">
       <HintPath>Lib\WindowsPhoneWatermarkTextBoxControl.dll</HintPath>
     </Reference>
+    <Reference Include="WriteableBitmapExWinPhone">
+      <HintPath>Lib\WriteableBitmapExWinPhone.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -103,6 +106,12 @@
     <Compile Include="State\CapturedPicture.cs" />
     <Compile Include="State\StateManager.cs" />
     <Compile Include="Utils\CountdownTimer.cs" />
+    <Compile Include="Utils\ExifLib\ExifIds.cs" />
+    <Compile Include="Utils\ExifLib\ExifIO.cs" />
+    <Compile Include="Utils\ExifLib\ExifReader.cs" />
+    <Compile Include="Utils\ExifLib\ExifTag.cs" />
+    <Compile Include="Utils\ExifLib\JpegInfo.cs" />
+    <Compile Include="Utils\ImageUtils.cs" />
     <Compile Include="ViewModel\ApplicationSettingsViewModel.cs" />
     <Compile Include="ViewModel\CheckpointAddNotesViewModel.cs" />
     <Compile Include="ViewModel\CheckpointAddPicturesViewModel.cs" />
