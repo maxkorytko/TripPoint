@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Input;
+using System.Windows.Media;
 using Microsoft.Phone.Controls;
 
 using TripPoint.Model.Domain;
@@ -7,6 +9,7 @@ using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.State;
+using TripPoint.WindowsPhone.Utils;
 using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
@@ -16,12 +19,10 @@ namespace TripPoint.WindowsPhone.ViewModel
         public static readonly string CAPTURED_PICTURE = "CheckpointAddPictureViewModel.CapturedPicture";
 
         private int _checkpointID;
-        
-        private CapturedPicture _picture;
-        private string _pictureTitle;
+
+        private Picture _picture;
 
         private ICheckpointRepository _checkpointRepository;
-        private IPictureRepository _pictureRepository;
 
         public CheckpointAddPicturesViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
@@ -35,7 +36,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             CancelAddPictureCommand = new RelayCommand(CancelAddPictureAction);
         }
 
-        public CapturedPicture Picture
+        public Picture Picture
         {
             get { return _picture; }
             set
@@ -47,18 +48,6 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
-        public string PictureTitle
-        {
-            get { return _pictureTitle; }
-            set
-            {
-                if (_pictureTitle == value) return;
-
-                _pictureTitle = value;
-                RaisePropertyChanged("PictureTitle");
-            }
-        }
-
         public ICommand AddPictureCommand { get; private set; }
 
         public ICommand CancelAddPictureCommand { get; private set; }
@@ -66,32 +55,18 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void AddPictureAction()
         {
             var checkpoint = _checkpointRepository.FindCheckpoint(_checkpointID);
+            
+            if (checkpoint != null)
+            {
+                checkpoint.Pictures.Add(Picture);
+                _checkpointRepository.UpdateCheckpoint(checkpoint);
 
-            var picture = CreatePicture(checkpoint);
-            SavePicture(picture);
+                // TODO:
+                // save picture to isolated storage.
+                // consider applying a strategy pattern for saving/restoring objects from IsoStorage
+            }
 
             Navigator.GoBack();
-        }
-
-        private Picture CreatePicture(Checkpoint checkpoint)
-        {
-            if (checkpoint == null) return null;
-
-            var picture = new Picture
-            {
-                Checkpoint = checkpoint,
-                FileName = Picture.FileName,
-                Title = PictureTitle
-            };
-
-            return picture;
-        }
-
-        private void SavePicture(Picture picture)
-        {
-            if (picture == null) return;
-
-            //_pictureRepository.SavePicture(picture);
         }
 
         private void CancelAddPictureAction()
@@ -112,14 +87,29 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void InitializePicture()
         {
-            Picture = StateManager.Instance.Get<CapturedPicture>(CAPTURED_PICTURE);
+            var capturedPicture = StateManager.Instance.Get<CapturedPicture>(CAPTURED_PICTURE);
             StateManager.Instance.Remove(CAPTURED_PICTURE);
+
+            Picture = CreatePicture(capturedPicture);
+        }
+
+        private static Picture CreatePicture(CapturedPicture source)
+        {
+            var picture = new DisplayablePicture();
+
+            if (source != null)
+            {
+                picture.FileName = source.FileName;
+                picture.RawBytes = source.RawBytes;
+                picture.Title = String.Empty;
+            }
+
+            return picture;
         }
 
         private void ResetViewModel()
         {
             Picture = null;
-            PictureTitle = String.Empty;
         }
 
         private static int GetCheckpointID(PhoneApplicationPage view)
@@ -129,6 +119,27 @@ namespace TripPoint.WindowsPhone.ViewModel
             var checkpointIdParameter = view.TryGetQueryStringParameter("checkpointID");
 
             return TripPointConvert.ToInt32(checkpointIdParameter);
-        } 
+        }
+
+        public class DisplayablePicture : Picture
+        {
+            private ImageSource _source;
+
+            public ImageSource Source
+            {
+                get
+                {
+                    if (_source == null)
+                    {
+                        using (var stream = new MemoryStream(RawBytes))
+                        {
+                            _source = ImageUtils.CreateWriteableBitmapFromStream(stream);
+                        }
+                    }
+
+                    return _source;
+                }
+            }
+        }
     }
 }

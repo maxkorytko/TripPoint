@@ -1,11 +1,8 @@
-﻿#region SDK Usings
-using System;
-using System.IO;
+﻿using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Linq;
 using Microsoft.Phone.Tasks;
-#endregion
 
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
@@ -33,11 +30,6 @@ namespace TripPoint.WindowsPhone.ViewModel
             : base(repositoryFactory)
         {
             InitializeCommands();
-
-            // it is important to initialize the camera capture task in the constructor
-            // to ensure the application receives the results of the task
-            // even when the application was deactivated and activated again
-            //InitializeCameraCaptureTask();
         }
 
         private void InitializeCommands()
@@ -150,7 +142,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void AddPicturesAction()
         {
             InitializeCameraCaptureTask();
-            ShowCameraCaptureTask();
+            _cameraCaptureTask.Show();
         }
 
         private void InitializeCameraCaptureTask()
@@ -168,37 +160,22 @@ namespace TripPoint.WindowsPhone.ViewModel
                 // ensure we always rotate the photo to portrait orientation
                 //
                 var photo = ImageUtils.RotateImageToPortrait(e.ChosenPhoto);
-                
-                SaveCapturedPhoto(e.OriginalFileName, photo);
+
+                SaveCapturedPhoto(new CapturedPicture(e.OriginalFileName, photo));
             };
         }
 
-        private static void SaveCapturedPhoto(string fileName, Stream photo)
+        private static void SaveCapturedPhoto(CapturedPicture picture)
         {
             try
             {
                 StateManager.Instance.Set<CapturedPicture>(CheckpointAddPicturesViewModel.CAPTURED_PICTURE,
-                    new CapturedPicture(fileName, photo));
+                    picture);
             }
             catch (Exception ex)
             {
                 Logger.Log("Failed to save captured photo - {0}", new String[]{ ex.Message });
             }
-        }
-
-        // TODO: remove
-        //private void SaveDummyPicture()
-        //{
-        //    var pictureUri = new Uri("Assets/Photos/Cat.jpg", UriKind.Relative);
-        //    var resourceStream = Application.GetResourceStream(pictureUri);
-
-        //    StateManager.Instance.Set<CapturedPicture>(CheckpointAddPicturesViewModel.CAPTURED_PICTURE,
-        //        new CapturedPicture(resourceStream.Stream));
-        //}
-
-        private void ShowCameraCaptureTask()
-        {
-            _cameraCaptureTask.Show();
         }
 
         private void ViewCheckpointDetailsAction(Checkpoint checkpoint)

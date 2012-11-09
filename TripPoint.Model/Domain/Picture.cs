@@ -13,8 +13,7 @@ namespace TripPoint.Model.Domain
         private int _pictureID;
         private string _fileName;
         private string _title;
-        private ImageSource _source;
-
+        
         private EntityRef<Checkpoint> _checkpoint;
 
         #region ID
@@ -101,20 +100,7 @@ namespace TripPoint.Model.Domain
         }
         #endregion
 
-        #region Source
-        public ImageSource Source
-        {
-            get
-            {
-                if (_source == null)
-                {
-                    // TODO: create image source
-                }
-
-                return _source;
-            }
-        }
-        #endregion
+        public byte[] RawBytes { get; set; }
 
         #region INotifyPropertyChanged Members
 

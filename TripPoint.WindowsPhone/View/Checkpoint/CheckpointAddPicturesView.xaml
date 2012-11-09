@@ -37,7 +37,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <wpcontrols:WatermarkTextBox Grid.Row="0" Text="{Binding PictureTitle, Mode=TwoWay}"
+            <wpcontrols:WatermarkTextBox Grid.Row="0" Text="{Binding Picture.Title, Mode=TwoWay}"
                 WatermarkText="{Binding Localization.Resources.AddPictureTitle}" />
 
             <Image Grid.Row="1" Source="{Binding Picture.Source}" Stretch="Uniform" />
