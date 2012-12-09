@@ -13,6 +13,7 @@ using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.State;
+using TripPoint.WindowsPhone.State.Data.Repository.Factory;
 using TripPoint.WindowsPhone.Navigation;
 
 namespace TripPoint.WindowsPhone
@@ -34,7 +35,8 @@ namespace TripPoint.WindowsPhone
             UnhandledException += Application_UnhandledException;
             
             // Wire up dependencies
-            RepositoryFactory.Initialize(new DatabaseRepositoryFactory());
+            RepositoryFactory.Initialize(new WindowsPhoneRepositoryFactory(
+                new DatabaseRepositoryFactory()));
 
             // Creates a dabase if necessary
             // Must be called before InitializeComponent

@@ -14,7 +14,6 @@ namespace TripPoint.WindowsPhone.ViewModel
     public class CreateTripViewModel : TripPointViewModelBase
     {
         private Trip _trip;
-        private bool _canCancelCreateTrip;
         private ITripRepository _tripRepository;
 
         public CreateTripViewModel(IRepositoryFactory repositoryFactory)

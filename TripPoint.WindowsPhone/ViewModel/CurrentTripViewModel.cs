@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Linq;
@@ -161,7 +162,8 @@ namespace TripPoint.WindowsPhone.ViewModel
                 //
                 var photo = ImageUtils.RotateImageToPortrait(e.ChosenPhoto);
 
-                SaveCapturedPhoto(new CapturedPicture(e.OriginalFileName, photo));
+                SaveCapturedPhoto(new CapturedPicture(Path.GetFileNameWithoutExtension(e.OriginalFileName),
+                    photo));
             };
         }
 
@@ -198,7 +200,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             InitializeLatestCheckpoint();
             InitializeCurrentTripHasCheckpoints();
 
-            if (ReturningFromCameraCaptureTask())
+            if (IsReturningFromCameraCaptureTask())
             {
                 Navigator.Navigate(string.Format("/Checkpoints/{0}/Add/Pictures", LatestCheckpoint.ID));
             }
@@ -226,7 +228,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             CurrentTripHasNoCheckpoints = !CurrentTripHasCheckpoints;
         }
 
-        private static bool ReturningFromCameraCaptureTask()
+        private static bool IsReturningFromCameraCaptureTask()
         {
             return StateManager.Instance.Get<CapturedPicture>(
                 CheckpointAddPicturesViewModel.CAPTURED_PICTURE) != null;

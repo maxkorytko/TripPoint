@@ -90,6 +90,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\BytesToImageSourceConverter.cs" />
     <Compile Include="I18N\Localization.cs" />
     <Compile Include="I18N\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -104,6 +105,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\LocationService.cs" />
     <Compile Include="State\CapturedPicture.cs" />
+    <Compile Include="State\Data\Repository\Factory\WindowsPhoneRepositoryFactory.cs" />
+    <Compile Include="State\Data\Repository\IsolatedStoragePictureRepository.cs" />
+    <Compile Include="State\Data\Thumbnail.cs" />
     <Compile Include="State\StateManager.cs" />
     <Compile Include="Utils\CountdownTimer.cs" />
     <Compile Include="Utils\ExifLib\ExifIds.cs" />
@@ -111,7 +115,9 @@
     <Compile Include="Utils\ExifLib\ExifReader.cs" />
     <Compile Include="Utils\ExifLib\ExifTag.cs" />
     <Compile Include="Utils\ExifLib\JpegInfo.cs" />
+    <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Utils\ImageUtils.cs" />
+    <Compile Include="Utils\PictureLoader.cs" />
     <Compile Include="ViewModel\ApplicationSettingsViewModel.cs" />
     <Compile Include="ViewModel\CheckpointAddNotesViewModel.cs" />
     <Compile Include="ViewModel\CheckpointAddPicturesViewModel.cs" />
@@ -134,6 +140,9 @@
     </Compile>
     <Compile Include="View\Checkpoint\CreateCheckpointView.xaml.cs">
       <DependentUpon>CreateCheckpointView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\PictureGrid.xaml.cs">
+      <DependentUpon>PictureGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Settings\ApplicationSettingsView.xaml.cs">
       <DependentUpon>ApplicationSettingsView.xaml</DependentUpon>
@@ -173,6 +182,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Checkpoint\CreateCheckpointView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\PictureGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -217,14 +230,14 @@
     <Content Include="Assets\Images\Dark\appbar.stop.rest.png" />
     <Content Include="Assets\Images\Dark\checkpoint.thumb.png" />
     <Content Include="Assets\Images\Dark\trip.thumb.png" />
-    <Resource Include="Assets\Photos\Baskets.jpg" />
+    <Content Include="Assets\Photos\Baskets.jpg" />
     <Content Include="Assets\Photos\Cat.jpg" />
-    <Resource Include="Assets\Photos\Giraffe.jpg" />
-    <Resource Include="Assets\Photos\Koala.jpg" />
-    <Resource Include="Assets\Photos\Lighthouse.jpg" />
-    <Resource Include="Assets\Photos\Penguins.jpg" />
-    <Resource Include="Assets\Photos\Peppers.jpg" />
-    <Resource Include="Assets\Photos\Trees.jpg" />
+    <Content Include="Assets\Photos\Giraffe.jpg" />
+    <Content Include="Assets\Photos\Koala.jpg" />
+    <Content Include="Assets\Photos\Lighthouse.jpg" />
+    <Content Include="Assets\Photos\Penguins.jpg" />
+    <Content Include="Assets\Photos\Peppers.jpg" />
+    <Content Include="Assets\Photos\Trees.jpg" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

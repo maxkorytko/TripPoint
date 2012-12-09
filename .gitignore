@@ -3,3 +3,4 @@
 *.csproj.user
 TripPoint.suo
 Data/*
+Tmp/*

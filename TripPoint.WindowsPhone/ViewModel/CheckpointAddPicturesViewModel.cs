@@ -1,13 +1,13 @@
 ﻿using System;
-using System.IO;
 using System.Windows.Input;
-using System.Windows.Media;
 using Microsoft.Phone.Controls;
+using System.Windows.Media.Imaging;
 
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
+using TripPoint.WindowsPhone.Navigation;
 using TripPoint.WindowsPhone.State;
 using TripPoint.WindowsPhone.Utils;
 using GalaSoft.MvvmLight.Command;
@@ -23,6 +23,8 @@ namespace TripPoint.WindowsPhone.ViewModel
         private Picture _picture;
 
         private ICheckpointRepository _checkpointRepository;
+
+        private IPictureRepository _pictureRepository;
 
         public CheckpointAddPicturesViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
@@ -61,9 +63,11 @@ namespace TripPoint.WindowsPhone.ViewModel
                 checkpoint.Pictures.Add(Picture);
                 _checkpointRepository.UpdateCheckpoint(checkpoint);
 
-                // TODO:
-                // save picture to isolated storage.
-                // consider applying a strategy pattern for saving/restoring objects from IsoStorage
+                // scale the picture in order to save disk space
+                // it will also help speed up loading the picture
+                //
+                ScalePicture(0.75f);
+                _pictureRepository.SavePictureAsBytes(Picture);
             }
 
             Navigator.GoBack();
@@ -74,15 +78,22 @@ namespace TripPoint.WindowsPhone.ViewModel
             Navigator.GoBack();
         }
 
-        public override void OnNavigatedTo(Navigation.TripPointNavigationEventArgs e)
+        public override void OnNavigatedTo(TripPointNavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
             ResetViewModel();
             InitializePicture();
 
-            _checkpointRepository = RepositoryFactory.CheckpointRepository;
             _checkpointID = GetCheckpointID(e.View);
+
+            _checkpointRepository = RepositoryFactory.CheckpointRepository;
+            _pictureRepository = RepositoryFactory.PictureRepository;
+        }
+
+        private void ResetViewModel()
+        {
+            Picture = null;
         }
 
         private void InitializePicture()
@@ -95,7 +106,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private static Picture CreatePicture(CapturedPicture source)
         {
-            var picture = new DisplayablePicture();
+            var picture = new Picture();
 
             if (source != null)
             {
@@ -107,9 +118,19 @@ namespace TripPoint.WindowsPhone.ViewModel
             return picture;
         }
 
-        private void ResetViewModel()
+        private void ScalePicture(float scalingFactor)
         {
-            Picture = null;
+            if (Picture.RawBytes == null) return;
+
+            var bitmap = ImageUtils.CreateWriteableBitmapFromBytes(Picture.RawBytes);
+
+            if (bitmap == null) return;
+
+            bitmap = bitmap.Resize(Convert.ToInt32(bitmap.PixelWidth * scalingFactor), 
+                Convert.ToInt32(bitmap.PixelHeight * scalingFactor),
+                WriteableBitmapExtensions.Interpolation.Bilinear);
+
+            Picture.RawBytes = TripPointConvert.ToBytes(bitmap.SaveJpeg());
         }
 
         private static int GetCheckpointID(PhoneApplicationPage view)
@@ -119,27 +140,6 @@ namespace TripPoint.WindowsPhone.ViewModel
             var checkpointIdParameter = view.TryGetQueryStringParameter("checkpointID");
 
             return TripPointConvert.ToInt32(checkpointIdParameter);
-        }
-
-        public class DisplayablePicture : Picture
-        {
-            private ImageSource _source;
-
-            public ImageSource Source
-            {
-                get
-                {
-                    if (_source == null)
-                    {
-                        using (var stream = new MemoryStream(RawBytes))
-                        {
-                            _source = ImageUtils.CreateWriteableBitmapFromStream(stream);
-                        }
-                    }
-
-                    return _source;
-                }
-            }
         }
     }
 }

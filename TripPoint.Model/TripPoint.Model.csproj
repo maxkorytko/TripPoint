@@ -58,6 +58,7 @@
     <Compile Include="Data\Repository\Factory\IRepositoryFactory.cs" />
     <Compile Include="Data\Repository\Factory\RepositoryFactory.cs" />
     <Compile Include="Data\Repository\ICheckpointRepository.cs" />
+    <Compile Include="Data\Repository\IPictureRepository.cs" />
     <Compile Include="Data\Repository\ITripRepository.cs" />
     <Compile Include="Data\TripPointDataContext.cs">
       <SubType>Code</SubType>

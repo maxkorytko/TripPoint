@@ -5,5 +5,7 @@
         ITripRepository TripRepository { get; }
 
         ICheckpointRepository CheckpointRepository { get; }
+
+        IPictureRepository PictureRepository { get; }
     }
 }

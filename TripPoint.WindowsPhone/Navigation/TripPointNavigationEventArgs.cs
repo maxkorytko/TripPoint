@@ -12,8 +12,6 @@ namespace TripPoint.WindowsPhone.Navigation
     /// </summary>
     public class TripPointNavigationEventArgs
     {
-        private NavigationEventArgs _navigationEventArgs;
-
         public TripPointNavigationEventArgs(NavigationEventArgs navigationEventArgs)
             : this(navigationEventArgs, null)
         {   

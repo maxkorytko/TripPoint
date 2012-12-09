@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using System.Collections.Generic;
 using Microsoft.Phone.Controls;
 
 using TripPoint.Model.Domain;
@@ -15,9 +16,11 @@ namespace TripPoint.WindowsPhone.ViewModel
     public class CheckpointDetailsViewModel : TripPointViewModelBase
     {
         Checkpoint _checkpoint;
+        ICollection<Thumbnail> _thumbnails;
         bool _shouldShowCheckpointMap;
         ICheckpointRepository _checkpointRepository;
-
+        IPictureRepository _pictureRepository;
+        
         public CheckpointDetailsViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
@@ -45,13 +48,43 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
+        public ICollection<Thumbnail> Thumbnails
+        {
+            get
+            {
+                InitializeThumbnails();
+                return _thumbnails;
+            }
+            private set
+            {
+                if (_thumbnails == value) return;
+
+                _thumbnails = value;
+            }
+        }
+
+        private void InitializeThumbnails()
+        {
+            if (_thumbnails != null) return;
+
+            if (Checkpoint == null) return;
+
+            _thumbnails = new List<Thumbnail>();
+
+            foreach (var picture in Checkpoint.Pictures)
+            {
+                var thumbnail = new Thumbnail(picture);
+                _thumbnails.Add(thumbnail);
+            }
+        }
+
         public bool ShouldShowCheckpointMap
         {
             get { return _shouldShowCheckpointMap; }
             set
             {
                 // not checking if value has been updated
-                // this is to ensures the map can be hidden by default
+                // this is to ensure the map can be hidden by default
 
                 var oldValue = _shouldShowCheckpointMap;
                 _shouldShowCheckpointMap = value;
@@ -93,6 +126,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             base.OnNavigatedTo(e);
 
             _checkpointRepository = RepositoryFactory.CheckpointRepository;
+            _pictureRepository = RepositoryFactory.PictureRepository;
 
             var checkpointID = GetCheckpointID(e.View);
             InitializeCheckpoint(checkpointID);
@@ -120,6 +154,12 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             // display the map provided that checkpoint location is available
             ShouldShowCheckpointMap = Checkpoint.Location != null && !Checkpoint.Location.IsUnknown;
+        }
+
+        public void ResetViewModel()
+        {
+            ShouldShowCheckpointMap = false;
+            Thumbnails = null;
         }
     }
 }

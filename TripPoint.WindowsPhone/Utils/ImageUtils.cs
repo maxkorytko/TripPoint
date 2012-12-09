@@ -20,8 +20,6 @@ namespace TripPoint.WindowsPhone.Utils
         /// <returns></returns>
         public static Stream RotateImageToPortrait(Stream source)
         {
-            var result = new MemoryStream();
-
             try
             {
                 var initialSourceStreamPosition = source.Position;
@@ -66,17 +64,49 @@ namespace TripPoint.WindowsPhone.Utils
             }
         }
 
-        /// <summary>
-        /// Shorthand method for creating a WriteableBitmap object from a photo stream
-        /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        public static WriteableBitmap CreateWriteableBitmapFromStream(Stream source)
+        private static WriteableBitmap CreateWriteableBitmapFromStream(Stream source)
         {
+            if (source == null) return null;
+
             var bitmap = new BitmapImage();
             bitmap.SetSource(source);
 
             return new WriteableBitmap(bitmap);
+        }
+
+        /// <summary>
+        /// Creates an instance of WriteableBitmap from the byte array
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        public static WriteableBitmap CreateWriteableBitmapFromBytes(byte[] bytes)
+        {
+            if (bytes == null || bytes.Length == 0) return null;
+
+            using (var stream = new MemoryStream(bytes))
+            {
+                return CreateWriteableBitmapFromStream(stream);
+            }
+        }
+
+        /// <summary>
+        /// Create an instance of BitmapImage from the byte array
+        /// Decodes the image in the background by default
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        public static BitmapImage CreateBitmapFromBytes(byte[] bytes)
+        {
+            if (bytes == null || bytes.Length == 0) return null;
+
+            using (var source = new MemoryStream(bytes))
+            {
+                var bitmap = new BitmapImage();
+                bitmap.CreateOptions = BitmapCreateOptions.BackgroundCreation;
+                bitmap.SetSource(source);
+
+                return bitmap;
+            }
         }
     }
 }

@@ -4,6 +4,11 @@ using System.Data.Linq;
 using System.Data.Linq.Mapping;
 using System.Windows.Media;
 using Microsoft.Phone.Data.Linq.Mapping;
+using System.Collections.Generic;
+using System.IO;
+using System.Windows;
+using System.Windows.Resources;
+using System.Windows.Media.Imaging;
 
 namespace TripPoint.Model.Domain
 {
@@ -13,6 +18,7 @@ namespace TripPoint.Model.Domain
         private int _pictureID;
         private string _fileName;
         private string _title;
+        private byte[] _rawBytes;
         
         private EntityRef<Checkpoint> _checkpoint;
 
@@ -100,7 +106,19 @@ namespace TripPoint.Model.Domain
         }
         #endregion
 
-        public byte[] RawBytes { get; set; }
+        #region RawBytes
+        public byte[] RawBytes
+        {
+            get { return _rawBytes; }
+            set
+            {
+                if (_rawBytes == value) return;
+
+                _rawBytes = value;
+                NotifyPropertyChanged("RawBytes");
+            }
+        }
+        #endregion
 
         #region INotifyPropertyChanged Members
 

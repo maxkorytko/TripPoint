@@ -16,5 +16,11 @@
         {
             get { return new DatabaseCheckpointRepository(DataContext); }
         }
+
+        public IPictureRepository PictureRepository
+        {
+            // not supported
+            get { return null; }
+        }
     }
 }
