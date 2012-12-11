@@ -4,6 +4,7 @@ using System.Windows.Media.Imaging;
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
+using TripPoint.WindowsPhone.State.Data;
 
 namespace TripPoint.WindowsPhone.Utils
 {

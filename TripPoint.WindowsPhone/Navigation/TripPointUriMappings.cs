@@ -39,6 +39,12 @@ namespace TripPoint.WindowsPhone.Navigation
             },
             new UriMapping
             {
+                Uri = new Uri("/Checkpoints/{checkpointID}/Pictures/{pictureID}/Details", UriKind.Relative),
+                MappedUri = new Uri("/View/Picture/PictureDetailsView.xaml?checkpointID={checkpointID}&pictureID={pictureID}",
+                    UriKind.Relative)
+            },
+            new UriMapping
+            {
                 Uri = new Uri("/Checkpoints/{checkpointID}/Details", UriKind.Relative),
                 MappedUri = new Uri("/View/Checkpoint/CheckpointDetailsView.xaml?checkpointID={checkpointID}",
                     UriKind.Relative)

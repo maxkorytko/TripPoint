@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Utils;
 
-namespace TripPoint.WindowsPhone.State
+namespace TripPoint.WindowsPhone.State.Data
 {
     [DataContract]
     public class CapturedPicture

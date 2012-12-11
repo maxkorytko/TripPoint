@@ -9,6 +9,7 @@ using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
 using TripPoint.WindowsPhone.State;
+using TripPoint.WindowsPhone.State.Data;
 using TripPoint.WindowsPhone.Utils;
 using GalaSoft.MvvmLight.Command;
 

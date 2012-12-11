@@ -1,9 +1,9 @@
-﻿using Microsoft.Phone.Controls;
-using System.Device.Location;
-using System.Windows.Navigation;
+﻿using System.Device.Location;
+using Microsoft.Phone.Controls;
 
-using TripPoint.Model.Utils;
+using TripPoint.WindowsPhone.State.Data;
 using TripPoint.WindowsPhone.ViewModel;
+using TripPoint.WindowsPhone.View.Controls;
 using GalaSoft.MvvmLight.Messaging;
 
 namespace TripPoint.WindowsPhone.View.Checkpoint
@@ -30,8 +30,6 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
 
         private void UpdateCheckpointMapVisibility(bool isVisible)
         {
-            Logger.Log(this, "Map is visible: {0}", isVisible);
-
             if (isVisible)
                 ShowCheckpointMap();
             else
@@ -74,14 +72,17 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
         private void OnUnloaded()
         {
             Messenger.Default.Unregister(this);
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
 
             // we must reset the view model to free memory allocated for thumbnails
             (DataContext as CheckpointDetailsViewModel).ResetViewModel();
+        }
+
+        private void PictureSelected(object sender, PictureSelectedEventArgs args)
+        {
+            var selected = (args.SelectedPicture as Thumbnail);
+
+            if (selected != null)
+                (DataContext as CheckpointDetailsViewModel).ViewPictureCommand.Execute(selected.Picture);
         }
     }
 }

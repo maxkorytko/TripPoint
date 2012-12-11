@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using System.Collections.Generic;
 using Microsoft.Phone.Controls;
@@ -7,6 +8,7 @@ using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
+using TripPoint.WindowsPhone.State.Data;
 using TripPoint.WindowsPhone.Navigation;
 using TripPoint.WindowsPhone.I18N;
 using GalaSoft.MvvmLight.Command;
@@ -34,6 +36,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             EditCheckpointCommand = new RelayCommand(EditCheckpointAction);
             DeleteCheckpointCommand = new RelayCommand(DeleteCheckpointAction);
+            ViewPictureCommand = new RelayCommand<Picture>(ViewPictureAction);
         }
 
         public Checkpoint Checkpoint 
@@ -100,6 +103,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         public ICommand DeleteCheckpointCommand { get; private set; }
 
+        public ICommand ViewPictureCommand { get; private set; }
+
         private void EditCheckpointAction()
         {
             Logger.Log(this, "Edit checkpoint");
@@ -119,6 +124,14 @@ namespace TripPoint.WindowsPhone.ViewModel
             _checkpointRepository.DeleteCheckpoint(Checkpoint);
             
             Navigator.GoBack();
+        }
+
+        private void ViewPictureAction(Picture picture)
+        {
+            if (Checkpoint == null || picture == null) return;
+
+            Navigator.Navigate(String.Format("/Checkpoints/{0}/Pictures/{1}/Details", Checkpoint.ID,
+                picture.ID));
         }
 
         public override void OnNavigatedTo(TripPointNavigationEventArgs e)

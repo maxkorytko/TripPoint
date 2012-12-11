@@ -104,7 +104,7 @@
     <Compile Include="Navigation\TripPointUriMappings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\LocationService.cs" />
-    <Compile Include="State\CapturedPicture.cs" />
+    <Compile Include="State\Data\CapturedPicture.cs" />
     <Compile Include="State\Data\Repository\Factory\WindowsPhoneRepositoryFactory.cs" />
     <Compile Include="State\Data\Repository\IsolatedStoragePictureRepository.cs" />
     <Compile Include="State\Data\Thumbnail.cs" />
@@ -125,6 +125,7 @@
     <Compile Include="ViewModel\CreateCheckpointViewModel.cs" />
     <Compile Include="ViewModel\CreateTripViewModel.cs" />
     <Compile Include="ViewModel\CurrentTripViewModel.cs" />
+    <Compile Include="ViewModel\PictureDetailsViewModel.cs" />
     <Compile Include="ViewModel\TripDetailsViewModel.cs" />
     <Compile Include="ViewModel\TripListViewModel.cs" />
     <Compile Include="ViewModel\TripPointViewModelBase.cs" />
@@ -143,6 +144,9 @@
     </Compile>
     <Compile Include="View\Controls\PictureGrid.xaml.cs">
       <DependentUpon>PictureGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Picture\PictureDetailsView.xaml.cs">
+      <DependentUpon>PictureDetailsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Settings\ApplicationSettingsView.xaml.cs">
       <DependentUpon>ApplicationSettingsView.xaml</DependentUpon>
@@ -186,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\PictureGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Picture\PictureDetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

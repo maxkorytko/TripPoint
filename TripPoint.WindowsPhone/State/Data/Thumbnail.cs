@@ -2,9 +2,10 @@
 using System.ComponentModel;
 using System.Windows.Media;
 
+using TripPoint.Model.Domain;
 using TripPoint.WindowsPhone.Utils;
 
-namespace TripPoint.Model.Domain
+namespace TripPoint.WindowsPhone.State.Data
 {
     public class Thumbnail : INotifyPropertyChanged
     {

@@ -65,7 +65,8 @@
             </controls:PivotItem>
             
             <controls:PivotItem Header="{Binding Localization.Resources.Pictures}">
-                <trippointcontrols:PictureGrid DataContext="{Binding Thumbnails}" />
+                <trippointcontrols:PictureGrid DataContext="{Binding Thumbnails}" 
+                                               OnPictureSelected="PictureSelected"/>
             </controls:PivotItem>
             
             <controls:PivotItem Header="{Binding Localization.Resources.Notes}">

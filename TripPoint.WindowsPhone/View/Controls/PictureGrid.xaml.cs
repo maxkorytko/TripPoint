@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 
 using TripPoint.Model.Utils;
+using TripPoint.WindowsPhone.State.Data;
 
 namespace TripPoint.WindowsPhone.View.Controls
 {
@@ -21,17 +13,34 @@ namespace TripPoint.WindowsPhone.View.Controls
             InitializeComponent();
         }
 
+        public delegate void PictureSelectedEventHandler(object sender, PictureSelectedEventArgs args);
+
+        public event PictureSelectedEventHandler OnPictureSelected;
+
         private void PictureList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var listBox = sender as ListBox;
+            var pictureListBox = sender as ListBox;
 
-            if (listBox.SelectedItem == null) return;
+            if (pictureListBox.SelectedItem == null) return;
 
-            //(DataContext as TripListViewModel).ViewTripDetailsCommand.Execute(listBox.SelectedItem);
+            if (OnPictureSelected != null)
+            {
+                var selectedPicture = pictureListBox.SelectedItem;
 
-            Logger.Log(string.Format("Selected item index: {0}", listBox.SelectedIndex));
+                OnPictureSelected(this, new PictureSelectedEventArgs(selectedPicture));
+            }
 
-            listBox.SelectedItem = null;
+            pictureListBox.SelectedItem = null;
         }
+    }
+
+    public class PictureSelectedEventArgs : EventArgs
+    {
+        public PictureSelectedEventArgs(object selectedPicture)
+        {
+            SelectedPicture = selectedPicture;
+        }
+
+        public object SelectedPicture { get; private set; }
     }
 }
