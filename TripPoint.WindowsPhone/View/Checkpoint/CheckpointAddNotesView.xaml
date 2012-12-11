@@ -5,6 +5,7 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:wpcontrols="clr-namespace:System.Windows.Controls;assembly=WindowsPhoneWatermarkTextBoxControl"
+    xmlns:coding4FunBinding="clr-namespace:Coding4Fun.Phone.Controls.Binding;assembly=Coding4Fun.Phone.Controls"
     xmlns:appBar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -34,7 +35,8 @@
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <wpcontrols:WatermarkTextBox WatermarkText="{Binding Localization.Resources.TypeNote}" 
-                                         Text="{Binding Notes, Mode=TwoWay}"/>
+                                         Text="{Binding Notes, Mode=TwoWay}"
+                                         coding4FunBinding:TextBinding.UpdateSourceOnChange="True" />
         </Grid>
     </Grid>
 

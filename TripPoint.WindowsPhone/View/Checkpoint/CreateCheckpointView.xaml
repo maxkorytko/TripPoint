@@ -7,6 +7,7 @@
     xmlns:appBar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:coding4Fun="clr-namespace:Coding4Fun.Phone.Controls;assembly=Coding4Fun.Phone.Controls"
+    xmlns:coding4FunBinding="clr-namespace:Coding4Fun.Phone.Controls.Binding;assembly=Coding4Fun.Phone.Controls"
     xmlns:convert="clr-namespace:TripPoint.WindowsPhone.Converters;assembly=TripPoint"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -49,7 +50,8 @@
             
             <StackPanel Grid.Row="0" Margin="0,20,0,20">
                 <TextBlock Text="{Binding Localization.Resources.Title}" />
-                <TextBox Text="{Binding Checkpoint.Title, Mode=TwoWay}" />
+                <TextBox Text="{Binding Checkpoint.Title, Mode=TwoWay}" 
+                         coding4FunBinding:TextBinding.UpdateSourceOnChange="True"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Margin="0,20,0,20">
@@ -59,7 +61,8 @@
 
             <StackPanel Grid.Row="2" Margin="0,20,0,20">
                 <TextBlock Text="{Binding Localization.Resources.Notes}" />
-                <TextBox Text="{Binding Notes, Mode=TwoWay}"/>
+                <TextBox Text="{Binding Notes, Mode=TwoWay}" 
+                         coding4FunBinding:TextBinding.UpdateSourceOnChange="True" />
             </StackPanel>
         </Grid>
         

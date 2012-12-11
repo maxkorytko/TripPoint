@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:appBar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
     xmlns:wpcontrols="clr-namespace:System.Windows.Controls;assembly=WindowsPhoneWatermarkTextBoxControl"
+    xmlns:coding4FunBinding="clr-namespace:Coding4Fun.Phone.Controls.Binding;assembly=Coding4Fun.Phone.Controls"
     xmlns:convert="clr-namespace:TripPoint.WindowsPhone.Converters;assembly=TripPoint"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -42,8 +43,9 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <wpcontrols:WatermarkTextBox Grid.Row="0" Text="{Binding Picture.Title, Mode=TwoWay}"
-                WatermarkText="{Binding Localization.Resources.AddPictureTitle}" />
+            <wpcontrols:WatermarkTextBox Grid.Row="0" WatermarkText="{Binding Localization.Resources.AddPictureTitle}"
+                                         Text="{Binding Picture.Title, Mode=TwoWay}"
+                                         coding4FunBinding:TextBinding.UpdateSourceOnChange="True" />
 
             <Image Grid.Row="1" Stretch="Uniform"
                    Source="{Binding Picture.RawBytes, Converter={StaticResource BytesToImageSource}}" />
