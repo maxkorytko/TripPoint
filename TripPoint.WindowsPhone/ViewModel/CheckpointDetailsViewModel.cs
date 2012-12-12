@@ -121,6 +121,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void DeleteCheckpoint()
         {
+            // TODO: ensure the app doesn't crash if exception occurs
+            _pictureRepository.DeletePictures(Checkpoint.Pictures);
             _checkpointRepository.DeleteCheckpoint(Checkpoint);
             
             Navigator.GoBack();

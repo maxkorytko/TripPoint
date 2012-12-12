@@ -49,6 +49,7 @@ namespace TripPoint.Model.Data.Repository
             checkpointEntity.Trip = null;
             DataContext.Locations.DeleteOnSubmit(checkpointEntity.Location);
             DataContext.Notes.DeleteAllOnSubmit(checkpointEntity.Notes);
+            DataContext.Pictures.DeleteAllOnSubmit(checkpoint.Pictures);
             DataContext.Checkpoints.DeleteOnSubmit(checkpointEntity);
             
             DataContext.SubmitChanges();

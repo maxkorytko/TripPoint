@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.IO.IsolatedStorage;
+using System.Collections.Generic;
 
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
@@ -15,17 +16,18 @@ namespace TripPoint.WindowsPhone.State.Data.Repository
     {
         private static readonly byte[] EMPTY_BYTE_ARRAY = new byte[0];
 
+        // Override
         public byte[] LoadPictureAsBytes(Picture picture)
         {
             if (picture == null) return EMPTY_BYTE_ARRAY;
 
-            var path = Path.Combine(GetDirectoryPath(picture), picture.FileName);
+            var filePath = GetFilePath(picture);
 
             using (var isolatedStorage = IsolatedStorageFile.GetUserStoreForApplication())
             {
-                if (!isolatedStorage.FileExists(path)) return EMPTY_BYTE_ARRAY;
+                if (!isolatedStorage.FileExists(filePath)) return EMPTY_BYTE_ARRAY;
 
-                using (var fileStream = isolatedStorage.OpenFile(path, FileMode.Open, FileAccess.Read))
+                using (var fileStream = isolatedStorage.OpenFile(filePath, FileMode.Open, FileAccess.Read))
                 {
                     var pictureBytes = new byte[fileStream.Length];
 
@@ -36,6 +38,11 @@ namespace TripPoint.WindowsPhone.State.Data.Repository
             }
         }
 
+        private static string GetFilePath(Picture picture)
+        {
+            return Path.Combine(GetDirectoryPath(picture), picture.FileName);
+        }
+
         private static string GetDirectoryPath(Picture picture)
         {
             var tripID = Convert.ToString(picture.Checkpoint.Trip.ID);
@@ -43,6 +50,7 @@ namespace TripPoint.WindowsPhone.State.Data.Repository
             return Path.Combine(Path.Combine("Trips", tripID), "Pictures");
         }
 
+        // Override
         public bool SavePictureAsBytes(Picture picture)
         {
             if (picture == null) return false;
@@ -64,10 +72,8 @@ namespace TripPoint.WindowsPhone.State.Data.Repository
 
         private static void WritePictureToIsolatedStorage(Picture picture)
         {
-            var path = GetDirectoryPath(picture);
-
-            EnsurePathExists(path);
-            WritePictureToIsolatedStorage(picture, path);
+            EnsurePathExists(GetDirectoryPath(picture));
+            WritePictureToIsolatedStorage(picture, GetFilePath(picture));
         }
 
         private static void EnsurePathExists(string path)
@@ -80,19 +86,40 @@ namespace TripPoint.WindowsPhone.State.Data.Repository
             }
         }
 
-        private static void WritePictureToIsolatedStorage(Picture picture, string path)
+        private static void WritePictureToIsolatedStorage(Picture picture, string filePath)
         {
-            var fileName = Path.Combine(path, picture.FileName);
+            if (String.IsNullOrWhiteSpace(filePath)) throw new ArgumentException("filePath");
 
             using (var isolatedStorage = IsolatedStorageFile.GetUserStoreForApplication())
             {
-                using (var fileStream = new IsolatedStorageFileStream(fileName, FileMode.Create, isolatedStorage))
+                using (var fileStream = new IsolatedStorageFileStream(filePath, FileMode.Create, isolatedStorage))
                 {
                     using (var writer = new BinaryWriter(fileStream))
                     {
                         writer.Write(picture.RawBytes);
                     }
                 }
+            }
+        }
+
+        public void DeletePictures(IEnumerable<Picture> picturesToDelete)
+        {
+            foreach (var picture in picturesToDelete)
+            {
+                DeletePicture(picture);
+            }
+        }
+
+        private void DeletePicture(Picture pictureToDelete)
+        {
+            if (pictureToDelete == null) return;
+
+            var filePath = GetFilePath(pictureToDelete);
+
+            using (var isolatedStorage = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                if (isolatedStorage.FileExists(filePath))
+                    isolatedStorage.DeleteFile(filePath);
             }
         }
     }

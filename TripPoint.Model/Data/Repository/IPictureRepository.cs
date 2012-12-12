@@ -1,4 +1,6 @@
-﻿using TripPoint.Model.Domain;
+﻿using System.Collections.Generic;
+
+using TripPoint.Model.Domain;
 
 namespace TripPoint.Model.Data.Repository
 {
@@ -17,5 +19,7 @@ namespace TripPoint.Model.Data.Repository
         /// <param name="picture"></param>
         /// <returns></returns>
         bool SavePictureAsBytes(Picture picture);
+
+        void DeletePictures(IEnumerable<Picture> picturesToDelete);
     }
 }
