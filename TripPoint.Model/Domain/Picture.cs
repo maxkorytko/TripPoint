@@ -18,6 +18,7 @@ namespace TripPoint.Model.Domain
         private int _pictureID;
         private string _fileName;
         private string _title;
+        private DateTime _dateTaken;
         private byte[] _rawBytes;
         
         private EntityRef<Checkpoint> _checkpoint;
@@ -76,6 +77,22 @@ namespace TripPoint.Model.Domain
                 NotifyPropertyChanging("Title");
                 _title = value;
                 NotifyPropertyChanged("Title");
+            }
+        }
+        #endregion
+
+        #region DateTaken
+        [Column]
+        public DateTime DateTaken
+        {
+            get { return _dateTaken; }
+            set
+            {
+                if (_dateTaken == value) return;
+
+                NotifyPropertyChanging("DateTaken");
+                _dateTaken = value;
+                NotifyPropertyChanged("DateTaken");
             }
         }
         #endregion

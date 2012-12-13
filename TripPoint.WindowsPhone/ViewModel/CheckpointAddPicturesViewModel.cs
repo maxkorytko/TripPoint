@@ -108,6 +108,8 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static Picture CreatePicture(CapturedPicture source)
         {
             var picture = new Picture();
+            
+            picture.DateTaken = DateTime.Now;
 
             if (source != null)
             {
