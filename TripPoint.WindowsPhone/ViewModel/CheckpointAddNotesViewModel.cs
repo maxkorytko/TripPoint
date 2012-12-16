@@ -14,7 +14,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
-    public class CheckpointAddNotesViewModel : TripPointViewModelBase
+    public class CheckpointAddNotesViewModel : Base.TripPointViewModelBase
     {
         private int _checkpointID;
         private string _notes;

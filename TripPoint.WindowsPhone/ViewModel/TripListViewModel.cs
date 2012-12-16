@@ -12,7 +12,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
-    public class TripListViewModel : TripPointViewModelBase
+    public class TripListViewModel : Base.TripPointViewModelBase
     {
         private ITripRepository _tripRepository;
         ObservableCollection<Trip> _trips;

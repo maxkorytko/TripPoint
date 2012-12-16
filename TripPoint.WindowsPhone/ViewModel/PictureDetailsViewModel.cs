@@ -9,7 +9,7 @@ using TripPoint.WindowsPhone.Navigation;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
-    public class PictureDetailsViewModel : TripPointViewModelBase
+    public class PictureDetailsViewModel : Base.TripPointViewModelBase
     {
         private Picture _picture;
 

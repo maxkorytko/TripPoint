@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 
-using TripPoint.WindowsPhone.ViewModel;
+using TripPoint.WindowsPhone.ViewModel.Base;
 
 namespace TripPoint.WindowsPhone.Navigation
 {

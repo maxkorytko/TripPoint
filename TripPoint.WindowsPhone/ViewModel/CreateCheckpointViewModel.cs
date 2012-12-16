@@ -19,7 +19,7 @@ using TripPoint.WindowsPhone.I18N;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
-    public class CreateCheckpointViewModel : TripPointViewModelBase
+    public class CreateCheckpointViewModel : Base.TripPointViewModelBase
     {
         private int _tripID = -1;
         private Checkpoint _checkpoint;

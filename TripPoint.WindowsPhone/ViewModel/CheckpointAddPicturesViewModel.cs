@@ -15,7 +15,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
-    public class CheckpointAddPicturesViewModel : TripPointViewModelBase
+    public class CheckpointAddPicturesViewModel : Base.TripPointViewModelBase
     {
         public static readonly string CAPTURED_PICTURE = "CheckpointAddPictureViewModel.CapturedPicture";
 

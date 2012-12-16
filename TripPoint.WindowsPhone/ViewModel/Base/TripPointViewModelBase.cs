@@ -7,7 +7,7 @@ using TripPoint.WindowsPhone.I18N;
 using TripPoint.WindowsPhone.Navigation;
 using GalaSoft.MvvmLight;
 
-namespace TripPoint.WindowsPhone.ViewModel
+namespace TripPoint.WindowsPhone.ViewModel.Base
 {
     /// <summary>
     /// Base class for application view models

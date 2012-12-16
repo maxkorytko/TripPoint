@@ -15,7 +15,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
-    public class CheckpointDetailsViewModel : TripPointViewModelBase
+    public class CheckpointDetailsViewModel : Base.TripPointViewModelBase
     {
         Checkpoint _checkpoint;
         ICollection<PictureThumbnail> _thumbnails;

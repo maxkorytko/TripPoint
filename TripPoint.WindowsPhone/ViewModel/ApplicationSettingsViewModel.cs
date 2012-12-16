@@ -8,7 +8,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
-    public class ApplicationSettingsViewModel : TripPointViewModelBase
+    public class ApplicationSettingsViewModel : Base.TripPointViewModelBase
     {
         private Nullable<bool> _locationServiceToggleIsChecked;
         private string _locationServiceSettingDescription;
