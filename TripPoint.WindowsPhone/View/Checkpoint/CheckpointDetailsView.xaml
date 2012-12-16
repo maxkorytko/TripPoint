@@ -51,7 +51,7 @@
                         <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PhoneTextTitle2Style}"
                                    Text="{Binding Localization.Resources.Pictures}" />
                         <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource PhoneTextTitle2Style}"
-                                   Text="0" />
+                                   Text="{Binding Checkpoint.Pictures.Count}" />
     
                         <!-- Notes -->
                         <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PhoneTextTitle2Style}"

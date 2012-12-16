@@ -33,11 +33,13 @@
                     </Grid.RowDefinitions>
                     
                     <StackPanel Grid.Row="0">
-                        <TextBlock x:Name="TripName" Style="{StaticResource PhoneTextTitle2Style}"
+                        <TextBlock x:Name="TripName" Style="{StaticResource PhoneTextBlockBase}"
                                    HorizontalAlignment="Stretch" TextTrimming="WordEllipsis" 
-                                   Text="{Binding CurrentTrip.Name}"/>
+                                   FontSize="44"
+                                   Text="{Binding CurrentTrip.Name}" />
 
-                        <TextBlock x:Name="TripStartDate" Style="{StaticResource PhoneTextBlockBase}"
+                        <TextBlock x:Name="TripStartDate" Style="{StaticResource PhoneTextTitle3Style}"
+                                   Foreground="#FF1B91E0" FontWeight="SemiBold"
                                    Text="{Binding CurrentTrip.StartDate}" />
                     </StackPanel>
                     
@@ -61,22 +63,30 @@
                         </Grid.RowDefinitions>
                         
                         <StackPanel Grid.Row="0" Margin="0,25,0,15">
-                            <TextBlock Style="{StaticResource PhoneTextBlockBase}"
+                            <TextBlock Style="{StaticResource PhoneTextBlockBase}" 
+                                       FontSize="36"
+                                       Foreground="#FF1B91E0"
                                        Text="{Binding Localization.Resources.LatestCheckpoint}" />
 
-                            <TextBlock x:Name="LastCheckpointTitle" Style="{StaticResource PhoneTextTitle2Style}"
-                                HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                                       Text="{Binding LatestCheckpoint.Title}" TextTrimming="WordEllipsis" />
+                            <TextBlock x:Name="LastCheckpointTitle" Style="{StaticResource PhoneTextBlockBase}"
+                                       FontSize="44"
+                                       HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                       TextTrimming="WordEllipsis" 
+                                       Text="{Binding LatestCheckpoint.Title}" />
 
-                            <TextBlock x:Name="LastCheckpointCreateDate" Style="{StaticResource PhoneTextBlockBase}"
+                            <TextBlock x:Name="LastCheckpointCreateDate" 
+                                       Style="{StaticResource PhoneTextTitle3Style}"
+                                       Foreground="#FF1B91E0" FontWeight="SemiBold"
                                        Text="{Binding LatestCheckpoint.Timestamp}" />
                         </StackPanel>
                     
-                        <StackPanel Grid.Row="1" VerticalAlignment="Top">
-                            <Button x:Name="AddNotesButton" Content="{Binding Localization.Resources.AddNotes}" 
+                        <StackPanel Grid.Row="1" VerticalAlignment="Bottom" Margin="0,0,0,5">
+                            <Button x:Name="AddNotesButton"
+                                    Content="{Binding Localization.Resources.AddNotes}" 
                                     Command="{Binding AddNotesCommand}" />
 
-                            <Button x:Name="AddPicturesButton" Content="{Binding Localization.Resources.AddPictures}" 
+                            <Button x:Name="AddPicturesButton"
+                                    Content="{Binding Localization.Resources.AddPictures}" 
                                     Command="{Binding AddPicturesCommand}" />
                         </StackPanel>
                     </Grid>        
@@ -111,7 +121,7 @@
     </Grid>
 
     <appBar:Bindable.ApplicationBar>
-        <appBar:BindableApplicationBar IsVisible="True">
+        <appBar:BindableApplicationBar IsVisible="True" Mode="Minimized">
             <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.CreateCheckpoint_AppBar}"
                                                  IconUri="/Assets/Images/Dark/appbar.new.rest.png" 
                                                  Command="{Binding CreateCheckpointCommand}" />
