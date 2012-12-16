@@ -34,16 +34,11 @@ namespace TripPoint.WindowsPhone.Utils
             _pictureRepository = RepositoryFactory.Create().PictureRepository;
         }
 
-        public void LoadThumbnail(Thumbnail thumbnail)
+        public byte[] LoadPicture(Picture picture)
         {
-            if (thumbnail == null) return;
+            if (picture == null) return new byte[0];
 
-            var pictureBytes = thumbnail.Picture.RawBytes;
-
-            if (pictureBytes == null || pictureBytes.Length == 0)
-                pictureBytes = _pictureRepository.LoadPictureAsBytes(thumbnail.Picture);
-
-            thumbnail.Source = ImageUtils.CreateBitmapFromBytes(pictureBytes);
+            return _pictureRepository.LoadPictureAsBytes(picture) ?? new byte[0];
         }
     }
 }

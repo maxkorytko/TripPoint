@@ -1,36 +1,33 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
-using TripPoint.Model.Domain;
-using TripPoint.WindowsPhone.Utils;
-
-namespace TripPoint.WindowsPhone.State.Data
+namespace TripPoint.Model.Domain
 {
-    public class Thumbnail : INotifyPropertyChanged
+    public class Thumbnail
     {
+        private Uri _imageUri;
+
         private ImageSource _source;
 
-        public Thumbnail(Picture picture)
+        public Thumbnail(Uri imageUri)
         {
-            if (picture == null)
-                throw new ArgumentException("picture");
+            if (imageUri == null) throw new ArgumentException("imageUri");
 
-            Picture = picture;
+            _imageUri = imageUri;
         }
 
-        public Picture Picture { get; private set; }
-
-        public ImageSource Source
+        public virtual ImageSource Source
         {
             get 
             {
                 if (_source == null)
-                    PictureLoader.Instance.LoadThumbnail(this);
+                    _source = new BitmapImage(_imageUri);
 
                 return _source; 
             }
-            set
+            protected set
             {
                 if (_source == value) return;
 

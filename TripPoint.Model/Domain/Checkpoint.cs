@@ -16,6 +16,7 @@ namespace TripPoint.Model.Domain
         private int _checkpointID;
         private DateTime _timestamp;
         private string _title;
+        private Thumbnail _thumbnail;
         
         private EntitySet<Note> _notes;
         private EntitySet<Picture> _pictures;
@@ -192,6 +193,20 @@ namespace TripPoint.Model.Domain
                     _locationID = value.ID;
 
                 NotifyPropertyChanged("Location");
+            }
+        }
+        #endregion
+
+        #region Thumbnail
+        public Thumbnail Thumbnail
+        {
+            get { return _thumbnail; }
+            set
+            {
+                if (_thumbnail == value) return;
+
+                _thumbnail = value;
+                NotifyPropertyChanged("Thumbnail");
             }
         }
         #endregion

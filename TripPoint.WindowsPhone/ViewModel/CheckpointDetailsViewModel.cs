@@ -18,7 +18,7 @@ namespace TripPoint.WindowsPhone.ViewModel
     public class CheckpointDetailsViewModel : TripPointViewModelBase
     {
         Checkpoint _checkpoint;
-        ICollection<Thumbnail> _thumbnails;
+        ICollection<PictureThumbnail> _thumbnails;
         bool _shouldShowCheckpointMap;
         ICheckpointRepository _checkpointRepository;
         IPictureRepository _pictureRepository;
@@ -51,7 +51,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
-        public ICollection<Thumbnail> Thumbnails
+        public ICollection<PictureThumbnail> Thumbnails
         {
             get
             {
@@ -72,12 +72,12 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             if (Checkpoint == null) return;
 
-            _thumbnails = new List<Thumbnail>();
+            _thumbnails = new List<PictureThumbnail>();
 
             foreach (var picture in Checkpoint.Pictures)
             {
-                var thumbnail = new Thumbnail(picture);
-                _thumbnails.Add(thumbnail);
+                _thumbnails.Add(new PictureThumbnail(new Uri("/Assets/Images/Dark/checkpoint.thumb.png",
+                    UriKind.Relative), picture));
             }
         }
 

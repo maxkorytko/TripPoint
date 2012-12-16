@@ -94,8 +94,9 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                
-                                <Image Source="/Assets/Images/Dark/checkpoint.thumb.png" Grid.Column="0" />
+
+                                <Image Width="80" Height="80" Grid.Column="0" Stretch="UniformToFill"
+                                       Source="{Binding Thumbnail.Source}" />
                                 
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="15,0,0,0">
                                     <TextBlock x:Name="CheckpointTitle" Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}"/>

@@ -15,6 +15,7 @@ using TripPoint.WindowsPhone.State;
 using TripPoint.WindowsPhone.State.Data;
 using TripPoint.WindowsPhone.Utils;
 using GalaSoft.MvvmLight.Command;
+using System.Collections.Generic;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
@@ -212,6 +213,24 @@ namespace TripPoint.WindowsPhone.ViewModel
             if (_tripRepository == null) return;
 
             CurrentTrip = _tripRepository.CurrentTrip;
+            SetCheckpointThumbnails(CurrentTrip.Checkpoints);
+        }
+
+        private void SetCheckpointThumbnails(IEnumerable<Checkpoint> checkpoints)
+        {
+            foreach (var checkpoint in checkpoints)
+            {
+                var thumbnail = (PictureThumbnail)checkpoint.Thumbnail;
+
+                if (thumbnail == null)
+                {
+                    thumbnail = new PictureThumbnail(new Uri("/Assets/Images/Dark/checkpoint.thumb.png",
+                        UriKind.Relative));
+                    checkpoint.Thumbnail = thumbnail;
+                }
+
+                thumbnail.Picture = checkpoint.Pictures.LastOrDefault();
+            }
         }
 
         private void InitializeLatestCheckpoint()
