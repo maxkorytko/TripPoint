@@ -12,15 +12,15 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True"
     DataContext="{Binding TripDetailsViewModel, Source={StaticResource Locator}}">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <controls:Panorama Title="Trip Details">
+        <controls:Panorama Title="{Binding Localization.Resources.TripDetails}">
             <!-- Trip Details item -->
-            <controls:PanoramaItem Header="Details">
+            <controls:PanoramaItem Header="{Binding Localization.Resources.Details}">
                 <Grid x:Name="TripDetailsLayout">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -39,7 +39,7 @@
             </controls:PanoramaItem>
 
             <!-- Checkpoints items -->
-            <controls:PanoramaItem Header="Checkpoints">
+            <controls:PanoramaItem Header="{Binding Localization.Resource.Checkpoints}">
                 <ListBox x:Name="CheckpointList" ItemsSource="{Binding Trip.Checkpoints}"
                          SelectionChanged="CheckpointList_SelectionChanged">
                     <ListBox.ItemTemplate>
@@ -50,7 +50,8 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
-                                <Image Source="/Assets/Images/Dark/checkpoint.thumb.png" Grid.Column="0" />
+                                <Image Width="80" Height="80" Grid.Column="0" Stretch="UniformToFill"
+                                       Source="{Binding Thumbnail.Source}" />
 
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="15,0,0,0">
                                     <TextBlock x:Name="CheckpointTitle" Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}"/>

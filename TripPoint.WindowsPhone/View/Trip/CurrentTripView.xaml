@@ -23,9 +23,9 @@
     
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <controls:Panorama Title="Current Trip">
+        <controls:Panorama Title="{Binding Localization.Resources.CurrentTrip}">
             <!-- Trip Details item -->
-            <controls:PanoramaItem Header="Details">
+            <controls:PanoramaItem Header="{Binding Localization.Resources.Details}">
                 <Grid x:Name="TripDetailsLayout">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -36,11 +36,11 @@
                         <TextBlock x:Name="TripName" Style="{StaticResource PhoneTextBlockBase}"
                                    HorizontalAlignment="Stretch" TextTrimming="WordEllipsis" 
                                    FontSize="44"
-                                   Text="{Binding CurrentTrip.Name}" />
+                                   Text="{Binding Trip.Name}" />
 
                         <TextBlock x:Name="TripStartDate" Style="{StaticResource PhoneTextTitle3Style}"
                                    Foreground="#FF1B91E0" FontWeight="SemiBold"
-                                   Text="{Binding CurrentTrip.StartDate}" />
+                                   Text="{Binding Trip.StartDate}" />
                     </StackPanel>
                     
                     <Grid x:Name="CreateCheckpointContainer" Grid.Row="1"
@@ -94,8 +94,8 @@
             </controls:PanoramaItem>
             
             <!-- Checkpoints item -->
-            <controls:PanoramaItem Header="Checkpoints">
-                <ListBox x:Name="CheckpointList" ItemsSource="{Binding CurrentTrip.Checkpoints}"
+            <controls:PanoramaItem Header="{Binding Localization.Resources.Checkpoints}">
+                <ListBox x:Name="CheckpointList" ItemsSource="{Binding Trip.Checkpoints}"
                          SelectionChanged="CheckpointList_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>

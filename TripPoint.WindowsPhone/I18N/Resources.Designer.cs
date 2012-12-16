@@ -124,6 +124,15 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Checkpoints.
+        /// </summary>
+        public static string Checkpoints {
+            get {
+                return ResourceManager.GetString("Checkpoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
         public static string Confirm {
@@ -201,6 +210,15 @@ namespace TripPoint.WindowsPhone.I18N {
         public static string CreateTripPageTitle {
             get {
                 return ResourceManager.GetString("CreateTripPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Trip.
+        /// </summary>
+        public static string CurrentTrip {
+            get {
+                return ResourceManager.GetString("CurrentTrip", resourceCulture);
             }
         }
         
@@ -401,6 +419,15 @@ namespace TripPoint.WindowsPhone.I18N {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trip Details.
+        /// </summary>
+        public static string TripDetails {
+            get {
+                return ResourceManager.GetString("TripDetails", resourceCulture);
             }
         }
         

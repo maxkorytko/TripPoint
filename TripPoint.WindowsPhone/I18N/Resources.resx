@@ -236,4 +236,13 @@ Would you like to save this checkpoint?</value>
   <data name="TypeNote" xml:space="preserve">
     <value>type note</value>
   </data>
+  <data name="CurrentTrip" xml:space="preserve">
+    <value>Current Trip</value>
+  </data>
+  <data name="Checkpoints" xml:space="preserve">
+    <value>Checkpoints</value>
+  </data>
+  <data name="TripDetails" xml:space="preserve">
+    <value>Trip Details</value>
+  </data>
 </root>

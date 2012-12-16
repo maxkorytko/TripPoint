@@ -119,6 +119,7 @@
     <Compile Include="Utils\ImageUtils.cs" />
     <Compile Include="Utils\PictureLoader.cs" />
     <Compile Include="ViewModel\ApplicationSettingsViewModel.cs" />
+    <Compile Include="ViewModel\Base\TripViewModelBase.cs" />
     <Compile Include="ViewModel\CheckpointAddNotesViewModel.cs" />
     <Compile Include="ViewModel\CheckpointAddPicturesViewModel.cs" />
     <Compile Include="ViewModel\CheckpointDetailsViewModel.cs" />
