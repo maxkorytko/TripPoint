@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 using TripPoint.Model.Domain;
@@ -32,18 +34,35 @@ namespace TripPoint.WindowsPhone.ViewModel
             var userDecision = MessageBox.Show(Resources.ConfirmDeleteTrip, Resources.Deleting,
                 MessageBoxButton.OKCancel);
 
-            if (userDecision == MessageBoxResult.OK)
+            if (userDecision != MessageBoxResult.OK) return;
+
+            try
+            {
                 DeleteTrip();
+                Navigator.GoBack();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(Resources.DeleteTripFailed);
+            }
+        }
+
+        private void DeletePictures()
+        {
+            var picturesToDelete = Trip.Checkpoints.SelectMany(checkpoint => checkpoint.Pictures);
+            RepositoryFactory.PictureRepository.DeletePictures(picturesToDelete);
+        }
+
+        private void DeleteCheckpoints()
+        {
+            RepositoryFactory.CheckpointRepository.DeleteCheckpoints(Trip.Checkpoints);
         }
 
         private void DeleteTrip()
         {
-            if (TripRepository != null)
-            {
-                TripRepository.DeleteTrip(Trip);
-            }
-
-            Navigator.GoBack();
+            DeletePictures();
+            DeleteCheckpoints();
+            TripRepository.DeleteTrip(Trip);
         }
 
         public ICommand ViewCheckpointDetailsCommand { get; private set; }

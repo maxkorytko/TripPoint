@@ -76,10 +76,7 @@ namespace TripPoint.Model.Data.Repository
 
             if (tripToDelete == null) return;
 
-            DataContext.Notes.DeleteAllOnSubmit(tripToDelete.Checkpoints.SelectMany(checkpoint => checkpoint.Notes));
-            DataContext.Checkpoints.DeleteAllOnSubmit(tripToDelete.Checkpoints);
             DataContext.Trips.DeleteOnSubmit(tripToDelete);
-            
             DataContext.SubmitChanges();
         }
     }

@@ -21,21 +21,27 @@ namespace TripPoint.WindowsPhone.State.Data.Repository
         {
             if (picture == null) return EMPTY_BYTE_ARRAY;
 
-            var filePath = GetFilePath(picture);
+            byte[] pictureBytes = null;
 
-            using (var isolatedStorage = IsolatedStorageFile.GetUserStoreForApplication())
+            try
             {
-                if (!isolatedStorage.FileExists(filePath)) return EMPTY_BYTE_ARRAY;
-
-                using (var fileStream = isolatedStorage.OpenFile(filePath, FileMode.Open, FileAccess.Read))
+                using (var isolatedStorage = IsolatedStorageFile.GetUserStoreForApplication())
                 {
-                    var pictureBytes = new byte[fileStream.Length];
+                    var filePath = GetFilePath(picture);
 
-                    fileStream.Read(pictureBytes, 0, pictureBytes.Length);
-
-                    return pictureBytes;
+                    using (var fileStream = isolatedStorage.OpenFile(filePath, FileMode.Open, FileAccess.Read))
+                    {
+                        pictureBytes = new byte[fileStream.Length];
+                        fileStream.Read(pictureBytes, 0, pictureBytes.Length);
+                    }
                 }
             }
+            catch (Exception)
+            {
+                pictureBytes = EMPTY_BYTE_ARRAY;
+            }
+
+            return pictureBytes;
         }
 
         private static string GetFilePath(Picture picture)
@@ -102,6 +108,7 @@ namespace TripPoint.WindowsPhone.State.Data.Repository
             }
         }
 
+        // Override
         public void DeletePictures(IEnumerable<Picture> picturesToDelete)
         {
             foreach (var picture in picturesToDelete)
@@ -120,6 +127,8 @@ namespace TripPoint.WindowsPhone.State.Data.Repository
             {
                 if (isolatedStorage.FileExists(filePath))
                     isolatedStorage.DeleteFile(filePath);
+
+                // TODO: delete the directory if it's empty
             }
         }
     }

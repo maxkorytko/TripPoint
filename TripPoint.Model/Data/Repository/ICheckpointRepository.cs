@@ -1,4 +1,6 @@
-﻿using TripPoint.Model.Domain;
+﻿using System.Collections.Generic;
+
+using TripPoint.Model.Domain;
 
 namespace TripPoint.Model.Data.Repository
 {
@@ -28,5 +30,11 @@ namespace TripPoint.Model.Data.Repository
         /// </summary>
         /// <param name="checkpoint"></param>
         void DeleteCheckpoint(Checkpoint checkpoint);
+
+        /// <summary>
+        /// Bulk deletes a number of checkpoints
+        /// </summary>
+        /// <param name="checkpoints"></param>
+        void DeleteCheckpoints(IEnumerable<Checkpoint> checkpoints);
     }
 }

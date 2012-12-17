@@ -1,5 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
+using System.Collections.Generic;
 
 using TripPoint.Model.Domain;
 
@@ -49,10 +49,19 @@ namespace TripPoint.Model.Data.Repository
             checkpointEntity.Trip = null;
             DataContext.Locations.DeleteOnSubmit(checkpointEntity.Location);
             DataContext.Notes.DeleteAllOnSubmit(checkpointEntity.Notes);
-            DataContext.Pictures.DeleteAllOnSubmit(checkpoint.Pictures);
+            DataContext.Pictures.DeleteAllOnSubmit(checkpointEntity.Pictures);
             DataContext.Checkpoints.DeleteOnSubmit(checkpointEntity);
             
             DataContext.SubmitChanges();
+        }
+
+        public void DeleteCheckpoints(IEnumerable<Checkpoint> checkpoints)
+        {
+            // TODO: optimize to delete without looping using DataContext.DeleteAllOnSubmit
+            foreach (var checkpoint in checkpoints)
+            {
+                DeleteCheckpoint(checkpoint);
+            }
         }
     }
 }

@@ -20,6 +20,10 @@ namespace TripPoint.Model.Data.Repository
         /// <returns></returns>
         bool SavePictureAsBytes(Picture picture);
 
+        /// <summary>
+        /// Deletes a number of pictures
+        /// </summary>
+        /// <param name="picturesToDelete"></param>
         void DeletePictures(IEnumerable<Picture> picturesToDelete);
     }
 }

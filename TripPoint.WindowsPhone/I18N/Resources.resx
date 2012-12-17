@@ -245,4 +245,7 @@ Would you like to save this checkpoint?</value>
   <data name="TripDetails" xml:space="preserve">
     <value>Trip Details</value>
   </data>
+  <data name="DeleteTripFailed" xml:space="preserve">
+    <value>Failed to delete the trip. Restart the application and try again.</value>
+  </data>
 </root>

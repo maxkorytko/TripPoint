@@ -232,6 +232,15 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to delete the trip. Restart the application and try again..
+        /// </summary>
+        public static string DeleteTripFailed {
+            get {
+                return ResourceManager.GetString("DeleteTripFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deleting.
         /// </summary>
         public static string Deleting {
