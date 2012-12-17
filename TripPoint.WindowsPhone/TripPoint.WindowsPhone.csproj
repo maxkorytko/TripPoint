@@ -91,6 +91,7 @@
     </Compile>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\BytesToImageSourceConverter.cs" />
+    <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="I18N\Localization.cs" />
     <Compile Include="I18N\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

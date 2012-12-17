@@ -5,6 +5,9 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:coding4Fun="clr-namespace:Coding4Fun.Phone.Controls;assembly=Coding4Fun.Phone.Controls"
+    xmlns:convert="clr-namespace:TripPoint.WindowsPhone.Converters;assembly=TripPoint"
     xmlns:appBar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -15,6 +18,11 @@
     mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True"
     DataContext="{Binding TripDetailsViewModel, Source={StaticResource Locator}}">
+
+    <phone:PhoneApplicationPage.Resources>
+        <convert:BoolToVisibilityConverter x:Key="BoolToVisibility" />
+        <convert:InverseBoolConverter x:Key="InverseBool" />
+    </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -65,10 +73,21 @@
                 </ListBox>
             </controls:PanoramaItem>
         </controls:Panorama>
+
+        <coding4Fun:ProgressOverlay  Visibility="{Binding IsDeletingTrip, Converter={StaticResource BoolToVisibility}}">
+            <coding4Fun:ProgressOverlay.Content>
+                <StackPanel>
+                    <toolkit:PerformanceProgressBar IsIndeterminate="True" />
+                    <TextBlock Text="{Binding Localization.Resources.Deleting}" 
+                               HorizontalAlignment="Center" 
+                               Margin="10,0,0,0" />
+                </StackPanel>
+            </coding4Fun:ProgressOverlay.Content>
+        </coding4Fun:ProgressOverlay>
     </Grid>
 
     <appBar:Bindable.ApplicationBar>
-        <appBar:BindableApplicationBar IsVisible="True">
+        <appBar:BindableApplicationBar IsVisible="{Binding IsDeletingTrip, Converter={StaticResource InverseBool}}">
             <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Delete_AppBar}"
                                                  IconUri="/Assets/Images/Dark/appbar.delete.rest.png" 
                                                  Command="{Binding DeleteTripCommand}" />

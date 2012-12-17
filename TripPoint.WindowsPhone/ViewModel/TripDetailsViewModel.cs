@@ -12,11 +12,29 @@ namespace TripPoint.WindowsPhone.ViewModel
 {
     public class TripDetailsViewModel : Base.TripViewModelBase
     {
+        private bool _isDeletingTrip;
+
         public TripDetailsViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
             InitializeCommands();
         }
+
+        public bool IsDeletingTrip
+        {
+            get { return _isDeletingTrip; }
+            private set
+            {
+                if (_isDeletingTrip == value) return;
+
+                _isDeletingTrip = value;
+                RaisePropertyChanged("IsDeletingTrip");
+            }
+        }
+
+        public ICommand ViewCheckpointDetailsCommand { get; private set; }
+
+        public ICommand DeleteTripCommand { get; private set; }
 
         private void InitializeCommands()
         {
@@ -38,6 +56,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             try
             {
+                IsDeletingTrip = true;
                 DeleteTrip();
                 Navigator.GoBack();
             }
@@ -45,6 +64,17 @@ namespace TripPoint.WindowsPhone.ViewModel
             {
                 MessageBox.Show(Resources.DeleteTripFailed);
             }
+            finally
+            {
+                IsDeletingTrip = false;
+            }
+        }
+
+        private void DeleteTrip()
+        {
+            DeletePictures();
+            DeleteCheckpoints();
+            TripRepository.DeleteTrip(Trip);
         }
 
         private void DeletePictures()
@@ -57,16 +87,5 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             RepositoryFactory.CheckpointRepository.DeleteCheckpoints(Trip.Checkpoints);
         }
-
-        private void DeleteTrip()
-        {
-            DeletePictures();
-            DeleteCheckpoints();
-            TripRepository.DeleteTrip(Trip);
-        }
-
-        public ICommand ViewCheckpointDetailsCommand { get; private set; }
-
-        public ICommand DeleteTripCommand { get; private set; }
     }
 }
