@@ -39,7 +39,7 @@
                                    Text="{Binding Trip.Name}" />
 
                         <TextBlock x:Name="TripStartDate" Style="{StaticResource PhoneTextTitle3Style}"
-                                   Foreground="#FF1B91E0" FontWeight="SemiBold"
+                                   Foreground="#FF1B91E0"
                                    Text="{Binding Trip.StartDate}" />
                     </StackPanel>
                     
@@ -76,7 +76,7 @@
 
                             <TextBlock x:Name="LastCheckpointCreateDate" 
                                        Style="{StaticResource PhoneTextTitle3Style}"
-                                       Foreground="#FF1B91E0" FontWeight="SemiBold"
+                                       Foreground="#FF1B91E0"
                                        Text="{Binding LatestCheckpoint.Timestamp}" />
                         </StackPanel>
                     

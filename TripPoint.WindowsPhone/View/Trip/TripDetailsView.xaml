@@ -28,11 +28,13 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0">
-                        <TextBlock x:Name="TripName" Style="{StaticResource PhoneTextTitle2Style}"
-                                   HorizontalAlignment="Stretch" TextTrimming="WordEllipsis" 
+                        <TextBlock x:Name="TripName" Style="{StaticResource PhoneTextBlockBase}"
+                                   HorizontalAlignment="Stretch" TextTrimming="WordEllipsis"
+                                   FontSize="44"
                                    Text="{Binding Trip.Name}"/>
 
-                        <TextBlock x:Name="TripStartDate" Style="{StaticResource PhoneTextBlockBase}"
+                        <TextBlock x:Name="TripStartDate" Style="{StaticResource PhoneTextTitle3Style}"
+                                   Foreground="#FF1B91E0"
                                    Text="{Binding Trip.StartDate}" />
                     </StackPanel>
                 </Grid>
