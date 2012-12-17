@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Windows.Input;
+using System.ComponentModel;
+using System.Windows;
+using System.Threading;
 using Microsoft.Phone.Controls;
 using System.Windows.Media.Imaging;
 
@@ -20,11 +23,9 @@ namespace TripPoint.WindowsPhone.ViewModel
         public static readonly string CAPTURED_PICTURE = "CheckpointAddPictureViewModel.CapturedPicture";
 
         private int _checkpointID;
-
         private Picture _picture;
-
+        private bool _isSavingPicture;
         private ICheckpointRepository _checkpointRepository;
-
         private IPictureRepository _pictureRepository;
 
         public CheckpointAddPicturesViewModel(IRepositoryFactory repositoryFactory)
@@ -51,27 +52,62 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
+        public bool IsSavingPicture
+        {
+            get { return _isSavingPicture; }
+            private set
+            {
+                if (_isSavingPicture == value) return;
+
+                _isSavingPicture = value;
+                RaisePropertyChanged("IsSavingPicture");
+            }
+        }
+
         public ICommand AddPictureCommand { get; private set; }
 
         public ICommand CancelAddPictureCommand { get; private set; }
 
         private void AddPictureAction()
         {
-            var checkpoint = _checkpointRepository.FindCheckpoint(_checkpointID);
-            
-            if (checkpoint != null)
-            {
-                checkpoint.Pictures.Add(Picture);
-                _checkpointRepository.UpdateCheckpoint(checkpoint);
+            IsSavingPicture = true;
 
+            var worker = new BackgroundWorker();
+
+            worker.DoWork += (sender, args) => { SavePicture(); };
+            worker.RunWorkerCompleted += (sender, args) => { Navigator.GoBack(); };
+            worker.RunWorkerAsync();
+        }
+
+        private void SavePicture()
+        {
+            var checkpoint = _checkpointRepository.FindCheckpoint(_checkpointID);
+
+            if (checkpoint == null) return;
+
+            checkpoint.Pictures.Add(Picture);
+            _checkpointRepository.UpdateCheckpoint(checkpoint);
+
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
                 // scale the picture in order to save disk space
                 // it will also help speed up loading the picture
                 //
                 ScalePicture(0.75f);
-                _pictureRepository.SavePictureAsBytes(Picture);
+
+                lock (Picture)
+                {
+                    Monitor.Pulse(Picture);
+                }
+            });
+
+            // wait until scaling is complete before saving the image
+            lock (Picture)
+            {
+                Monitor.Wait(Picture);
             }
 
-            Navigator.GoBack();
+            _pictureRepository.SavePictureAsBytes(Picture);
         }
 
         private void CancelAddPictureAction()
@@ -95,6 +131,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void ResetViewModel()
         {
             Picture = null;
+            IsSavingPicture = false;
         }
 
         private void InitializePicture()
