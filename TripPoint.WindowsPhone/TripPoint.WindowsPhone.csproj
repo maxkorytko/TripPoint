@@ -240,14 +240,6 @@
     <Content Include="Assets\Images\Dark\appbar.stop.rest.png" />
     <Content Include="Assets\Images\Dark\checkpoint.thumb.png" />
     <Content Include="Assets\Images\Dark\trip.thumb.png" />
-    <Content Include="Assets\Photos\Baskets.jpg" />
-    <Content Include="Assets\Photos\Cat.jpg" />
-    <Content Include="Assets\Photos\Giraffe.jpg" />
-    <Content Include="Assets\Photos\Koala.jpg" />
-    <Content Include="Assets\Photos\Lighthouse.jpg" />
-    <Content Include="Assets\Photos\Penguins.jpg" />
-    <Content Include="Assets\Photos\Peppers.jpg" />
-    <Content Include="Assets\Photos\Trees.jpg" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
