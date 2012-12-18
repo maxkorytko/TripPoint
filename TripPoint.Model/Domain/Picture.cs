@@ -2,13 +2,6 @@
 using System.ComponentModel;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
-using System.Windows.Media;
-using Microsoft.Phone.Data.Linq.Mapping;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows;
-using System.Windows.Resources;
-using System.Windows.Media.Imaging;
 
 namespace TripPoint.Model.Domain
 {
