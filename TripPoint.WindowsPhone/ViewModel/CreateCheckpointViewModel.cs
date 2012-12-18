@@ -116,7 +116,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private bool IsLocationObtained()
         {
-            return Checkpoint.Location != null;
+            return Checkpoint.Location != null && !Checkpoint.Location.IsUnknown;
         }
 
         private void SaveCheckpoint()

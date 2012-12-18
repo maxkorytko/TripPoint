@@ -74,7 +74,8 @@
             </controls:PanoramaItem>
         </controls:Panorama>
 
-        <coding4Fun:ProgressOverlay  Visibility="{Binding IsDeletingTrip, Converter={StaticResource BoolToVisibility}}">
+        <coding4Fun:ProgressOverlay  Visibility="{Binding IsDeletingTrip, Converter={StaticResource BoolToVisibility}}"
+                                     Background="#AA000000">
             <coding4Fun:ProgressOverlay.Content>
                 <StackPanel>
                     <toolkit:PerformanceProgressBar IsIndeterminate="True" />
