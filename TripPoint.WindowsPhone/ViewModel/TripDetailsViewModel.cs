@@ -1,11 +1,12 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.WindowsPhone.I18N;
+using TripPoint.WindowsPhone.Navigation;
 using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
@@ -54,20 +55,29 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             if (userDecision != MessageBoxResult.OK) return;
 
-            try
+            DeleteTripAsync();
+        }
+
+        private void DeleteTripAsync()
+        {
+            IsDeletingTrip = true;
+
+            var worker = new BackgroundWorker();
+
+            worker.DoWork += (sender, args) => { DeleteTrip(); };
+            worker.RunWorkerCompleted += (sender, args) =>
             {
-                IsDeletingTrip = true;
-                DeleteTrip();
-                Navigator.GoBack();
-            }
-            catch (Exception)
-            {
+                if (args.Error == null)
+                {
+                    Navigator.GoBack();
+                    return;
+                }
+
                 MessageBox.Show(Resources.DeleteTripFailed);
-            }
-            finally
-            {
                 IsDeletingTrip = false;
-            }
+            };
+
+            worker.RunWorkerAsync();
         }
 
         private void DeleteTrip()
@@ -86,6 +96,18 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void DeleteCheckpoints()
         {
             RepositoryFactory.CheckpointRepository.DeleteCheckpoints(Trip.Checkpoints);
+        }
+
+        public override void  OnNavigatedTo(TripPointNavigationEventArgs e)
+        {
+ 	         base.OnNavigatedTo(e);
+
+             ResetViewModel();
+        }
+
+        private void ResetViewModel()
+        {
+            IsDeletingTrip = false;
         }
     }
 }
