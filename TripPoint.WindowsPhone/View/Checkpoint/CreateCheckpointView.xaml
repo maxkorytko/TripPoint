@@ -21,6 +21,7 @@
 
     <phone:PhoneApplicationPage.Resources>
         <convert:BoolToVisibilityConverter x:Key="BoolToVisibility" />
+        <convert:InverseBoolConverter x:Key="InverseBool" />
     </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -65,14 +66,15 @@
                          coding4FunBinding:TextBinding.UpdateSourceOnChange="True" />
             </StackPanel>
         </Grid>
-        
-        <coding4Fun:ProgressOverlay Grid.RowSpan="2" 
+
+        <coding4Fun:ProgressOverlay Grid.RowSpan="2" Background="#AA000000"
                                     Visibility="{Binding IsWaitingForLocation, Converter={StaticResource BoolToVisibility}}">
             <coding4Fun:ProgressOverlay.Content>
                 <StackPanel>
                     <toolkit:PerformanceProgressBar IsIndeterminate="True" />
                     <TextBlock Text="{Binding Localization.Resources.FindingYourLocation}" 
-                               HorizontalAlignment="Center" Margin="10,0,0,0" />
+                               HorizontalAlignment="Center"
+                               Margin="10,0,0,0" />
                 </StackPanel>
             </coding4Fun:ProgressOverlay.Content>
         </coding4Fun:ProgressOverlay>
@@ -80,7 +82,7 @@
     </Grid>
 
     <appBar:Bindable.ApplicationBar>
-        <appBar:BindableApplicationBar IsVisible="True">
+        <appBar:BindableApplicationBar IsVisible="{Binding IsWaitingForLocation, Converter={StaticResource InverseBool}}">
             <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Save}"
                                                  IconUri="/Assets/Images/Dark/appbar.save.rest.png" 
                                                  Command="{Binding CreateCheckpointCommand}" />

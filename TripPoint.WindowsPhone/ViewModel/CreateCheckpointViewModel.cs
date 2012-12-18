@@ -1,12 +1,8 @@
-﻿#region SDK Usings
-
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Device.Location;
 using Microsoft.Phone.Controls;
-
-#endregion
 
 using GalaSoft.MvvmLight.Command;
 using TripPoint.Model.Domain;
@@ -89,7 +85,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             if (Checkpoint == null)
             {
-                CloseView();
+                GoBack();
                 return;
             }
                 
@@ -98,7 +94,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             if (IsLocationObtained())
             {
                 SaveCheckpoint();
-                CloseView();
+                GoBack();
             }
             else if (LocationService.Permission == GeoPositionPermission.Denied)
                 DisplayLocationNotFoundMessage();
@@ -134,7 +130,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             tripRepository.UpdateTrip(trip);
         }
 
-        private void CloseView()
+        private void GoBack()
         {
             ResetViewModel();
             Navigator.GoBack();
@@ -149,7 +145,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             if (userDecision == MessageBoxResult.OK)
                 SaveCheckpoint();
 
-            CloseView();
+            GoBack();
         }
 
         private void WaitUntilLocationIsObtained(int timeout)
@@ -182,7 +178,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             {
                 StopWaitingForLocation();
                 SaveCheckpoint();
-                CloseView();
+                GoBack();
             }
         }
 
@@ -221,7 +217,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void CancelCreateCheckpointAction()
         {
-            CloseView();
+            GoBack();
         }
 
         public override void OnNavigatedTo(TripPointNavigationEventArgs e)

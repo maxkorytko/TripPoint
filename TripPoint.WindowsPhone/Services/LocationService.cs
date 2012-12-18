@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 using System.Device.Location;
 
 namespace TripPoint.WindowsPhone.Services
@@ -35,7 +34,7 @@ namespace TripPoint.WindowsPhone.Services
         {
             if (IsRunning) return;
 
-            _geoCoordinateWatcher = new GeoCoordinateWatcher(GeoPositionAccuracy.Default); 
+            _geoCoordinateWatcher = new GeoCoordinateWatcher(GeoPositionAccuracy.High); 
             _geoCoordinateWatcher.MovementThreshold = 20;
             _geoCoordinateWatcher.PositionChanged += PositionChanged;
             

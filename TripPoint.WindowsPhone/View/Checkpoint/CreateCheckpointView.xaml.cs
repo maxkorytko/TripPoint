@@ -23,9 +23,7 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
                     if (ViewModel != null)
-                    {
                         ViewModel.OnLocationObtained(args.Position.Location);
-                    }
                 });
             };
         }
