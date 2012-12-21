@@ -39,7 +39,7 @@
                    Text="{Binding Picture.Title}"/>
 
             <TextBlock Style="{StaticResource PhoneTextTitle3Style}"
-                       Foreground="#FF1B91E0"
+                       Foreground="{StaticResource PhoneAccentBrush}"
                        Text="{Binding Picture.DateTaken}" />
         </StackPanel>
 

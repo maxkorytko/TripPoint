@@ -39,7 +39,7 @@
                                    Text="{Binding Trip.Name}" />
 
                         <TextBlock x:Name="TripStartDate" Style="{StaticResource PhoneTextTitle3Style}"
-                                   Foreground="#FF1B91E0"
+                                   Foreground="{StaticResource PhoneAccentBrush}"
                                    Text="{Binding Trip.StartDate}" />
                     </StackPanel>
                     
@@ -65,7 +65,7 @@
                         <StackPanel Grid.Row="0" Margin="0,25,0,15">
                             <TextBlock Style="{StaticResource PhoneTextBlockBase}" 
                                        FontSize="36"
-                                       Foreground="#FF1B91E0"
+                                       Foreground="{StaticResource PhoneAccentBrush}"
                                        Text="{Binding Localization.Resources.LatestCheckpoint}" />
 
                             <TextBlock x:Name="LastCheckpointTitle" Style="{StaticResource PhoneTextBlockBase}"
@@ -76,7 +76,7 @@
 
                             <TextBlock x:Name="LastCheckpointCreateDate" 
                                        Style="{StaticResource PhoneTextTitle3Style}"
-                                       Foreground="#FF1B91E0"
+                                       Foreground="{StaticResource PhoneAccentBrush}"
                                        Text="{Binding LatestCheckpoint.Timestamp}" />
                         </StackPanel>
                     
@@ -109,8 +109,14 @@
                                        Source="{Binding Thumbnail.Source}" />
                                 
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="15,0,0,0">
-                                    <TextBlock x:Name="CheckpointTitle" Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}"/>
-                                    <TextBlock x:Name="CheckpointCreateDate" Text="{Binding Timestamp}" Style="{StaticResource PhoneTextBlockBase}" />
+                                    <TextBlock x:Name="CheckpointTitle"
+                                               Text="{Binding Title}"
+                                               Style="{StaticResource PhoneTextLargeStyle}"/>
+                                    
+                                    <TextBlock x:Name="CheckpointCreateDate"
+                                               Text="{Binding Timestamp}"
+                                               Foreground="{StaticResource PhoneAccentBrush}"
+                                               Style="{StaticResource PhoneTextBlockBase}" />
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
