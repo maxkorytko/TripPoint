@@ -26,8 +26,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private Picture _picture;
         private bool _isSavingPicture;
         private ICheckpointRepository _checkpointRepository;
-        private IPictureRepository _pictureRepository;
-
+        
         public CheckpointAddPicturesViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
@@ -107,7 +106,7 @@ namespace TripPoint.WindowsPhone.ViewModel
                 Monitor.Wait(Picture);
             }
 
-            _pictureRepository.SavePictureAsBytes(Picture);
+            PictureStateManager.Instance.SavePicture(Picture);
         }
 
         private void CancelAddPictureAction()
@@ -123,9 +122,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             InitializePicture();
 
             _checkpointID = GetCheckpointID(e.View);
-
             _checkpointRepository = RepositoryFactory.CheckpointRepository;
-            _pictureRepository = RepositoryFactory.PictureRepository;
         }
 
         private void ResetViewModel()

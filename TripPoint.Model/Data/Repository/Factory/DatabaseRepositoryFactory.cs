@@ -17,10 +17,14 @@
             get { return new DatabaseCheckpointRepository(DataContext); }
         }
 
+        public INoteRepository NoteRepository
+        {
+            get { return new DatabaseNoteRepository(DataContext); }
+        }
+
         public IPictureRepository PictureRepository
         {
-            // not supported
-            get { return null; }
+            get { return new DatabasePictureRepository(DataContext); }
         }
     }
 }

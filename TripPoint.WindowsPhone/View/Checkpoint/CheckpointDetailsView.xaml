@@ -6,7 +6,9 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:jwcontrols="clr-namespace:JeffWilcox.Controls;assembly=JeffWilcox.Maps"
     xmlns:trippointcontrols="clr-namespace:TripPoint.WindowsPhone.View.Controls;assembly=TripPoint"
-    xmlns:appBar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
+    xmlns:appBar="clr-namespace:Sh;assembly=Sh"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:convert="clr-namespace:TripPoint.WindowsPhone.Converters;assembly=TripPoint"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -14,9 +16,14 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True"
     DataContext="{Binding CheckpointDetailsViewModel, Source={StaticResource Locator}}">
+    
+    <phone:PhoneApplicationPage.Resources>
+        <convert:BoolToVisibilityConverter x:Name="BoolToVisibility" />
+        <convert:InverseBoolToVisibilityConverter x:Name="InverseBoolToVisibility" />
+    </phone:PhoneApplicationPage.Resources>
     
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -31,9 +38,14 @@
                     
                     <!-- Title -->
                     <StackPanel Grid.Row="0" Margin="0,25,0,50">
-                        <TextBlock Style="{StaticResource PhoneTextTitle2Style}" Text="{Binding Checkpoint.Title}" 
-                                   HorizontalAlignment="Stretch"/>
-                        <TextBlock Style="{StaticResource PhoneTextBlockBase}" Text="{Binding Checkpoint.Timestamp}" />
+                        <TextBlock Text="{Binding Checkpoint.Title}"
+                                   FontSize="36"
+                                   Style="{StaticResource PhoneTextBlockBase}" 
+                                   HorizontalAlignment="Stretch" />
+
+                        <TextBlock Text="{Binding Checkpoint.Timestamp}"
+                                   Foreground="{StaticResource PhoneAccentBrush}"
+                                   Style="{StaticResource PhoneTextBlockBase}" />
                     </StackPanel>
                     
                     <Grid Grid.Row="1">
@@ -60,29 +72,61 @@
                                    Text="{Binding Checkpoint.Notes.Count}" />
 
                     </Grid>
-                    
+
+                    <appBar:AdvancedApplicationBarIconButton Text="{Binding Localization.Resources.Edit_AppBar}"
+                                                 IconUri="/Assets/Images/Dark/appbar.edit.rest.png"
+                                                 Command="{Binding EditCheckpointCommand}" />
+
                 </Grid>
             </controls:PivotItem>
             
             <controls:PivotItem Header="{Binding Localization.Resources.Pictures}">
                 <trippointcontrols:PictureGrid DataContext="{Binding Thumbnails}" 
-                                               OnPictureSelected="PictureSelected"/>
+                                               OnPictureSelected="PictureSelected" />
             </controls:PivotItem>
             
             <controls:PivotItem Header="{Binding Localization.Resources.Notes}">
-                <ListBox ItemsSource="{Binding Checkpoint.Notes}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,15,0,15">
-                                <TextBlock Style="{StaticResource PhoneTextTitle2Style}"
-                                           Text="{Binding Text}" />
+                <Grid>
+                    <toolkit:MultiselectList x:Name="NoteList"
+                                             SelectionChanged="NoteList_SelectionChanged"
+                                             IsSelectionEnabledChanged="NoteList_IsSelectionEnabledChanged"
+                                             ItemsSource="{Binding Checkpoint.Notes}">
+                        <toolkit:MultiselectList.ItemContainerStyle>
+                            <Style TargetType="toolkit:MultiselectItem">
+                                <Setter Property="Margin" Value="0,15,0,30" />
+                            </Style>
+                        </toolkit:MultiselectList.ItemContainerStyle>
+                        
+                        <toolkit:MultiselectList.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,-10,0,0">
+                                    <TextBlock Style="{StaticResource PhoneTextTitle2Style}"
+                                                Text="{Binding Text}" />
                                 
-                                <TextBlock Style="{StaticResource PhoneTextBlockBase}"
-                                           Text="{Binding Timestamp}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                                    <TextBlock Style="{StaticResource PhoneTextBlockBase}"
+                                                Text="{Binding Timestamp}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </toolkit:MultiselectList.ItemTemplate>
+                    </toolkit:MultiselectList>
+
+                    <appBar:AdvancedApplicationBarIconButton Text="{Binding Localization.Resources.Select_AppBar}"
+                                                             IconUri="/Assets/Images/Dark/appbar.list.check.png" 
+                                                             Visibility="{Binding IsNotesSelectionEnabled, Converter={StaticResource InverseBoolToVisibility}}" 
+                                                             Command="{Binding SelectNotesCommand}" />
+
+                    <appBar:AdvancedApplicationBarIconButton x:Name="DeleteNotesActionBarButton"
+                                                             Text="{Binding Localization.Resources.Delete_AppBar}"
+                                                             IconUri="/Assets/Images/Dark/appbar.delete.rest.png"
+                                                             IsEnabled="False"
+                                                             Visibility="{Binding IsNotesSelectionEnabled, Converter={StaticResource BoolToVisibility}}"
+                                                             Click="DeleteNotesActionBarButton_Click" />
+
+                    <appBar:AdvancedApplicationBarIconButton Text="{Binding Localization.Resources.Cancel_AppBar}"
+                                                             IconUri="/Assets/Images/Dark/appbar.stop.rest.png" 
+                                                             Visibility="{Binding IsNotesSelectionEnabled, Converter={StaticResource BoolToVisibility}}"
+                                                             Command="{Binding CancelSelectingNotesCommand}" />
+                </Grid>
             </controls:PivotItem>
             
             <controls:PivotItem Header="Map" x:Name="CheckpointMapPivotItem">
@@ -91,25 +135,18 @@
                 It will cause ArgumentException when checkpoint gets deleted
                 This is because Location will be set to null
                 -->
-                <jwcontrols:StaticMap Name="CheckpointMap" Margin="-12,0,-12,0"
+                <jwcontrols:StaticMap x:Name="CheckpointMap" Margin="-12,0,-12,0"
                                       Provider="Bing" 
                                       ZoomLevel="15" />
                 
             </controls:PivotItem>
             
         </controls:Pivot>
+
+        <appBar:AdvancedApplicationBar>
+            <appBar:AdvancedApplicationBarMenuItem Text="{Binding Localization.Resources.Delete_Checkpoint_AppBar}"
+                                                   Command="{Binding DeleteCheckpointCommand}" />
+        </appBar:AdvancedApplicationBar>
+
     </Grid>
-
-    <appBar:Bindable.ApplicationBar>
-        <appBar:BindableApplicationBar IsVisible="True">
-            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Edit_AppBar}"
-                                                 IconUri="/Assets/Images/Dark/appbar.edit.rest.png" 
-                                                 Command="{Binding EditCheckpointCommand}" />
-
-            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Delete_AppBar}"
-                                                 IconUri="/Assets/Images/Dark/appbar.delete.rest.png" 
-                                                 Command="{Binding DeleteCheckpointCommand}" />
-        </appBar:BindableApplicationBar>
-    </appBar:Bindable.ApplicationBar>
-
 </phone:PhoneApplicationPage>

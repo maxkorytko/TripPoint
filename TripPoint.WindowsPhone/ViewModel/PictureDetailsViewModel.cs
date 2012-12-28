@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Linq;
+using System.Windows;
+using System.Windows.Input;
 using Microsoft.Phone.Controls;
 
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
+using TripPoint.WindowsPhone.I18N;
+using TripPoint.WindowsPhone.State;
 using TripPoint.WindowsPhone.Navigation;
+using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
@@ -16,7 +21,12 @@ namespace TripPoint.WindowsPhone.ViewModel
         public PictureDetailsViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
-            
+            InitializeCommands();
+        }
+
+        private void InitializeCommands()
+        {
+            DeletePictureCommand = new RelayCommand(DeletePictureAction);
         }
 
         public Picture Picture
@@ -31,17 +41,45 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
+        public ICommand DeletePictureCommand { get; private set; }
+
+        private void DeletePictureAction()
+        {
+            var userDecision = MessageBox.Show(Resources.ConfirmDeletePicture, Resources.Deleting,
+                MessageBoxButton.OKCancel);
+
+            if (userDecision == MessageBoxResult.OK)
+                DeletePicture();
+        }
+
+        private void DeletePicture()
+        {
+            try
+            {
+                PictureStateManager.Instance.DeletePicture(Picture);
+                RepositoryFactory.PictureRepository.DeletePicture(Picture);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(this, String.Format("Could not delete picture: {0}", ex.Message));
+            }
+            finally
+            {
+                Navigator.GoBack();
+            }
+        }
+
         public override void OnNavigatedTo(TripPointNavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
-            var checkpointID = TripPointConvert.ToInt32(GetParameter(e.View, "checkpointID"));
             var pictureID = TripPointConvert.ToInt32(GetParameter(e.View, "pictureID"));
+            Picture = RepositoryFactory.PictureRepository.FindPicture(pictureID);
             
-            InitializePicture(checkpointID, pictureID);
             LoadPicture();
         }
 
+        // TO-DO: move this method to TripPointViewModelBase
         private static string GetParameter(PhoneApplicationPage view, string parameterName)
         {
             if (view == null) return String.Empty;
@@ -49,21 +87,11 @@ namespace TripPoint.WindowsPhone.ViewModel
             return view.TryGetQueryStringParameter(parameterName);
         }
 
-        private void InitializePicture(int checkpointID, int pictureID)
-        {
-            var checkpoint = RepositoryFactory.CheckpointRepository.FindCheckpoint(checkpointID);
-
-            if (checkpoint != null)
-            {
-                Picture = checkpoint.Pictures.SingleOrDefault<Picture>(picture => picture.ID == pictureID);
-            }
-        }
-
         private void LoadPicture()
         {
             if (Picture == null) return;
 
-            Picture.RawBytes = RepositoryFactory.PictureRepository.LoadPictureAsBytes(Picture);
+            Picture.RawBytes = PictureStateManager.Instance.LoadPicture(Picture);
         }
     }
 }

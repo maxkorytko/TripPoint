@@ -12,6 +12,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static CurrentTripViewModel _currentTripViewModel;
         private static TripDetailsViewModel _tripDetailsViewModel;
         private static CreateCheckpointViewModel _createCheckpointViewModel;
+        private static CheckpointEditViewModel _checkpointEditViewModel;
         private static CheckpointAddNotesViewModel _checkpointAddNotesViewModel;
         private static CheckpointAddPicturesViewModel _checkpointAddPicturesViewModel;
         private static CheckpointDetailsViewModel _checkpointDetailsViewModel;
@@ -192,6 +193,37 @@ namespace TripPoint.WindowsPhone.ViewModel
         }
         #endregion
 
+        #region CheckpointEditViewModel
+        private static void InitializeCheckpointEditViewModel()
+        {
+            if (_checkpointEditViewModel == null)
+                _checkpointEditViewModel = new CheckpointEditViewModel(RepositoryFactory.Create());
+        }
+
+        public static CheckpointEditViewModel CheckpointEditViewModelStatic
+        {
+            get
+            {
+                InitializeCheckpointEditViewModel();
+                return _checkpointEditViewModel;
+            }
+        }
+
+        public CheckpointEditViewModel CheckpointEditViewModel
+        {
+            get
+            {
+                return CheckpointEditViewModelStatic;
+            }
+        }
+
+        private static void ClearCheckpointEditViewModel()
+        {
+            _checkpointEditViewModel.Cleanup();
+            _checkpointEditViewModel = null;
+        }
+        #endregion
+
         #region CheckpointAddNotesViewModel
         private static void InitializeCheckpointAddNotesViewModel()
         {
@@ -357,6 +389,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             ClearCurrentTripViewModel();
             ClearTripDetailsViewModel();
             ClearCreateCheckpointViewModel();
+            ClearCheckpointEditViewModel();
             ClearCheckpointAddNotesViewModel();
             ClearCheckpointAddPicturesViewModel();
             ClearCheckpointDetailsViewModel();

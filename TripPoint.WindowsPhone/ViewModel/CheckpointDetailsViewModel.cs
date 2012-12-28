@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Microsoft.Phone.Controls;
 
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
+using TripPoint.WindowsPhone.State;
 using TripPoint.WindowsPhone.State.Data;
 using TripPoint.WindowsPhone.Navigation;
 using TripPoint.WindowsPhone.I18N;
@@ -17,16 +20,15 @@ namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CheckpointDetailsViewModel : Base.TripPointViewModelBase
     {
-        Checkpoint _checkpoint;
-        ICollection<PictureThumbnail> _thumbnails;
-        bool _shouldShowCheckpointMap;
-        ICheckpointRepository _checkpointRepository;
-        IPictureRepository _pictureRepository;
+        private Checkpoint _checkpoint;
+        private ICollection<PictureThumbnail> _thumbnails;
+        private bool _shouldShowCheckpointMap;
+        private bool _isNotesSelectionEnabled;
+        private ICheckpointRepository _checkpointRepository;
         
         public CheckpointDetailsViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
-            Checkpoint = new Checkpoint();
             ShouldShowCheckpointMap = false;
 
             InitializeCommands();
@@ -37,6 +39,9 @@ namespace TripPoint.WindowsPhone.ViewModel
             EditCheckpointCommand = new RelayCommand(EditCheckpointAction);
             DeleteCheckpointCommand = new RelayCommand(DeleteCheckpointAction);
             ViewPictureCommand = new RelayCommand<Picture>(ViewPictureAction);
+            SelectNotesCommand = new RelayCommand(SelectNotesAction);
+            CancelSelectingNotesCommand = new RelayCommand(CancelSelectingNotesAction);
+            DeleteNotesCommand = new RelayCommand<IEnumerable<Note>>(DeleteNotesAction);
         }
 
         public Checkpoint Checkpoint 
@@ -58,26 +63,26 @@ namespace TripPoint.WindowsPhone.ViewModel
                 InitializeThumbnails();
                 return _thumbnails;
             }
-            private set
+            set
             {
                 if (_thumbnails == value) return;
 
                 _thumbnails = value;
+                RaisePropertyChanged("Thumbnails");
             }
         }
 
         private void InitializeThumbnails()
         {
-            if (_thumbnails != null) return;
-
-            if (Checkpoint == null) return;
-
-            _thumbnails = new List<PictureThumbnail>();
+            if (_thumbnails == null) _thumbnails = new ObservableCollection<PictureThumbnail>();
+            if (_thumbnails.Count > 0) return;
 
             foreach (var picture in Checkpoint.Pictures)
             {
-                _thumbnails.Add(new PictureThumbnail(new Uri("/Assets/Images/Dark/checkpoint.thumb.png",
-                    UriKind.Relative), picture));
+                var thumbnail = new PictureThumbnail(new Uri("/Assets/Images/Dark/checkpoint.thumb.png", UriKind.Relative),
+                    picture);
+
+                _thumbnails.Add(thumbnail);
             }
         }
 
@@ -88,7 +93,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             {
                 // not checking if value has been updated
                 // this is to ensure the map can be hidden by default
-
+                //
                 var oldValue = _shouldShowCheckpointMap;
                 _shouldShowCheckpointMap = value;
 
@@ -99,15 +104,35 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
+        public bool IsNotesSelectionEnabled
+        {
+            get { return _isNotesSelectionEnabled; }
+            set
+            {
+                if (_isNotesSelectionEnabled == value) return;
+
+                var oldValue = _isNotesSelectionEnabled;
+                _isNotesSelectionEnabled = value;
+                
+                RaisePropertyChanged("IsNotesSelectionEnabled", oldValue, value, true);
+            }
+        }
+
         public ICommand EditCheckpointCommand { get; private set; }
 
         public ICommand DeleteCheckpointCommand { get; private set; }
 
         public ICommand ViewPictureCommand { get; private set; }
 
+        public ICommand SelectNotesCommand { get; private set; }
+
+        public ICommand CancelSelectingNotesCommand { get; private set; }
+
+        public ICommand DeleteNotesCommand { get; private set; }
+
         private void EditCheckpointAction()
         {
-            Logger.Log(this, "Edit checkpoint");
+            Navigator.Navigate(String.Format("/Checkpoints/{0}/Edit", Checkpoint.ID));
         }
 
         private void DeleteCheckpointAction()
@@ -122,7 +147,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void DeleteCheckpoint()
         {
             // TODO: ensure the app doesn't crash if exception occurs
-            _pictureRepository.DeletePictures(Checkpoint.Pictures);
+            PictureStateManager.Instance.DeletePictures(Checkpoint.Pictures);
             _checkpointRepository.DeleteCheckpoint(Checkpoint);
             
             Navigator.GoBack();
@@ -132,8 +157,33 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             if (Checkpoint == null || picture == null) return;
 
-            Navigator.Navigate(String.Format("/Checkpoints/{0}/Pictures/{1}/Details", Checkpoint.ID,
-                picture.ID));
+            Navigator.Navigate(String.Format("/Pictures/{0}/Details", picture.ID));
+        }
+
+        private void SelectNotesAction()
+        {
+            IsNotesSelectionEnabled = true;
+        }
+
+        private void CancelSelectingNotesAction()
+        {
+            IsNotesSelectionEnabled = false;
+        }
+
+        private void DeleteNotesAction(IEnumerable<Note> notesToDelete)
+        {
+            if (notesToDelete == null) return;
+
+            RepositoryFactory.NoteRepository.DeleteNotes(notesToDelete);
+            
+            // ensure the UI renders the most up to date checkpoint
+            Checkpoint = _checkpointRepository.FindCheckpoint(Checkpoint.ID);
+        }
+
+        public void ResetViewModel()
+        {
+            Checkpoint = null;
+            ShouldShowCheckpointMap = false;
         }
 
         public override void OnNavigatedTo(TripPointNavigationEventArgs e)
@@ -141,11 +191,12 @@ namespace TripPoint.WindowsPhone.ViewModel
             base.OnNavigatedTo(e);
 
             _checkpointRepository = RepositoryFactory.CheckpointRepository;
-            _pictureRepository = RepositoryFactory.PictureRepository;
-
-            var checkpointID = GetCheckpointID(e.View);
-            InitializeCheckpoint(checkpointID);
+            
+            InitializeCheckpoint(GetCheckpointID(e.View));
             DetermineCheckpointMapAvailability();
+
+            // ensure thumbnails for deleted pictures are not displayed
+            DeleteStaleThumbnailsIfNecessary();
         }
 
         private static int GetCheckpointID(PhoneApplicationPage view)
@@ -159,10 +210,9 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void InitializeCheckpoint(int checkpointID)
         {
-            var checkpoint = _checkpointRepository.FindCheckpoint(checkpointID);
+            if (Checkpoint != null) return;
 
-            if (checkpoint != null)
-                Checkpoint = checkpoint;
+            Checkpoint = _checkpointRepository.FindCheckpoint(checkpointID) ?? new Checkpoint();
         }
 
         private void DetermineCheckpointMapAvailability()
@@ -171,10 +221,47 @@ namespace TripPoint.WindowsPhone.ViewModel
             ShouldShowCheckpointMap = Checkpoint.Location != null && !Checkpoint.Location.IsUnknown;
         }
 
-        public void ResetViewModel()
+        private void DeleteStaleThumbnailsIfNecessary()
         {
-            ShouldShowCheckpointMap = false;
-            Thumbnails = null;
+            if (_thumbnails == null) return;
+
+            //var checkpoint = _checkpointRepository.FindCheckpoint(Checkpoint.ID);
+
+            //if (checkpoint.Pictures.Count == Checkpoint.Pictures.Count) return;
+            if (Checkpoint.Pictures.Count == _thumbnails.Count) return;
+
+            var staleThumbnails = (from thumbnail in _thumbnails
+                                  where !Checkpoint.Pictures.Contains(thumbnail.Picture, new PictureComparer())
+                                  select thumbnail).ToList();
+
+            foreach (var thumbnail in staleThumbnails)
+            {
+                _thumbnails.Remove(thumbnail);
+            }
+
+            //Checkpoint = checkpoint;
+        }
+
+        class PictureComparer : IEqualityComparer<Picture>
+        {
+            public bool Equals(Picture left, Picture right)
+            {
+                if (Object.ReferenceEquals(left, right)) return true;
+
+                if (Object.ReferenceEquals(left, null) || Object.ReferenceEquals(right, null)) return false;
+
+                return left.ID == right.ID;
+            }
+
+            public int GetHashCode(Picture picture)
+            {
+                if (Object.ReferenceEquals(picture, null)) return 0;
+
+                int titleHashCode = picture.Title == null ? 0 : picture.Title.GetHashCode();
+                int idHashCode = picture.ID.GetHashCode();
+
+                return titleHashCode ^ idHashCode;
+            }
         }
     }
 }

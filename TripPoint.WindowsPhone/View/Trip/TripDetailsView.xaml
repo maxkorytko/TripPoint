@@ -36,14 +36,20 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0">
-                        <TextBlock x:Name="TripName" Style="{StaticResource PhoneTextBlockBase}"
+                        <TextBlock Style="{StaticResource PhoneTextBlockBase}"
                                    HorizontalAlignment="Stretch" TextTrimming="WordEllipsis"
                                    FontSize="44"
                                    Text="{Binding Trip.Name}"/>
 
-                        <TextBlock x:Name="TripStartDate" Style="{StaticResource PhoneTextTitle3Style}"
-                                   Foreground="#FF1B91E0"
+                        <TextBlock Style="{StaticResource PhoneTextTitle3Style}"
+                                   Foreground="{StaticResource PhoneAccentBrush}"
                                    Text="{Binding Trip.StartDate}" />
+                        
+                        <TextBlock Style="{StaticResource PhoneTextBlockBase}"
+                                   Padding="0,15,0,0"
+                                   TextWrapping="Wrap"
+                                   FontSize="30"
+                                   Text="{Binding Trip.Notes}" />
                     </StackPanel>
                 </Grid>
             </controls:PanoramaItem>

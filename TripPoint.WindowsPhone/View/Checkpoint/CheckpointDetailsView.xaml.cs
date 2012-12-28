@@ -1,6 +1,14 @@
-﻿using System.Device.Location;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Navigation;
+using System.ComponentModel;
+using System.Device.Location;
 using Microsoft.Phone.Controls;
 
+using TripPoint.Model.Domain;
 using TripPoint.WindowsPhone.State.Data;
 using TripPoint.WindowsPhone.ViewModel;
 using TripPoint.WindowsPhone.View.Controls;
@@ -17,6 +25,11 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
             Unloaded += (sender, args) => OnUnloaded();
         }
 
+        private CheckpointDetailsViewModel ViewModel
+        {
+            get { return DataContext as CheckpointDetailsViewModel; }
+        }
+
         private void RegisterMessages()
         {
             Messenger.Default.Register<PropertyChangedMessage<bool>>(this, message =>
@@ -24,6 +37,10 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
                 if (message.PropertyName.Equals("ShouldShowCheckpointMap"))
                 {
                     UpdateCheckpointMapVisibility(message.NewValue);
+                }
+                else if (message.PropertyName.Equals("IsNotesSelectionEnabled"))
+                {
+                    UpdateNoteListSelectionEnabled(message.NewValue);
                 }
             });
         }
@@ -38,8 +55,7 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
 
         private void ShowCheckpointMap()
         {
-            var mapCenter = (DataContext as CheckpointDetailsViewModel).Checkpoint.Location.GeoCoordinate ??
-                            GeoCoordinate.Unknown;
+            var mapCenter = ViewModel.Checkpoint.Location.GeoCoordinate ?? GeoCoordinate.Unknown;
 
             // we don't want to display the map unless we known the checkpoint location
             if (mapCenter == GeoCoordinate.Unknown) return;
@@ -69,12 +85,15 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
             CheckpointDetails.Items.Remove(item);
         }
 
+        private void UpdateNoteListSelectionEnabled(bool isSelectionEnabled)
+        {
+            NoteList.IsSelectionEnabled = isSelectionEnabled;
+        }
+
         private void OnUnloaded()
         {
             Messenger.Default.Unregister(this);
-
-            // we must reset the view model to free memory allocated for thumbnails
-            (DataContext as CheckpointDetailsViewModel).ResetViewModel();
+            ViewModel.ResetViewModel();
         }
 
         private void PictureSelected(object sender, PictureSelectedEventArgs args)
@@ -82,7 +101,60 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
             var selected = (args.SelectedPicture as PictureThumbnail);
 
             if (selected != null)
-                (DataContext as CheckpointDetailsViewModel).ViewPictureCommand.Execute(selected.Picture);
+                ViewModel.ViewPictureCommand.Execute(selected.Picture);
+        }
+
+        protected override void OnBackKeyPress(CancelEventArgs e)
+        {
+            base.OnBackKeyPress(e);
+
+            if (ViewModel.IsNotesSelectionEnabled)
+            {
+                ViewModel.IsNotesSelectionEnabled = false;
+                e.Cancel = true;
+                return;
+            }
+
+            // clear thumbnails to free up memory
+            ViewModel.Thumbnails.Clear();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            ViewModel.OnNavigatedTo(new Navigation.TripPointNavigationEventArgs(e,
+                e.Content as PhoneApplicationPage));
+        }
+
+        private void NoteList_IsSelectionEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            bool isSelectionEnabled = (sender as MultiselectList).IsSelectionEnabled;
+
+            if (ViewModel.IsNotesSelectionEnabled != isSelectionEnabled)
+                ViewModel.IsNotesSelectionEnabled = isSelectionEnabled;
+        }
+
+        private void NoteList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedItems = (sender as MultiselectList).SelectedItems;
+
+            if (selectedItems != null)
+                DeleteNotesActionBarButton.IsEnabled = selectedItems.Count > 0;
+        }
+
+        private void DeleteNotesActionBarButton_Click(object sender, EventArgs e)
+        {
+            if  (NoteList.SelectedItems == null) return;
+
+            IList<Note> notesToDelete = new List<Note>();
+            
+            foreach (var item in NoteList.SelectedItems)
+            {
+                notesToDelete.Add(item as Note);
+            }
+
+            ViewModel.DeleteNotesCommand.Execute(notesToDelete);
         }
     }
 }

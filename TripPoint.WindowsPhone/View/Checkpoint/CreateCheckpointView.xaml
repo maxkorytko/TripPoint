@@ -50,18 +50,24 @@
             </Grid.RowDefinitions>
             
             <StackPanel Grid.Row="0" Margin="0,20,0,20">
-                <TextBlock Text="{Binding Localization.Resources.Title}" />
+                <TextBlock Text="{Binding Localization.Resources.Title}"
+                           Style="{StaticResource PhoneTextBlockBase}" />
+                
                 <TextBox Text="{Binding Checkpoint.Title, Mode=TwoWay}" 
-                         coding4FunBinding:TextBinding.UpdateSourceOnChange="True"/>
+                         coding4FunBinding:TextBinding.UpdateSourceOnChange="True" />
             </StackPanel>
 
             <StackPanel Grid.Row="1" Margin="0,20,0,20">
-                <TextBlock Text="{Binding Localization.Resources.Timestamp}" />
+                <TextBlock Text="{Binding Localization.Resources.Timestamp}"
+                           Style="{StaticResource PhoneTextBlockBase}" />
+                
                 <toolkit:TimePicker Value="{Binding Checkpoint.Timestamp, Mode=TwoWay}" />
             </StackPanel>
 
             <StackPanel Grid.Row="2" Margin="0,20,0,20">
-                <TextBlock Text="{Binding Localization.Resources.Notes}" />
+                <TextBlock Text="{Binding Localization.Resources.Notes}"
+                           Style="{StaticResource PhoneTextBlockBase}" />
+                
                 <TextBox Text="{Binding Notes, Mode=TwoWay}" 
                          coding4FunBinding:TextBinding.UpdateSourceOnChange="True" />
             </StackPanel>
@@ -83,11 +89,11 @@
 
     <appBar:Bindable.ApplicationBar>
         <appBar:BindableApplicationBar IsVisible="{Binding IsWaitingForLocation, Converter={StaticResource InverseBool}}">
-            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Save}"
+            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Save_AppBar}"
                                                  IconUri="/Assets/Images/Dark/appbar.save.rest.png" 
                                                  Command="{Binding CreateCheckpointCommand}" />
 
-            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Cancel}"
+            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Cancel_AppBar}"
                                                  IconUri="/Assets/Images/Dark/appbar.stop.rest.png" 
                                                  Command="{Binding CancelCreateCheckpointCommand}" />
         </appBar:BindableApplicationBar>

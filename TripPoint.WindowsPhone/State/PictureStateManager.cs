@@ -4,20 +4,34 @@ using System.IO.IsolatedStorage;
 using System.Collections.Generic;
 
 using TripPoint.Model.Domain;
-using TripPoint.Model.Data.Repository;
 
-namespace TripPoint.WindowsPhone.State.Data.Repository
+namespace TripPoint.WindowsPhone.State
 {
-    /// <summary>
-    /// Concrete implementation of the IPictureRepository interface
-    /// Uses Isolated Storage for persisting and restoring pictures 
-    /// </summary>
-    public class IsolatedStoragePictureRepository : IPictureRepository
+    public class PictureStateManager
     {
         private static readonly byte[] EMPTY_BYTE_ARRAY = new byte[0];
 
-        // Override
-        public byte[] LoadPictureAsBytes(Picture picture)
+        private static PictureStateManager _instance;
+
+        private PictureStateManager()
+        {
+        }
+
+        public static PictureStateManager Instance
+        {
+            get
+            {
+                if (_instance == null) _instance = new PictureStateManager();
+                return _instance;
+            }
+        }
+
+        /// <summary>
+        /// Restores byte array containing the picture 
+        /// </summary>
+        /// <param name="picture"></param>
+        /// <returns></returns>
+        public byte[] LoadPicture(Picture picture)
         {
             if (picture == null) return EMPTY_BYTE_ARRAY;
 
@@ -56,24 +70,19 @@ namespace TripPoint.WindowsPhone.State.Data.Repository
             return Path.Combine(Path.Combine("Trips", tripID), "Pictures");
         }
 
-        // Override
-        public bool SavePictureAsBytes(Picture picture)
+        /// <summary>
+        /// Persists byte array containing the picture
+        /// </summary>
+        /// <param name="picture"></param>
+        /// <returns></returns>
+        public void SavePicture(Picture picture)
         {
-            if (picture == null) return false;
+            if (picture == null) return;
 
             if (String.IsNullOrWhiteSpace(picture.FileName))
                 throw new InvalidOperationException("Picture file name must not be blank");
 
-            try
-            {
-                WritePictureToIsolatedStorage(picture);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return true;
+            WritePictureToIsolatedStorage(picture);
         }
 
         private static void WritePictureToIsolatedStorage(Picture picture)
@@ -108,16 +117,11 @@ namespace TripPoint.WindowsPhone.State.Data.Repository
             }
         }
 
-        // Override
-        public void DeletePictures(IEnumerable<Picture> picturesToDelete)
-        {
-            foreach (var picture in picturesToDelete)
-            {
-                DeletePicture(picture);
-            }
-        }
-
-        private void DeletePicture(Picture pictureToDelete)
+        /// <summary>
+        /// Deletes a picture
+        /// </summary>
+        /// <param name="pictureToDelete"></param>
+        public void DeletePicture(Picture pictureToDelete)
         {
             if (pictureToDelete == null) return;
 
@@ -129,6 +133,18 @@ namespace TripPoint.WindowsPhone.State.Data.Repository
                     isolatedStorage.DeleteFile(filePath);
 
                 // TODO: delete the directory if it's empty
+            }
+        }
+
+        /// <summary>
+        /// Deletes a number of pictures
+        /// </summary>
+        /// <param name="picturesToDelete"></param>
+        public void DeletePictures(IEnumerable<Picture> picturesToDelete)
+        {
+            foreach (var picture in picturesToDelete)
+            {
+                DeletePicture(picture);
             }
         }
     }

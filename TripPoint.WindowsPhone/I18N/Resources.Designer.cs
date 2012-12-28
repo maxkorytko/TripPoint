@@ -97,11 +97,11 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel.
+        ///   Looks up a localized string similar to cancel.
         /// </summary>
-        public static string Cancel {
+        public static string Cancel_AppBar {
             get {
-                return ResourceManager.GetString("Cancel", resourceCulture);
+                return ResourceManager.GetString("Cancel_AppBar", resourceCulture);
             }
         }
         
@@ -120,6 +120,15 @@ namespace TripPoint.WindowsPhone.I18N {
         public static string CheckpointAddPicturesViewTitle {
             get {
                 return ResourceManager.GetString("CheckpointAddPicturesViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EDIT CHECKPOINT.
+        /// </summary>
+        public static string CheckpointEditViewTitle {
+            get {
+                return ResourceManager.GetString("CheckpointEditViewTitle", resourceCulture);
             }
         }
         
@@ -147,6 +156,15 @@ namespace TripPoint.WindowsPhone.I18N {
         public static string ConfirmDeleteCheckpoint {
             get {
                 return ResourceManager.GetString("ConfirmDeleteCheckpoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this picture?.
+        /// </summary>
+        public static string ConfirmDeletePicture {
+            get {
+                return ResourceManager.GetString("ConfirmDeletePicture", resourceCulture);
             }
         }
         
@@ -228,6 +246,24 @@ namespace TripPoint.WindowsPhone.I18N {
         public static string Delete_AppBar {
             get {
                 return ResourceManager.GetString("Delete_AppBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to delete....
+        /// </summary>
+        public static string Delete_AppBar_MenuItem {
+            get {
+                return ResourceManager.GetString("Delete_AppBar_MenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to delete checkpoint....
+        /// </summary>
+        public static string Delete_Checkpoint_AppBar {
+            get {
+                return ResourceManager.GetString("Delete_Checkpoint_AppBar", resourceCulture);
             }
         }
         
@@ -387,11 +423,11 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save.
+        ///   Looks up a localized string similar to save.
         /// </summary>
-        public static string Save {
+        public static string Save_AppBar {
             get {
-                return ResourceManager.GetString("Save", resourceCulture);
+                return ResourceManager.GetString("Save_AppBar", resourceCulture);
             }
         }
         
@@ -401,6 +437,15 @@ namespace TripPoint.WindowsPhone.I18N {
         public static string Saving {
             get {
                 return ResourceManager.GetString("Saving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to select.
+        /// </summary>
+        public static string Select_AppBar {
+            get {
+                return ResourceManager.GetString("Select_AppBar", resourceCulture);
             }
         }
         
@@ -419,6 +464,15 @@ namespace TripPoint.WindowsPhone.I18N {
         public static string SettingsTitle {
             get {
                 return ResourceManager.GetString("SettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Date.
+        /// </summary>
+        public static string StartDate {
+            get {
+                return ResourceManager.GetString("StartDate", resourceCulture);
             }
         }
         

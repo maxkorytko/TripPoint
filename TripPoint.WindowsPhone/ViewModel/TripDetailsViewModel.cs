@@ -7,6 +7,7 @@ using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.WindowsPhone.I18N;
 using TripPoint.WindowsPhone.Navigation;
+using TripPoint.WindowsPhone.State;
 using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
@@ -90,7 +91,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void DeletePictures()
         {
             var picturesToDelete = Trip.Checkpoints.SelectMany(checkpoint => checkpoint.Pictures);
-            RepositoryFactory.PictureRepository.DeletePictures(picturesToDelete);
+            PictureStateManager.Instance.DeletePictures(picturesToDelete);
         }
 
         private void DeleteCheckpoints()

@@ -51,7 +51,7 @@ namespace TripPoint.WindowsPhone.State.Data
 
             if (_pictureBytes != null) return;
 
-            _pictureBytes = Picture.RawBytes ?? PictureLoader.Instance.LoadPicture(Picture);
+            _pictureBytes = Picture.RawBytes ?? PictureStateManager.Instance.LoadPicture(Picture);
 
             Source = ImageUtils.CreateBitmapFromBytes(_pictureBytes);
         }

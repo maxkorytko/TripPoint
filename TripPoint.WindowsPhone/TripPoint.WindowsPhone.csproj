@@ -68,6 +68,9 @@
     <Reference Include="Microsoft.Phone.Controls.Maps, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="Sh">
+      <HintPath>Lib\Sh.dll</HintPath>
+    </Reference>
     <Reference Include="system.data.linq" />
     <Reference Include="System.Device" />
     <Reference Include="System.Runtime.Serialization" />
@@ -89,6 +92,7 @@
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\BytesToImageSourceConverter.cs" />
     <Compile Include="Converters\InverseBoolConverter.cs" />
+    <Compile Include="Converters\InverseBoolToVisibilityConverter.cs" />
     <Compile Include="I18N\Localization.cs" />
     <Compile Include="I18N\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -104,8 +108,7 @@
     <Compile Include="Services\LocationService.cs" />
     <Compile Include="State\Data\CapturedPicture.cs" />
     <Compile Include="State\Data\PictureThumbnail.cs" />
-    <Compile Include="State\Data\Repository\Factory\WindowsPhoneRepositoryFactory.cs" />
-    <Compile Include="State\Data\Repository\IsolatedStoragePictureRepository.cs" />
+    <Compile Include="State\PictureStateManager.cs" />
     <Compile Include="State\StateManager.cs" />
     <Compile Include="Utils\CountdownTimer.cs" />
     <Compile Include="Utils\ExifLib\ExifIds.cs" />
@@ -115,13 +118,13 @@
     <Compile Include="Utils\ExifLib\JpegInfo.cs" />
     <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Utils\ImageUtils.cs" />
-    <Compile Include="Utils\PictureLoader.cs" />
     <Compile Include="ViewModel\ApplicationSettingsViewModel.cs" />
     <Compile Include="ViewModel\Base\TripPointViewModelBase.cs" />
     <Compile Include="ViewModel\Base\TripViewModelBase.cs" />
     <Compile Include="ViewModel\CheckpointAddNotesViewModel.cs" />
     <Compile Include="ViewModel\CheckpointAddPicturesViewModel.cs" />
     <Compile Include="ViewModel\CheckpointDetailsViewModel.cs" />
+    <Compile Include="ViewModel\CheckpointEditViewModel.cs" />
     <Compile Include="ViewModel\CreateCheckpointViewModel.cs" />
     <Compile Include="ViewModel\CreateTripViewModel.cs" />
     <Compile Include="ViewModel\CurrentTripViewModel.cs" />
@@ -137,6 +140,9 @@
     </Compile>
     <Compile Include="View\Checkpoint\CheckpointDetailsView.xaml.cs">
       <DependentUpon>CheckpointDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Checkpoint\CheckpointEditView.xaml.cs">
+      <DependentUpon>CheckpointEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Checkpoint\CreateCheckpointView.xaml.cs">
       <DependentUpon>CreateCheckpointView.xaml</DependentUpon>
@@ -181,6 +187,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Checkpoint\CheckpointDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Checkpoint\CheckpointEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -232,6 +242,7 @@
     <Content Include="Assets\Images\Dark\appbar.check.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.delete.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.edit.rest.png" />
+    <Content Include="Assets\Images\Dark\appbar.list.check.png" />
     <Content Include="Assets\Images\Dark\appbar.new.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.save.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.stop.rest.png" />

@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:appBar="clr-namespace:Sh;assembly=Sh"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:convert="clr-namespace:TripPoint.WindowsPhone.Converters;assembly=TripPoint"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -50,6 +51,10 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/> 
         </Grid>
+        
+        <appBar:AdvancedApplicationBar>
+            <appBar:AdvancedApplicationBarMenuItem Text="{Binding Localization.Resources.Delete_AppBar_MenuItem}" 
+                                                   Command="{Binding DeletePictureCommand}" />
+        </appBar:AdvancedApplicationBar>
     </Grid>
-
 </phone:PhoneApplicationPage>

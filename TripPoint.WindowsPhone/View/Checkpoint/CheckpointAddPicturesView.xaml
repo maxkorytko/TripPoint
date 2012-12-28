@@ -73,11 +73,11 @@
         <appBar:BindableApplicationBar IsVisible="{Binding IsSavingPicture, Converter={StaticResource InverseBool}}" 
                                        Mode="Minimized" 
                                        Opacity="0.5">
-            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Save}"
+            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Save_AppBar}"
                                                  IconUri="/Assets/Images/Dark/appbar.save.rest.png" 
                                                  Command="{Binding AddPictureCommand}" />
 
-            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Cancel}"
+            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Cancel_AppBar}"
                                                  IconUri="/Assets/Images/Dark/appbar.stop.rest.png" 
                                                  Command="{Binding CancelAddPictureCommand}" />
         </appBar:BindableApplicationBar>

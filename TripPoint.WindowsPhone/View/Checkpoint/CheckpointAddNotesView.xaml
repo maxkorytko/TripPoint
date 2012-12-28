@@ -42,11 +42,11 @@
 
     <appBar:Bindable.ApplicationBar>
         <appBar:BindableApplicationBar IsVisible="True">
-            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Save}"
+            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Save_AppBar}"
                                                  IconUri="/Assets/Images/Dark/appbar.save.rest.png" 
                                                  Command="{Binding AddNotesCommand}" />
 
-            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Cancel}"
+            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Cancel_AppBar}"
                                                  IconUri="/Assets/Images/Dark/appbar.stop.rest.png" 
                                                  Command="{Binding CancelAddNotesCommand}" />
         </appBar:BindableApplicationBar>

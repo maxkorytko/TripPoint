@@ -39,14 +39,14 @@ namespace TripPoint.WindowsPhone.Navigation
             },
             new UriMapping
             {
-                Uri = new Uri("/Checkpoints/{checkpointID}/Pictures/{pictureID}/Details", UriKind.Relative),
-                MappedUri = new Uri("/View/Picture/PictureDetailsView.xaml?checkpointID={checkpointID}&pictureID={pictureID}",
+                Uri = new Uri("/Checkpoints/{checkpointID}/Details", UriKind.Relative),
+                MappedUri = new Uri("/View/Checkpoint/CheckpointDetailsView.xaml?checkpointID={checkpointID}",
                     UriKind.Relative)
             },
             new UriMapping
             {
-                Uri = new Uri("/Checkpoints/{checkpointID}/Details", UriKind.Relative),
-                MappedUri = new Uri("/View/Checkpoint/CheckpointDetailsView.xaml?checkpointID={checkpointID}",
+                Uri = new Uri("/Checkpoints/{checkpointID}/Edit", UriKind.Relative),
+                MappedUri = new Uri("/View/Checkpoint/CheckpointEditView.xaml?checkpointID={checkpointID}",
                     UriKind.Relative)
             },
             new UriMapping
@@ -59,6 +59,12 @@ namespace TripPoint.WindowsPhone.Navigation
             {
                 Uri = new Uri("/Checkpoints/{checkpointID}/Add/Pictures", UriKind.Relative),
                 MappedUri = new Uri("/View/Checkpoint/CheckpointAddPicturesView.xaml?checkpointID={checkpointID}",
+                    UriKind.Relative)
+            },
+            new UriMapping
+            {
+                Uri = new Uri("/Pictures/{pictureID}/Details", UriKind.Relative),
+                MappedUri = new Uri("/View/Picture/PictureDetailsView.xaml?pictureID={pictureID}",
                     UriKind.Relative)
             },
             new UriMapping

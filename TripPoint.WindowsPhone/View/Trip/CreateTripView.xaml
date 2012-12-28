@@ -12,7 +12,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True"
     DataContext="{Binding CreateTripViewModel, Source={StaticResource Locator}}">
 
@@ -41,18 +41,24 @@
             </Grid.RowDefinitions>
             
             <StackPanel Grid.Row="0" Margin="0,20,0,20">
-                <TextBlock Text="Name" />
+                <TextBlock Text="{Binding Localization.Resources.Title}"
+                           Style="{StaticResource PhoneTextBlockBase}" />
+                
                 <TextBox Text="{Binding Trip.Name, Mode=TwoWay}" 
                          coding4FunBinding:TextBinding.UpdateSourceOnChange="True" />
             </StackPanel>
 
             <StackPanel Grid.Row="1" Margin="0,20,0,20">
-                <TextBlock Text="Starting Date" />
+                <TextBlock Text="{Binding Localization.Resources.StartDate}"
+                           Style="{StaticResource PhoneTextBlockBase}" />
+                
                 <toolkit:DatePicker Value="{Binding Trip.StartDate, Mode=TwoWay}"/>
             </StackPanel>
             
             <StackPanel Grid.Row="2" Margin="0,20,0,20">
-                <TextBlock Text="Notes" />
+                <TextBlock Text="{Binding Localization.Resources.Notes}"
+                           Style="{StaticResource PhoneTextBlockBase}" />
+                
                 <TextBox Margin="0" AcceptsReturn="True" VerticalAlignment="Stretch" Height="160" 
                          Text="{Binding Trip.Notes, Mode=TwoWay}" TextWrapping="Wrap" 
                          coding4FunBinding:TextBinding.UpdateSourceOnChange="True" />

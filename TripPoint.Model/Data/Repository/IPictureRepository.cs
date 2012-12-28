@@ -7,23 +7,16 @@ namespace TripPoint.Model.Data.Repository
     public interface IPictureRepository
     {
         /// <summary>
-        /// Restores byte array containing the picture 
+        /// Searches for a picture with the given ID
         /// </summary>
-        /// <param name="picture"></param>
+        /// <param name="pictureID">ID of the picture to look for</param>
         /// <returns></returns>
-        byte[] LoadPictureAsBytes(Picture picture);
-        
-        /// <summary>
-        /// Persists byte array containing the picture
-        /// </summary>
-        /// <param name="picture"></param>
-        /// <returns></returns>
-        bool SavePictureAsBytes(Picture picture);
+        Picture FindPicture(int pictureID);
 
         /// <summary>
-        /// Deletes a number of pictures
+        /// Deletes a picture
         /// </summary>
-        /// <param name="picturesToDelete"></param>
-        void DeletePictures(IEnumerable<Picture> picturesToDelete);
+        /// <param name="picture"></param>
+        void DeletePicture(Picture picture);
     }
 }

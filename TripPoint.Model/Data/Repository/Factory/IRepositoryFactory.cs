@@ -6,6 +6,8 @@
 
         ICheckpointRepository CheckpointRepository { get; }
 
+        INoteRepository NoteRepository { get; }
+
         IPictureRepository PictureRepository { get; }
     }
 }

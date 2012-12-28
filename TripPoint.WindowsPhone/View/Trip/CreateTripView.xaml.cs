@@ -44,7 +44,7 @@ namespace TripPoint.WindowsPhone.View.Trip
         {
             ApplicationBarIconButton saveButton = new ApplicationBarIconButton();
             saveButton.IconUri = new Uri("/Assets/Images/Dark/appbar.save.rest.png", UriKind.Relative);
-            saveButton.Text = I18N.Resources.Save;
+            saveButton.Text = I18N.Resources.Save_AppBar;
             saveButton.Click += (sender, args) => OnSaveButtonClicked();
 
             ApplicationBar.Buttons.Add(saveButton);
@@ -56,7 +56,7 @@ namespace TripPoint.WindowsPhone.View.Trip
 
             ApplicationBarIconButton cancelButton = new ApplicationBarIconButton();
             cancelButton.IconUri = new Uri("/Assets/Images/Dark/appbar.stop.rest.png", UriKind.Relative);
-            cancelButton.Text = I18N.Resources.Cancel;
+            cancelButton.Text = I18N.Resources.Cancel_AppBar;
             cancelButton.Click += (sender, args) => OnCancelButtonClicked();
 
             ApplicationBar.Buttons.Add(cancelButton);
