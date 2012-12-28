@@ -19,6 +19,7 @@
     
     <phone:PhoneApplicationPage.Resources>
         <convert:BoolToVisibilityConverter x:Key="BoolToVisibility" />
+        <convert:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility" />
     </phone:PhoneApplicationPage.Resources>
     
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -33,8 +34,10 @@
                     </Grid.RowDefinitions>
                     
                     <StackPanel Grid.Row="0">
-                        <TextBlock x:Name="TripName" Style="{StaticResource PhoneTextBlockBase}"
-                                   HorizontalAlignment="Stretch" TextTrimming="WordEllipsis" 
+                        <TextBlock x:Name="TripName"
+                                   Style="{StaticResource PhoneTextBlockBase}"
+                                   HorizontalAlignment="Stretch"
+                                   TextTrimming="WordEllipsis" 
                                    FontSize="44"
                                    Text="{Binding Trip.Name}" />
 
@@ -44,7 +47,7 @@
                     </StackPanel>
                     
                     <Grid x:Name="CreateCheckpointContainer" Grid.Row="1"
-                          Visibility="{Binding CurrentTripHasNoCheckpoints, Converter={StaticResource BoolToVisibility}}">
+                          Visibility="{Binding CurrentTripHasCheckpoints, Converter={StaticResource InverseBoolToVisibility}}">
                         
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -105,13 +108,16 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
-                                <Image Width="80" Height="80" Grid.Column="0" Stretch="UniformToFill"
+                                <Image Grid.Column="0"
+                                       Width="80" Height="80"
+                                       Stretch="UniformToFill"
                                        Source="{Binding Thumbnail.Source}" />
                                 
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="15,0,0,0">
                                     <TextBlock x:Name="CheckpointTitle"
                                                Text="{Binding Title}"
-                                               Style="{StaticResource PhoneTextLargeStyle}"/>
+                                               Style="{StaticResource PhoneTextLargeStyle}"
+                                               TextTrimming="WordEllipsis" />
                                     
                                     <TextBlock x:Name="CheckpointCreateDate"
                                                Text="{Binding Timestamp}"

@@ -12,7 +12,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True"
     DataContext="{Binding TripListViewModel, Source={StaticResource Locator}}">
 
@@ -43,14 +43,16 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <Image Source="/Assets/Images/Dark/trip.thumb.png" Grid.Column="0" />
-
                             <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="15,0,0,0">
-                                <TextBlock x:Name="TripTitle" Text="{Binding Name}" 
-                                           Style="{StaticResource PhoneTextLargeStyle}" />
+                                <TextBlock x:Name="TripTitle" 
+                                           Style="{StaticResource PhoneTextExtraLargeStyle}"
+                                           TextTrimming="WordEllipsis"
+                                           Text="{Binding Name}" />
                                 
-                                <TextBlock x:Name="TripStartDate" Text="{Binding StartDate}" 
-                                           Style="{StaticResource PhoneTextBlockBase}"/>
+                                <TextBlock x:Name="TripStartDate" 
+                                           Style="{StaticResource PhoneTextBlockBase}"
+                                           Foreground="{StaticResource PhoneAccentBrush}"
+                                           Text="{Binding StartDate}" />
                             </StackPanel>
                         </Grid>
                     </DataTemplate>

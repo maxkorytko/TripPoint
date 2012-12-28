@@ -66,18 +66,6 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
-        public bool CurrentTripHasNoCheckpoints
-        {
-            get { return _currentTripHasNoCheckpoints; }
-            private set
-            {
-                if (_currentTripHasNoCheckpoints == value) return;
-
-                _currentTripHasNoCheckpoints = value;
-                RaisePropertyChanged("CurrentTripHasNoCheckpoints");
-            }
-        }
-
         public ICommand FinishTripCommand { get; private set; }
 
         public ICommand PastTripsCommand { get; private set; }
@@ -206,7 +194,6 @@ namespace TripPoint.WindowsPhone.ViewModel
             if (Trip == null) return;
 
             CurrentTripHasCheckpoints = Trip.Checkpoints.Count > 0;
-            CurrentTripHasNoCheckpoints = !CurrentTripHasCheckpoints;
         }
 
         private static bool IsReturningFromCameraCaptureTask()

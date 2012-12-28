@@ -245,7 +245,6 @@
     <Content Include="Assets\Images\Dark\appbar.save.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.stop.rest.png" />
     <Content Include="Assets\Images\Dark\checkpoint.thumb.png" />
-    <Content Include="Assets\Images\Dark\trip.thumb.png" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

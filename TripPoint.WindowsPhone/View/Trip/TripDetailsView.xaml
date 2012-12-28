@@ -15,7 +15,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True"
     DataContext="{Binding TripDetailsViewModel, Source={StaticResource Locator}}">
 
@@ -37,7 +37,8 @@
 
                     <StackPanel Grid.Row="0">
                         <TextBlock Style="{StaticResource PhoneTextBlockBase}"
-                                   HorizontalAlignment="Stretch" TextTrimming="WordEllipsis"
+                                   HorizontalAlignment="Stretch"
+                                   TextWrapping="Wrap"
                                    FontSize="44"
                                    Text="{Binding Trip.Name}"/>
 
@@ -56,7 +57,8 @@
 
             <!-- Checkpoints items -->
             <controls:PanoramaItem Header="{Binding Localization.Resource.Checkpoints}">
-                <ListBox x:Name="CheckpointList" ItemsSource="{Binding Trip.Checkpoints}"
+                <ListBox x:Name="CheckpointList"
+                         ItemsSource="{Binding Trip.Checkpoints}"
                          SelectionChanged="CheckpointList_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -66,12 +68,21 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
-                                <Image Width="80" Height="80" Grid.Column="0" Stretch="UniformToFill"
+                                <Image Grid.Column="0"
+                                       Width="80" Height="80" 
+                                       Stretch="UniformToFill"
                                        Source="{Binding Thumbnail.Source}" />
 
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="15,0,0,0">
-                                    <TextBlock x:Name="CheckpointTitle" Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}"/>
-                                    <TextBlock x:Name="CheckpointCreateDate" Text="{Binding Timestamp}" Style="{StaticResource PhoneTextBlockBase}" />
+                                    <TextBlock x:Name="CheckpointTitle"
+                                               Style="{StaticResource PhoneTextLargeStyle}"
+                                               TextTrimming="WordEllipsis"
+                                               Text="{Binding Title}" />
+                                    
+                                    <TextBlock x:Name="CheckpointCreateDate"
+                                               Style="{StaticResource PhoneTextBlockBase}"
+                                               Foreground="{StaticResource PhoneAccentBrush}"
+                                               Text="{Binding Timestamp}" />
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>

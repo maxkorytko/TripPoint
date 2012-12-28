@@ -41,7 +41,8 @@
                         <TextBlock Text="{Binding Checkpoint.Title}"
                                    FontSize="36"
                                    Style="{StaticResource PhoneTextBlockBase}" 
-                                   HorizontalAlignment="Stretch" />
+                                   HorizontalAlignment="Stretch"
+                                   TextWrapping="Wrap" />
 
                         <TextBlock Text="{Binding Checkpoint.Timestamp}"
                                    Foreground="{StaticResource PhoneAccentBrush}"
