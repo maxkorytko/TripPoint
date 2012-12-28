@@ -5,7 +5,7 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:mvvmlightcommand="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
-    xmlns:appBar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
+    xmlns:appBar="clr-namespace:Sh;assembly=Sh"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -57,15 +57,12 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
+
+        <appBar:AdvancedApplicationBar IsVisible="{Binding NoCurrentTrip}">
+            <appBar:AdvancedApplicationBarIconButton Text="{Binding Localization.Resources.CreateTrip_AppBar}"
+                                                     IconUri="/Assets/Images/Dark/appbar.new.rest.png" 
+                                                     Command="{Binding CreateTripCommand}" />
+        </appBar:AdvancedApplicationBar>
+
     </Grid>
-
-    <appBar:Bindable.ApplicationBar>
-        <!-- The user should not be able to start a new trip until they finish the current one -->
-        <appBar:BindableApplicationBar IsVisible="{Binding NoCurrentTrip}">
-            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.CreateTrip_AppBar}"
-                                                 IconUri="/Assets/Images/Dark/appbar.new.rest.png" 
-                                                 Command="{Binding CreateTripCommand}" />
-        </appBar:BindableApplicationBar>
-    </appBar:Bindable.ApplicationBar>
-
 </phone:PhoneApplicationPage>

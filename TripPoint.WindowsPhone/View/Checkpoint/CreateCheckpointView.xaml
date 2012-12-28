@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:appBar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
+    xmlns:appBar="clr-namespace:Sh;assembly=Sh"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:coding4Fun="clr-namespace:Coding4Fun.Phone.Controls;assembly=Coding4Fun.Phone.Controls"
     xmlns:coding4FunBinding="clr-namespace:Coding4Fun.Phone.Controls.Binding;assembly=Coding4Fun.Phone.Controls"
@@ -84,19 +84,16 @@
                 </StackPanel>
             </coding4Fun:ProgressOverlay.Content>
         </coding4Fun:ProgressOverlay>
-        
+
+        <appBar:AdvancedApplicationBar IsVisible="{Binding IsWaitingForLocation, Converter={StaticResource InverseBool}}">
+            <appBar:AdvancedApplicationBarIconButton Text="{Binding Localization.Resources.Save_AppBar}"
+                                                     IconUri="/Assets/Images/Dark/appbar.save.rest.png" 
+                                                     Command="{Binding CreateCheckpointCommand}" />
+
+            <appBar:AdvancedApplicationBarIconButton Text="{Binding Localization.Resources.Cancel_AppBar}"
+                                                     IconUri="/Assets/Images/Dark/appbar.stop.rest.png" 
+                                                     Command="{Binding CancelCreateCheckpointCommand}" />
+        </appBar:AdvancedApplicationBar>
+
     </Grid>
-
-    <appBar:Bindable.ApplicationBar>
-        <appBar:BindableApplicationBar IsVisible="{Binding IsWaitingForLocation, Converter={StaticResource InverseBool}}">
-            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Save_AppBar}"
-                                                 IconUri="/Assets/Images/Dark/appbar.save.rest.png" 
-                                                 Command="{Binding CreateCheckpointCommand}" />
-
-            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Cancel_AppBar}"
-                                                 IconUri="/Assets/Images/Dark/appbar.stop.rest.png" 
-                                                 Command="{Binding CancelCreateCheckpointCommand}" />
-        </appBar:BindableApplicationBar>
-    </appBar:Bindable.ApplicationBar>
-
 </phone:PhoneApplicationPage>

@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:appBar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
+    xmlns:appBar="clr-namespace:Sh;assembly=Sh"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:coding4Fun="clr-namespace:Coding4Fun.Phone.Controls;assembly=Coding4Fun.Phone.Controls"
     xmlns:coding4FunBinding="clr-namespace:Coding4Fun.Phone.Controls.Binding;assembly=Coding4Fun.Phone.Controls"
@@ -66,20 +66,18 @@
                 </StackPanel>
             </coding4Fun:ProgressOverlay.Content>
         </coding4Fun:ProgressOverlay>
-        
-    </Grid>
 
-    <appBar:Bindable.ApplicationBar>
-        <appBar:BindableApplicationBar IsVisible="{Binding IsSavingPicture, Converter={StaticResource InverseBool}}" 
+        <appBar:AdvancedApplicationBar IsVisible="{Binding IsSavingPicture, Converter={StaticResource InverseBool}}" 
                                        Mode="Minimized" 
                                        Opacity="0.5">
-            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Save_AppBar}"
-                                                 IconUri="/Assets/Images/Dark/appbar.save.rest.png" 
-                                                 Command="{Binding AddPictureCommand}" />
+            <appBar:AdvancedApplicationBarIconButton Text="{Binding Localization.Resources.Save_AppBar}"
+                                                     IconUri="/Assets/Images/Dark/appbar.save.rest.png" 
+                                                     Command="{Binding AddPictureCommand}" />
 
-            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Cancel_AppBar}"
-                                                 IconUri="/Assets/Images/Dark/appbar.stop.rest.png" 
-                                                 Command="{Binding CancelAddPictureCommand}" />
-        </appBar:BindableApplicationBar>
-    </appBar:Bindable.ApplicationBar>
+            <appBar:AdvancedApplicationBarIconButton Text="{Binding Localization.Resources.Cancel_AppBar}"
+                                                     IconUri="/Assets/Images/Dark/appbar.stop.rest.png" 
+                                                     Command="{Binding CancelAddPictureCommand}" />
+        </appBar:AdvancedApplicationBar>
+
+    </Grid>
 </phone:PhoneApplicationPage>

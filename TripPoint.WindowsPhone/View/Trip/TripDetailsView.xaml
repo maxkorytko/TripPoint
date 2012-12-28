@@ -8,7 +8,7 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:coding4Fun="clr-namespace:Coding4Fun.Phone.Controls;assembly=Coding4Fun.Phone.Controls"
     xmlns:convert="clr-namespace:TripPoint.WindowsPhone.Converters;assembly=TripPoint"
-    xmlns:appBar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
+    xmlns:appBar="clr-namespace:Sh;assembly=Sh"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -91,14 +91,12 @@
                 </StackPanel>
             </coding4Fun:ProgressOverlay.Content>
         </coding4Fun:ProgressOverlay>
+
+        <appBar:AdvancedApplicationBar IsVisible="{Binding IsDeletingTrip, Converter={StaticResource InverseBool}}">
+            <appBar:AdvancedApplicationBarIconButton Text="{Binding Localization.Resources.Delete_AppBar}"
+                                                     IconUri="/Assets/Images/Dark/appbar.delete.rest.png" 
+                                                     Command="{Binding DeleteTripCommand}" />
+        </appBar:AdvancedApplicationBar>
+
     </Grid>
-
-    <appBar:Bindable.ApplicationBar>
-        <appBar:BindableApplicationBar IsVisible="{Binding IsDeletingTrip, Converter={StaticResource InverseBool}}">
-            <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.Delete_AppBar}"
-                                                 IconUri="/Assets/Images/Dark/appbar.delete.rest.png" 
-                                                 Command="{Binding DeleteTripCommand}" />
-        </appBar:BindableApplicationBar>
-    </appBar:Bindable.ApplicationBar>
-
 </phone:PhoneApplicationPage>

@@ -48,9 +48,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BindableApplicationBar">
-      <HintPath>Lib\BindableApplicationBar.dll</HintPath>
-    </Reference>
+    <Reference Include="BindableApplicationBar, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Coding4Fun.Phone.Controls">
       <HintPath>Lib\Coding4Fun.Phone.Controls.dll</HintPath>
     </Reference>
