@@ -15,7 +15,7 @@ namespace TripPoint.WindowsPhone.ViewModel
     public class TripListViewModel : Base.TripPointViewModelBase
     {
         private ITripRepository _tripRepository;
-        ObservableCollection<Trip> _trips;
+        private ObservableCollection<Trip> _trips;
         private bool _noCurrentTrip;
 
         public TripListViewModel(IRepositoryFactory repositoryFactory)

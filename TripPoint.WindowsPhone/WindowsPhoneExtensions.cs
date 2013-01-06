@@ -1,9 +1,9 @@
-﻿#region SDK Usings
-using System;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Media.Imaging;
 using Microsoft.Phone.Controls;
-#endregion
 
 using TripPoint.Model.Utils;
 
@@ -45,6 +45,16 @@ namespace TripPoint.WindowsPhone
             }
 
             return stream;
+        }
+
+        public static void Add<T>(this ICollection<T> to, IEnumerable<T> from)
+        {
+            if (from == null) return;
+
+            foreach (T item in from)
+            {
+                to.Add(item);
+            }
         }
     }
 }

@@ -108,6 +108,7 @@
     <Compile Include="State\Data\PictureThumbnail.cs" />
     <Compile Include="State\PictureStateManager.cs" />
     <Compile Include="State\StateManager.cs" />
+    <Compile Include="Utils\CollectionPaginator.cs" />
     <Compile Include="Utils\CountdownTimer.cs" />
     <Compile Include="Utils\ExifLib\ExifIds.cs" />
     <Compile Include="Utils\ExifLib\ExifIO.cs" />
@@ -144,6 +145,9 @@
     </Compile>
     <Compile Include="View\Checkpoint\CreateCheckpointView.xaml.cs">
       <DependentUpon>CreateCheckpointView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\CheckpointList.xaml.cs">
+      <DependentUpon>CheckpointList.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\PictureGrid.xaml.cs">
       <DependentUpon>PictureGrid.xaml</DependentUpon>
@@ -193,6 +197,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Checkpoint\CreateCheckpointView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\CheckpointList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -189,9 +189,8 @@ namespace TripPoint.WindowsPhone.ViewModel
         public void SaveCheckpointLocation(GeoCoordinate location)
         {
             if (location == null || location.IsUnknown) return;
+            if (Checkpoint == null) return;
 
-            Logger.Log("Location: {0}, {1}", location.Latitude, location.Longitude);
-            
             Checkpoint.Location = new GeoLocation
             {
                 Latitude = location.Latitude,

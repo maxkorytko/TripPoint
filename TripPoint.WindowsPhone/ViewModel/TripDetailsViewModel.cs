@@ -14,12 +14,20 @@ namespace TripPoint.WindowsPhone.ViewModel
 {
     public class TripDetailsViewModel : Base.TripViewModelBase
     {
+        private int _tripID;
         private bool _isDeletingTrip;
 
         public TripDetailsViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
+            _tripID = -1;
+
             InitializeCommands();
+        }
+
+        private void InitializeCommands()
+        {
+            DeleteTripCommand = new RelayCommand(DeleteTripAction);
         }
 
         public bool IsDeletingTrip
@@ -34,20 +42,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
-        public ICommand ViewCheckpointDetailsCommand { get; private set; }
-
         public ICommand DeleteTripCommand { get; private set; }
-
-        private void InitializeCommands()
-        {
-            ViewCheckpointDetailsCommand = new RelayCommand<Checkpoint>(ViewCheckpointDetailsAction);
-            DeleteTripCommand = new RelayCommand(DeleteTripAction);
-        }
-
-        private void ViewCheckpointDetailsAction(Checkpoint checkpoint)
-        {
-            Navigator.Navigate(string.Format("/Checkpoints/{0}/Details", checkpoint.ID));
-        }
 
         private void DeleteTripAction()
         {
@@ -97,9 +92,21 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void DeleteCheckpoints()
         {
             RepositoryFactory.CheckpointRepository.DeleteCheckpoints(Trip.Checkpoints);
+            Checkpoints = null;
         }
 
-        public override void  OnNavigatedTo(TripPointNavigationEventArgs e)
+        protected override void InitializeTrip(int tripID)
+        {
+            // if the user navigates back to this view, the query string will be empty
+            // therefore tripID will be equal to -1
+            // ensure we preserve trip ID value set previously
+            //
+            if (tripID != -1) _tripID = tripID;
+
+            base.InitializeTrip(_tripID);
+        }
+
+        public override void OnNavigatedTo(TripPointNavigationEventArgs e)
         {
  	         base.OnNavigatedTo(e);
 

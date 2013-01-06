@@ -5,6 +5,7 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:trippointcontrols="clr-namespace:TripPoint.WindowsPhone.View.Controls;assembly=TripPoint"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:coding4Fun="clr-namespace:Coding4Fun.Phone.Controls;assembly=Coding4Fun.Phone.Controls"
     xmlns:convert="clr-namespace:TripPoint.WindowsPhone.Converters;assembly=TripPoint"
@@ -57,37 +58,9 @@
 
             <!-- Checkpoints items -->
             <controls:PanoramaItem Header="{Binding Localization.Resource.Checkpoints}">
-                <ListBox x:Name="CheckpointList"
-                         ItemsSource="{Binding Trip.Checkpoints}"
-                         SelectionChanged="CheckpointList_SelectionChanged">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="0,25,0,25">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-
-                                <Image Grid.Column="0"
-                                       Width="80" Height="80" 
-                                       Stretch="UniformToFill"
-                                       Source="{Binding Thumbnail.Source}" />
-
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="15,0,0,0">
-                                    <TextBlock x:Name="CheckpointTitle"
-                                               Style="{StaticResource PhoneTextLargeStyle}"
-                                               TextTrimming="WordEllipsis"
-                                               Text="{Binding Title}" />
-                                    
-                                    <TextBlock x:Name="CheckpointCreateDate"
-                                               Style="{StaticResource PhoneTextBlockBase}"
-                                               Foreground="{StaticResource PhoneAccentBrush}"
-                                               Text="{Binding Timestamp}" />
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <trippointcontrols:CheckpointList DataContext="{Binding}"
+                                                  OnCheckpointSelected="CheckpointList_OnCheckpointSelected"
+                                                  OnMore="CheckpointList_OnMore" />
             </controls:PanoramaItem>
         </controls:Panorama>
 

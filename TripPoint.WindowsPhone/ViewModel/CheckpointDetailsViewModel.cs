@@ -224,10 +224,6 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void DeleteStaleThumbnailsIfNecessary()
         {
             if (_thumbnails == null) return;
-
-            //var checkpoint = _checkpointRepository.FindCheckpoint(Checkpoint.ID);
-
-            //if (checkpoint.Pictures.Count == Checkpoint.Pictures.Count) return;
             if (Checkpoint.Pictures.Count == _thumbnails.Count) return;
 
             var staleThumbnails = (from thumbnail in _thumbnails
@@ -238,8 +234,6 @@ namespace TripPoint.WindowsPhone.ViewModel
             {
                 _thumbnails.Remove(thumbnail);
             }
-
-            //Checkpoint = checkpoint;
         }
 
         class PictureComparer : IEqualityComparer<Picture>

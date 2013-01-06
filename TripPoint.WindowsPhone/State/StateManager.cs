@@ -6,9 +6,9 @@ namespace TripPoint.WindowsPhone.State
     public class StateManager
     {
         private static StateManager _instance;
-        private static IDictionary<string, Object> _state;
+        private static IDictionary<string, object> _state;
 
-        public static void Initialize(IDictionary<string, Object> stateStore)
+        public static void Initialize(IDictionary<string, object> stateStore)
         {
             if (stateStore == null)
                 throw new ArgumentException("stateStore");
@@ -38,13 +38,20 @@ namespace TripPoint.WindowsPhone.State
         public T Get<T>(string key, T defaultValue = default(T))
         {
             object value;
-            
+
             if (!_state.TryGetValue(key, out value))
             {
                 value = defaultValue;
             }
 
             return (T)value;
+        }
+
+        public bool Contains(string key)
+        {
+            if (key == null) return false;
+
+            return _state.ContainsKey(key);
         }
 
         public void Remove(string key)

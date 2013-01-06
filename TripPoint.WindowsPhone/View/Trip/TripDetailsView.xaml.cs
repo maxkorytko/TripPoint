@@ -1,7 +1,11 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Navigation;
+using System.ComponentModel;
 using Microsoft.Phone.Controls;
 
 using TripPoint.WindowsPhone.ViewModel;
+using TripPoint.WindowsPhone.View.Controls;
 
 namespace TripPoint.WindowsPhone.View.Trip
 {
@@ -12,16 +16,33 @@ namespace TripPoint.WindowsPhone.View.Trip
             InitializeComponent();
         }
 
-        private void CheckpointList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private TripDetailsViewModel ViewModel
         {
-            var listBox = sender as ListBox;
+            get { return DataContext as TripDetailsViewModel; }
+        }
 
-            if (listBox.SelectedItem == null) return;
+        private void CheckpointList_OnCheckpointSelected(object sender, CheckpointSelectedEventArgs args)
+        {
+            ViewModel.ViewCheckpointDetailsCommand.Execute(args.SelectedCheckpoint);
+        }
 
-            (DataContext as TripDetailsViewModel).ViewCheckpointDetailsCommand.Execute(listBox.SelectedItem);
+        private void CheckpointList_OnMore(object sender, RoutedEventArgs args)
+        {
+            ViewModel.PaginateCheckpointsCommand.Execute(null);
+        }
 
-            // allow selecting the same item multiple times
-            listBox.SelectedItem = null;
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            ViewModel.OnNavigatedTo(new Navigation.TripPointNavigationEventArgs(e));
+        }
+
+        protected override void OnBackKeyPress(CancelEventArgs e)
+        {
+            base.OnBackKeyPress(e);
+
+            ViewModel.Checkpoints = null;
         }
     }
 }

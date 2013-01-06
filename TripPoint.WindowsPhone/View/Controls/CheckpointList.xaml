@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="TripPoint.WindowsPhone.View.Controls.CheckpointList"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480">
+
+    <toolkit:LongListSelector IsFlatList="True"
+                              ShowListFooter="{Binding CanPaginateCheckpoints}"
+                              ItemsSource="{Binding Checkpoints}"
+                              SelectionChanged="List_SelectionChanged">
+        <toolkit:LongListSelector.ItemTemplate>
+            <DataTemplate>
+                <Grid Margin="0,25,0,25">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Column="0"
+                           Width="80" Height="80"
+                           Stretch="UniformToFill"
+                           Source="{Binding Thumbnail.Source}" />
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="15,0,0,0">
+                        <TextBlock x:Name="CheckpointTitle"
+                                   Text="{Binding Title}"
+                                   Style="{StaticResource PhoneTextLargeStyle}"
+                                   TextTrimming="WordEllipsis" />
+
+                        <TextBlock x:Name="CheckpointCreateDate"
+                                   Text="{Binding Timestamp}"
+                                   Foreground="{StaticResource PhoneAccentBrush}"
+                                   Style="{StaticResource PhoneTextBlockBase}" />
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
+        </toolkit:LongListSelector.ItemTemplate>
+
+        <toolkit:LongListSelector.ListFooterTemplate>
+            <DataTemplate>
+                <HyperlinkButton HorizontalAlignment="Left" 
+                                             Width="Auto"
+                                             FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+                                             Click="MoreButton_Click"
+                                             Content="MORE" />
+            </DataTemplate>
+        </toolkit:LongListSelector.ListFooterTemplate>
+
+    </toolkit:LongListSelector>
+</UserControl>

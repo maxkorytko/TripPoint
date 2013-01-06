@@ -21,8 +21,7 @@ namespace TripPoint.WindowsPhone.ViewModel
     {
         private Checkpoint _latestCheckpoint;
         private bool _currentTripHasCheckpoints;
-        private bool _currentTripHasNoCheckpoints;
-
+        
         private CameraCaptureTask _cameraCaptureTask;
         
         public CurrentTripViewModel(IRepositoryFactory repositoryFactory)
@@ -38,7 +37,6 @@ namespace TripPoint.WindowsPhone.ViewModel
             CreateCheckpointCommand = new RelayCommand(CreateCheckpointAction);
             AddNotesCommand = new RelayCommand(AddNotesAction);
             AddPicturesCommand = new RelayCommand(AddPicturesAction);
-            ViewCheckpointDetailsCommand = new RelayCommand<Checkpoint>(ViewCheckpointDetailsAction);
             SettingsCommand = new RelayCommand(SettingsAction);
         }
 
@@ -75,8 +73,6 @@ namespace TripPoint.WindowsPhone.ViewModel
         public ICommand AddNotesCommand { get; private set; }
 
         public ICommand AddPicturesCommand { get; private set; }
-
-        public ICommand ViewCheckpointDetailsCommand { get; private set; }
 
         public ICommand SettingsCommand { get; private set; }
 
@@ -152,27 +148,9 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
-        private void ViewCheckpointDetailsAction(Checkpoint checkpoint)
-        {
-            Navigator.Navigate(string.Format("/Checkpoints/{0}/Details", checkpoint.ID));
-        }
-
         private void SettingsAction()
         {
             Navigator.Navigate("/Application/Settings");
-        }
-
-        public override void OnNavigatedTo(TripPointNavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-
-            InitializeLatestCheckpoint();
-            InitializeCurrentTripHasCheckpoints();
-
-            if (IsReturningFromCameraCaptureTask())
-            {
-                Navigator.Navigate(string.Format("/Checkpoints/{0}/Add/Pictures", LatestCheckpoint.ID));
-            }
         }
 
         protected override void InitializeTrip(int tripID)
@@ -182,6 +160,26 @@ namespace TripPoint.WindowsPhone.ViewModel
             Trip = TripRepository.CurrentTrip;
         }
 
+        public override void OnNavigatedTo(TripPointNavigationEventArgs e)
+        {
+            if (IsReturningFromCameraCaptureTask())
+            {
+                Navigator.Navigate(String.Format("/Checkpoints/{0}/Add/Pictures", LatestCheckpoint.ID));
+                return;
+            }
+            
+            base.OnNavigatedTo(e);
+
+            InitializeLatestCheckpoint();
+            RefreshLatestCheckpoint();
+            InitializeCurrentTripHasCheckpoints();
+        }
+
+        private static bool IsReturningFromCameraCaptureTask()
+        {
+            return StateManager.Instance.Contains(CheckpointAddPicturesViewModel.CAPTURED_PICTURE);
+        }
+
         private void InitializeLatestCheckpoint()
         {
             if (Trip == null) return;
@@ -189,17 +187,18 @@ namespace TripPoint.WindowsPhone.ViewModel
             LatestCheckpoint = Trip.Checkpoints.FirstOrDefault();
         }
 
+        private void RefreshLatestCheckpoint()
+        {
+            if (_latestCheckpoint == null || _checkpoints == null) return;
+
+            RefreshCheckpoint(_checkpoints.FirstOrDefault(), _latestCheckpoint);
+        }
+
         private void InitializeCurrentTripHasCheckpoints()
         {
             if (Trip == null) return;
 
             CurrentTripHasCheckpoints = Trip.Checkpoints.Count > 0;
-        }
-
-        private static bool IsReturningFromCameraCaptureTask()
-        {
-            return StateManager.Instance.Get<CapturedPicture>(
-                CheckpointAddPicturesViewModel.CAPTURED_PICTURE) != null;
         }
     }
 }

@@ -8,6 +8,9 @@ namespace TripPoint.WindowsPhone.State.Data
 {
     public class PictureThumbnail : Thumbnail
     {
+        private Picture _picture;
+        private byte[] _pictureBytes;
+
         public PictureThumbnail(Uri imageUri)
             : this(imageUri, null)
         {   
@@ -18,10 +21,6 @@ namespace TripPoint.WindowsPhone.State.Data
         {
             _picture = picture;
         }
-
-        private Picture _picture;
-
-        private byte[] _pictureBytes;
 
         public Picture Picture
         {

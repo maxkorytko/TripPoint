@@ -1,9 +1,11 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 
 using TripPoint.WindowsPhone.ViewModel;
 using TripPoint.WindowsPhone.Navigation;
+using TripPoint.WindowsPhone.View.Controls;
 
 namespace TripPoint.WindowsPhone.View.Trip
 {
@@ -21,21 +23,14 @@ namespace TripPoint.WindowsPhone.View.Trip
             (DataContext as CurrentTripViewModel).OnNavigatedTo(new TripPointNavigationEventArgs(e));
         }
 
-        /// <summary>
-        /// View model does not know anything about the view, so resetting the selected item here
-        /// Resetting the selected item allows the user to select the same item more than once
-        /// This is necessary for the case when there is only one item in the list
-        /// </summary>
-        private void CheckpointList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CheckpointList_OnCheckpointSelected(object sender, CheckpointSelectedEventArgs args)
         {
-            var listBox = sender as ListBox;
+            (DataContext as CurrentTripViewModel).ViewCheckpointDetailsCommand.Execute(args.SelectedCheckpoint);
+        }
 
-            if (listBox.SelectedItem == null) return;
-
-            (DataContext as CurrentTripViewModel).ViewCheckpointDetailsCommand.Execute(listBox.SelectedItem);
-
-            // allow selecting the same item multiple times
-            listBox.SelectedItem = null;
+        private void CheckpointList_OnMore(object sender, RoutedEventArgs args)
+        {
+            (DataContext as CurrentTripViewModel).PaginateCheckpointsCommand.Execute(null);
         }
     }
 }
