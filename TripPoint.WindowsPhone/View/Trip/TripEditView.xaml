@@ -1,0 +1,74 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="TripPoint.WindowsPhone.View.Trip.TripEditView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:coding4FunBinding="clr-namespace:Coding4Fun.Phone.Controls.Binding;assembly=Coding4Fun.Phone.Controls"
+    xmlns:appBar="clr-namespace:Sh;assembly=Sh"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True"
+    DataContext="{Binding TripEditViewModel, Source={StaticResource Locator}}">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="PageTitle"
+                       Margin="9,-7,0,0"
+                       Style="{StaticResource PhoneTextNormalStyle}"
+                       Text="{Binding Localization.Resources.TripEditViewTitle}" />
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Vertical">
+                <TextBlock Text="{Binding Localization.Resources.Title}"
+                           Style="{StaticResource PhoneTextBlockBase}" />
+
+                <TextBox Text="{Binding Trip.Name, Mode=TwoWay}"
+                         coding4FunBinding:TextBinding.UpdateSourceOnChange="True" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Vertical">
+                <TextBlock Text="{Binding Localization.Resources.Notes}"
+                           Style="{StaticResource PhoneTextBlockBase}" />
+
+                <TextBox VerticalAlignment="Stretch"
+                         Height="160"
+                         Margin="0" 
+                         AcceptsReturn="True"  
+                         TextWrapping="Wrap"
+                         Text="{Binding Trip.Notes, Mode=TwoWay}" 
+                         coding4FunBinding:TextBinding.UpdateSourceOnChange="True" />
+            </StackPanel>
+        </Grid>
+
+        <appBar:AdvancedApplicationBar>
+            <appBar:AdvancedApplicationBarIconButton IconUri="/Assets/Images/Dark/appbar.save.rest.png"
+                                                     Text="{Binding Localization.Resources.Save_AppBar}"
+                                                     Command="{Binding SaveTripCommand}" />
+
+            <appBar:AdvancedApplicationBarIconButton IconUri="/Assets/Images/Dark/appbar.stop.rest.png" 
+                                                     Text="{Binding Localization.Resources.Cancel_AppBar}"
+                                                     Command="{Binding CancelEditTripCommand}" />
+        </appBar:AdvancedApplicationBar>
+
+    </Grid>
+</phone:PhoneApplicationPage>

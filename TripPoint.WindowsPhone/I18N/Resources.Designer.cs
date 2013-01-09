@@ -223,7 +223,7 @@ namespace TripPoint.WindowsPhone.I18N {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Trip.
+        ///   Looks up a localized string similar to new trip.
         /// </summary>
         public static string CreateTripPageTitle {
             get {
@@ -500,6 +500,15 @@ namespace TripPoint.WindowsPhone.I18N {
         public static string TripDetails {
             get {
                 return ResourceManager.GetString("TripDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EDIT TRIP.
+        /// </summary>
+        public static string TripEditViewTitle {
+            get {
+                return ResourceManager.GetString("TripEditViewTitle", resourceCulture);
             }
         }
         

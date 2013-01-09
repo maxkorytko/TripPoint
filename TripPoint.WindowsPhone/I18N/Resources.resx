@@ -157,7 +157,7 @@
     <value>checkpoint</value>
   </data>
   <data name="CreateTripPageTitle" xml:space="preserve">
-    <value>Create Trip</value>
+    <value>new trip</value>
   </data>
   <data name="CreateTrip_AppBar" xml:space="preserve">
     <value>trip</value>
@@ -268,5 +268,8 @@ Would you like to save this checkpoint?</value>
   </data>
   <data name="StartDate" xml:space="preserve">
     <value>Start Date</value>
+  </data>
+  <data name="TripEditViewTitle" xml:space="preserve">
+    <value>EDIT TRIP</value>
   </data>
 </root>

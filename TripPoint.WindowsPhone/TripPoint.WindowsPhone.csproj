@@ -118,6 +118,7 @@
     <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Utils\ImageUtils.cs" />
     <Compile Include="ViewModel\ApplicationSettingsViewModel.cs" />
+    <Compile Include="ViewModel\Base\TripCheckpointsViewModelBase.cs" />
     <Compile Include="ViewModel\Base\TripPointViewModelBase.cs" />
     <Compile Include="ViewModel\Base\TripViewModelBase.cs" />
     <Compile Include="ViewModel\CheckpointAddNotesViewModel.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="ViewModel\CurrentTripViewModel.cs" />
     <Compile Include="ViewModel\PictureDetailsViewModel.cs" />
     <Compile Include="ViewModel\TripDetailsViewModel.cs" />
+    <Compile Include="ViewModel\TripEditViewModel.cs" />
     <Compile Include="ViewModel\TripListViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\Checkpoint\CheckpointAddNotesView.xaml.cs">
@@ -169,6 +171,9 @@
     </Compile>
     <Compile Include="View\Trip\TripDetailsView.xaml.cs">
       <DependentUpon>TripDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Trip\TripEditView.xaml.cs">
+      <DependentUpon>TripEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Trip\TripListView.xaml.cs">
       <DependentUpon>TripListView.xaml</DependentUpon>
@@ -229,6 +234,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Trip\TripDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Trip\TripEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

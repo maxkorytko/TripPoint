@@ -22,5 +22,12 @@ namespace TripPoint.WindowsPhone.View.Trip
 
             listBox.SelectedItem = null;
         }
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            (DataContext as TripListViewModel).OnNavigatedTo(new Navigation.TripPointNavigationEventArgs(e));
+        }
     }
 }

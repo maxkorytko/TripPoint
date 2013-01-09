@@ -11,6 +11,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static CreateTripViewModel _createTripViewModel;
         private static CurrentTripViewModel _currentTripViewModel;
         private static TripDetailsViewModel _tripDetailsViewModel;
+        private static TripEditViewModel _tripEditViewModel;
         private static CreateCheckpointViewModel _createCheckpointViewModel;
         private static CheckpointEditViewModel _checkpointEditViewModel;
         private static CheckpointAddNotesViewModel _checkpointAddNotesViewModel;
@@ -28,6 +29,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             InitializeCreateTripViewModel();
             InitializeCurrentTripViewModel();
             InitializeTripDetailsViewModel();
+            InitializeTripEditViewModel();
             InitializeCreateCheckpointViewModel();
             InitializeCheckpointAddNotesViewModel();
             InitializeCheckpointAddPicturesViewModel();
@@ -159,6 +161,37 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             _tripDetailsViewModel.Cleanup();
             _tripDetailsViewModel = null;
+        }
+        #endregion
+
+        #region TripEditViewModel
+        private static void InitializeTripEditViewModel()
+        {
+            if (_tripEditViewModel == null)
+                _tripEditViewModel = new TripEditViewModel(RepositoryFactory.Create());
+        }
+
+        public static TripEditViewModel TripEditViewModelStatic
+        {
+            get
+            {
+                InitializeTripEditViewModel();
+                return _tripEditViewModel;
+            }
+        }
+
+        public TripEditViewModel TripEditViewModel
+        {
+            get
+            {
+                return TripEditViewModelStatic;
+            }
+        }
+
+        private static void ClearTripEditViewModel()
+        {
+            _tripEditViewModel.Cleanup();
+            _tripEditViewModel = null;
         }
         #endregion
 
@@ -388,6 +421,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             ClearCreateTripViewModel();
             ClearCurrentTripViewModel();
             ClearTripDetailsViewModel();
+            ClearTripEditViewModel();
             ClearCreateCheckpointViewModel();
             ClearCheckpointEditViewModel();
             ClearCheckpointAddNotesViewModel();

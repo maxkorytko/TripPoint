@@ -1,21 +1,22 @@
-﻿#region SDK Usings
-using System.Linq;
+﻿using System.Linq;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-#endregion
 
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
-using TripPoint.Model.Utils;
+using TripPoint.WindowsPhone.State;
 using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
     public class TripListViewModel : Base.TripPointViewModelBase
     {
+        private static readonly string LAST_VIEWED_TRIP_ID = "LastViewedTripID";
+
         private ITripRepository _tripRepository;
-        private ObservableCollection<Trip> _trips;
+        private ICollection<Trip> _trips;
         private bool _noCurrentTrip;
 
         public TripListViewModel(IRepositoryFactory repositoryFactory)
@@ -37,10 +38,13 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void ViewTripDetailsAction(Trip trip)
         {
+            if (trip == null) return;
+
+            StateManager.Instance.Set<int>(LAST_VIEWED_TRIP_ID, trip.ID);
             Navigator.Navigate(string.Format("/Trip/{0}/Details", trip.ID));
         }
 
-        public ObservableCollection<Trip> Trips
+        public ICollection<Trip> Trips
         {
             get { return _trips; }
             set
@@ -52,9 +56,6 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
-        /// <summary>
-        /// Flag property for hiding/showing the application bar
-        /// </summary>
         public bool NoCurrentTrip
         {
             get { return _noCurrentTrip; }
@@ -64,6 +65,19 @@ namespace TripPoint.WindowsPhone.ViewModel
 
                 _noCurrentTrip = value;
                 RaisePropertyChanged("NoCurrentTrip");
+            }
+        }
+
+        private IEnumerable<Trip> PastTrips
+        {
+            get
+            {
+                if (_tripRepository == null) return new List<Trip>();
+
+                return (from trip in _tripRepository.Trips
+                        where trip.EndDate.HasValue
+                        select trip)
+                        .OrderByDescending(trip => trip.EndDate);
             }
         }
 
@@ -78,19 +92,51 @@ namespace TripPoint.WindowsPhone.ViewModel
             _tripRepository = RepositoryFactory.TripRepository;
 
             InitializeTrips();
+            RefreshTrips();
             InitializeNoCurrentTrip();
+            StateManager.Instance.Remove(LAST_VIEWED_TRIP_ID);
         }
 
         private void InitializeTrips()
         {
             if (_tripRepository == null) return;
+            if (Trips != null) return;
 
-            var trips = (from trip in _tripRepository.Trips
-                         where trip.EndDate.HasValue
-                         select trip)
-                        .OrderByDescending(t => t.EndDate);
+            Trips = new ObservableCollection<Trip>(PastTrips);
+        }
 
-            Trips = new ObservableCollection<Trip>(trips);
+        private void RefreshTrips()
+        {
+            if (Trips == null) return;
+
+            if (Trips.Count != PastTrips.Count())
+            {
+                Trips = null;
+                InitializeTrips();
+                return;
+            }
+
+            RefreshLastViewedTrip();
+        }
+
+        private void RefreshLastViewedTrip()
+        {
+            if (!StateManager.Instance.Contains(LAST_VIEWED_TRIP_ID)) return;
+
+            var id = StateManager.Instance.Get<int>(LAST_VIEWED_TRIP_ID);
+
+            var staleTrip = Trips.FirstOrDefault(trip => trip.ID == id);
+            var updatedTrip = PastTrips.FirstOrDefault(trip => trip.ID == id);
+
+            RefreshTrip(staleTrip, updatedTrip);
+        }
+
+        private void RefreshTrip(Trip target, Trip source)
+        {
+            if (target == null || source == null) return;
+
+            target.Name = source.Name;
+            target.Notes = source.Notes;
         }
 
         private void InitializeNoCurrentTrip()

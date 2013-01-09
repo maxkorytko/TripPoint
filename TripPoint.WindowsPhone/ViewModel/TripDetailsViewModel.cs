@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
@@ -12,7 +13,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
-    public class TripDetailsViewModel : Base.TripViewModelBase
+    public class TripDetailsViewModel : Base.TripCheckpointsViewModelBase
     {
         private int _tripID;
         private bool _isDeletingTrip;
@@ -27,6 +28,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void InitializeCommands()
         {
+            EditTripCommand = new RelayCommand(EditTripAction);
             DeleteTripCommand = new RelayCommand(DeleteTripAction);
         }
 
@@ -42,7 +44,16 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
+        public ICommand EditTripCommand { get; private set; }
+
         public ICommand DeleteTripCommand { get; private set; }
+
+        private void EditTripAction()
+        {
+            if (Trip == null) return;
+
+            Navigator.Navigate(String.Format("/Trip/{0}/Edit", Trip.ID));
+        }
 
         private void DeleteTripAction()
         {

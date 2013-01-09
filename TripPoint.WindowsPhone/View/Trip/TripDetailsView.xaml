@@ -57,7 +57,7 @@
             </controls:PanoramaItem>
 
             <!-- Checkpoints items -->
-            <controls:PanoramaItem Header="{Binding Localization.Resource.Checkpoints}">
+            <controls:PanoramaItem Header="{Binding Localization.Resources.Checkpoints}">
                 <trippointcontrols:CheckpointList DataContext="{Binding}"
                                                   OnCheckpointSelected="CheckpointList_OnCheckpointSelected"
                                                   OnMore="CheckpointList_OnMore" />
@@ -77,9 +77,12 @@
         </coding4Fun:ProgressOverlay>
 
         <appBar:AdvancedApplicationBar IsVisible="{Binding IsDeletingTrip, Converter={StaticResource InverseBool}}">
-            <appBar:AdvancedApplicationBarIconButton Text="{Binding Localization.Resources.Delete_AppBar}"
-                                                     IconUri="/Assets/Images/Dark/appbar.delete.rest.png" 
-                                                     Command="{Binding DeleteTripCommand}" />
+            <appBar:AdvancedApplicationBarIconButton Text="{Binding Localization.Resources.Edit_AppBar}"
+                                                     IconUri="/Assets/Images/Dark/appbar.edit.rest.png" 
+                                                     Command="{Binding EditTripCommand}" />
+            
+            <appBar:AdvancedApplicationBarMenuItem Text="{Binding Localization.Resources.Delete_AppBar_MenuItem}"
+                                                   Command="{Binding DeleteTripCommand}" />
         </appBar:AdvancedApplicationBar>
 
     </Grid>

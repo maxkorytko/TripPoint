@@ -17,7 +17,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
-    public class CurrentTripViewModel : Base.TripViewModelBase
+    public class CurrentTripViewModel : Base.TripCheckpointsViewModelBase
     {
         private Checkpoint _latestCheckpoint;
         private bool _currentTripHasCheckpoints;

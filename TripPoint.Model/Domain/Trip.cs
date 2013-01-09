@@ -28,9 +28,8 @@ namespace TripPoint.Model.Domain
             EndDate = null;
             Notes = string.Empty;
             
-            _checkpoints = new EntitySet<Checkpoint>(
-                    AddCheckpointAction, RemoveCheckpointAction
-                );
+            _checkpoints = new EntitySet<Checkpoint>(AddCheckpointAction,
+                RemoveCheckpointAction);
         }
 
         #region ID
@@ -198,13 +197,6 @@ namespace TripPoint.Model.Domain
         }
 
         #endregion
-
-        // TODO: remove
-        public override int GetHashCode()
-        {
-            string value = string.Format("{0}{1}{2}{3}", Name, StartDate, EndDate, Notes);
-            return value.GetHashCode();
-        }
 
         public override string ToString()
         {
