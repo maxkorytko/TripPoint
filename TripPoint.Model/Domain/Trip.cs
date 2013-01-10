@@ -4,6 +4,9 @@ using System.Data.Linq;
 using System.Data.Linq.Mapping;
 using Microsoft.Phone.Data.Linq.Mapping;
 
+using TripPoint.I18N;
+using TripPoint.Model.Domain.Validation;
+
 namespace TripPoint.Model.Domain
 {
     /// <summary>
@@ -11,7 +14,7 @@ namespace TripPoint.Model.Domain
     /// </summary>
     [Table]
     [Index(Columns="EndDate DESC")]
-    public class Trip : INotifyPropertyChanging, INotifyPropertyChanged
+    public class Trip : IValidator, INotifyPropertyChanging, INotifyPropertyChanged
     {
         private int _tripID;
         private string _name;
@@ -23,10 +26,10 @@ namespace TripPoint.Model.Domain
 
         public Trip()
         {
-            Name = string.Empty;
-            StartDate = DateTime.Now;
-            EndDate = null;
-            Notes = string.Empty;
+            _name = string.Empty;
+            _startDate = DateTime.Now;
+            _endDate = null;
+            _notes = string.Empty;
             
             _checkpoints = new EntitySet<Checkpoint>(AddCheckpointAction,
                 RemoveCheckpointAction);
@@ -169,33 +172,26 @@ namespace TripPoint.Model.Domain
         private Binary _version;
         #endregion
 
-        /// <summary>
-        /// Validates required properties
-        /// </summary>
-        /// <returns></returns>
-        public bool Validate()
-        {
-            return IsNameValid() && IsStartDateValid() && IsEndDateValid();
-        }
-
         #region Validation
-        
-        private bool IsNameValid()
+        public ValidationResult Validate()
         {
-            return !string.IsNullOrEmpty(Name);
+            var result = new ValidationResult();
+
+            if (!IsNameValid) result.AddValidationError(new ValidationError(Resources.TripName_Required));
+            if (!IsStartDateValid) result.AddValidationError(new ValidationError(Resources.TripStartDate_Invalid));
+
+            return result;
         }
 
-        private bool IsStartDateValid()
+        private bool IsNameValid
         {
-            return StartDate <= DateTime.Now;
+            get { return !String.IsNullOrWhiteSpace(Name); }
         }
 
-        private bool IsEndDateValid()
+        private bool IsStartDateValid
         {
-            // TODO: implement
-            return true;
+            get { return StartDate <= DateTime.Now; }
         }
-
         #endregion
 
         public override string ToString()

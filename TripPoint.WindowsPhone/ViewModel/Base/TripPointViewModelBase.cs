@@ -2,8 +2,8 @@
 using System.Windows;
 using Microsoft.Phone.Controls;
 
+using TripPoint.I18N;
 using TripPoint.Model.Data.Repository.Factory;
-using TripPoint.WindowsPhone.I18N;
 using TripPoint.WindowsPhone.Navigation;
 using GalaSoft.MvvmLight;
 

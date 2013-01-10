@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E5C34F04-D6D5-41B1-920A-55C36880427E}</ProjectGuid>
+    <ProjectGuid>{788CAE2A-CE4C-4F5D-9172-952D79A372DE}</ProjectGuid>
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TripPoint.Model</RootNamespace>
-    <AssemblyName>TripPoint.Model</AssemblyName>
+    <RootNamespace>TripPoint.I18N</RootNamespace>
+    <AssemblyName>TripPoint.I18N</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
     <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
@@ -41,8 +41,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="system.data.linq" />
-    <Reference Include="System.Device" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -51,40 +49,19 @@
     <Reference Include="mscorlib.extensions" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Repository\DatabaseCheckpointRepository.cs" />
-    <Compile Include="Data\Repository\DatabaseNoteRepository.cs" />
-    <Compile Include="Data\Repository\DatabasePictureRepository.cs" />
-    <Compile Include="Data\Repository\DatabaseRepository.cs" />
-    <Compile Include="Data\Repository\DatabaseTripRepository.cs" />
-    <Compile Include="Data\Repository\Factory\DatabaseRepositoryFactory.cs" />
-    <Compile Include="Data\Repository\Factory\IRepositoryFactory.cs" />
-    <Compile Include="Data\Repository\Factory\RepositoryFactory.cs" />
-    <Compile Include="Data\Repository\ICheckpointRepository.cs" />
-    <Compile Include="Data\Repository\INoteRepository.cs" />
-    <Compile Include="Data\Repository\IPictureRepository.cs" />
-    <Compile Include="Data\Repository\ITripRepository.cs" />
-    <Compile Include="Data\TripPointDataContext.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Domain\Checkpoint.cs" />
-    <Compile Include="Domain\GeoLocation.cs" />
-    <Compile Include="Domain\Note.cs" />
-    <Compile Include="Domain\Picture.cs" />
-    <Compile Include="Domain\Thumbnail.cs" />
-    <Compile Include="Domain\Validation\IValidator.cs" />
-    <Compile Include="Domain\Validation\ValidationResult.cs" />
+    <Compile Include="Localization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Domain\Trip.cs" />
-    <Compile Include="Settings\ApplicationSettings.cs" />
-    <Compile Include="Utils\DebugStreamWriter.cs" />
-    <Compile Include="Utils\Logger.cs" />
-    <Compile Include="Utils\TripPointConvert.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TripPoint.I18N\TripPoint.I18N.csproj">
-      <Project>{788CAE2A-CE4C-4F5D-9172-952D79A372DE}</Project>
-      <Name>TripPoint.I18N</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

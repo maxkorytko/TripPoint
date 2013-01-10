@@ -1,4 +1,4 @@
-﻿namespace TripPoint.WindowsPhone.I18N
+﻿namespace TripPoint.I18N
 {
     public class Localization
     {

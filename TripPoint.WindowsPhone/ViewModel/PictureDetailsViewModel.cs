@@ -7,7 +7,7 @@ using Microsoft.Phone.Controls;
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
-using TripPoint.WindowsPhone.I18N;
+using TripPoint.I18N;
 using TripPoint.WindowsPhone.State;
 using TripPoint.WindowsPhone.Navigation;
 using GalaSoft.MvvmLight.Command;

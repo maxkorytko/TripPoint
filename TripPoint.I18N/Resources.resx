@@ -272,4 +272,13 @@ Would you like to save this checkpoint?</value>
   <data name="TripEditViewTitle" xml:space="preserve">
     <value>EDIT TRIP</value>
   </data>
+  <data name="MessageBox_InputErrors" xml:space="preserve">
+    <value>Input errors</value>
+  </data>
+  <data name="TripName_Required" xml:space="preserve">
+    <value>Title is required</value>
+  </data>
+  <data name="TripStartDate_Invalid" xml:space="preserve">
+    <value>Start date must not be in the future</value>
+  </data>
 </root>

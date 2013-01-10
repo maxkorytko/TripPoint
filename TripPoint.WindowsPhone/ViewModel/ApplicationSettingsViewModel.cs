@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Input;
 
+using TripPoint.I18N;
 using TripPoint.Model.Settings;
 using TripPoint.WindowsPhone.Services;
-using TripPoint.WindowsPhone.I18N;
 using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel

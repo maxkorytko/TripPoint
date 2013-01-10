@@ -1,5 +1,7 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 
+using TripPoint.I18N;
 using TripPoint.Model.Data.Repository.Factory;
 using GalaSoft.MvvmLight.Command;
 
@@ -25,6 +27,15 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void SaveTripAction()
         {
+            var validation = Trip.Validate();
+
+            if (validation.Failed)
+            {
+                MessageBox.Show(validation.ErrorMessages, Resources.MessageBox_InputErrors,
+                    MessageBoxButton.OK);
+                return;
+            }
+
             TripRepository.UpdateTrip(Trip);
 
             Navigator.GoBack();

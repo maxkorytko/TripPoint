@@ -13,7 +13,7 @@ using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.State;
 using TripPoint.WindowsPhone.State.Data;
 using TripPoint.WindowsPhone.Navigation;
-using TripPoint.WindowsPhone.I18N;
+using TripPoint.I18N;
 using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel

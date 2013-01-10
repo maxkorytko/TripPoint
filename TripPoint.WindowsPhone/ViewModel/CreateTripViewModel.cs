@@ -1,12 +1,12 @@
-﻿#region SDK Usings
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Linq;
-#endregion
 
 using TripPoint.Model.Domain;
+using TripPoint.Model.Domain.Validation;
 using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
+using TripPoint.I18N;
 using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
@@ -30,11 +30,12 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void SaveTripAction()
         {
-            bool isTripValid = Trip.Validate();
+            var validation = Trip.Validate();
 
-            if (!isTripValid)
+            if (validation.Failed)
             {
-                MessageBox.Show("Validation Failed");
+                MessageBox.Show(validation.ErrorMessages, Resources.MessageBox_InputErrors, 
+                    MessageBoxButton.OK);
                 return;
             }
 

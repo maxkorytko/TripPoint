@@ -11,7 +11,7 @@ using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
 using TripPoint.WindowsPhone.Services;
 using TripPoint.WindowsPhone.Utils;
-using TripPoint.WindowsPhone.I18N;
+using TripPoint.I18N;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {

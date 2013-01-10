@@ -91,12 +91,6 @@
     <Compile Include="Converters\BytesToImageSourceConverter.cs" />
     <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Converters\InverseBoolToVisibilityConverter.cs" />
-    <Compile Include="I18N\Localization.cs" />
-    <Compile Include="I18N\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Navigation\INavigator.cs" />
     <Compile Include="Navigation\TripPointNavigation.cs" />
     <Compile Include="Navigation\TripPointNavigationEventArgs.cs" />
@@ -270,6 +264,10 @@
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TripPoint.I18N\TripPoint.I18N.csproj">
+      <Project>{788CAE2A-CE4C-4F5D-9172-952D79A372DE}</Project>
+      <Name>TripPoint.I18N</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TripPoint.Model\TripPoint.Model.csproj">
       <Project>{E5C34F04-D6D5-41B1-920A-55C36880427E}</Project>
       <Name>TripPoint.Model</Name>
@@ -278,13 +276,6 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="I18N\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
