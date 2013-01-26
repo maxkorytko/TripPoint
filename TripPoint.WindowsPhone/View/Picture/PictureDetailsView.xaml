@@ -11,7 +11,6 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True"
     DataContext="{Binding PictureDetailsViewModel, Source={StaticResource Locator}}">
@@ -34,14 +33,13 @@
                        Style="{StaticResource PhoneTextNormalStyle}"
                        Text="{Binding Localization.Resources.AppTitle}"/>
 
-            <TextBlock Grid.Row="1" Margin="9,0,0,10" 
-                   Style="{StaticResource PhoneTextBlockBase}"
-                   FontSize="44"
-                   Text="{Binding Picture.Title}"/>
+            <TextBlock Grid.Row="1"
+                       Margin="9,0,0,10" 
+                       Style="{StaticResource HeaderNormalStyle}"
+                       Text="{Binding Picture.Title}"/>
 
-            <TextBlock Style="{StaticResource PhoneTextTitle3Style}"
-                       Foreground="{StaticResource PhoneAccentBrush}"
-                       Text="{Binding Picture.DateTaken}" />
+            <TextBlock Style="{StaticResource DateTimeTextStyle}"
+                       Text="{Binding Picture.DateTaken, StringFormat={StaticResource DateTimeFormat}}" />
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->

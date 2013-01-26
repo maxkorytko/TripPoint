@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.Collections.Generic;
 
 namespace TripPoint.Model.Domain.Validation
@@ -21,29 +22,23 @@ namespace TripPoint.Model.Domain.Validation
             if (error == null) return;
 
             _validationErrors.Add(error);
+            AppendErrorMessage(error.Message);
+        }
+
+        private void AppendErrorMessage(string message)
+        {
+            if (String.IsNullOrWhiteSpace(message)) return;
+
+            if (_errorMessages.Length > 0) _errorMessages.AppendLine();
+
+            _errorMessages.Append(message);
         }
 
         public string ErrorMessages
         {
             get
             {
-                _errorMessages.Clear();
-                AppendAllErrorMessages();
-
                 return _errorMessages.ToString();
-            }
-        }
-
-        private void AppendAllErrorMessages()
-        {
-            if (_validationErrors.Count == 0) return;
-
-            _errorMessages.Append(_validationErrors[0].Message);
-
-            for (int i = 1; i < _validationErrors.Count; i++)
-            {
-                _errorMessages.AppendLine();
-                _errorMessages.Append(_validationErrors[i].Message);
             }
         }
     }

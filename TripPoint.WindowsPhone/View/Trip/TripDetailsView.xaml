@@ -21,15 +21,17 @@
     DataContext="{Binding TripDetailsViewModel, Source={StaticResource Locator}}">
 
     <phone:PhoneApplicationPage.Resources>
-        <convert:BoolToVisibilityConverter x:Key="BoolToVisibility" />
         <convert:InverseBoolConverter x:Key="InverseBool" />
     </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <controls:Panorama Title="{Binding Localization.Resources.TripDetails}">
+        <controls:Panorama x:Name="TripDetailsPanorama"
+                           Title="{Binding Localization.Resources.TripDetails}"
+                           Foreground="White">
             <!-- Trip Details item -->
-            <controls:PanoramaItem Header="{Binding Localization.Resources.Details}">
+            <controls:PanoramaItem Header="{Binding Localization.Resources.DetailsHeader}"
+                                   Foreground="White">
                 <Grid x:Name="TripDetailsLayout">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -37,27 +39,35 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0">
-                        <TextBlock Style="{StaticResource PhoneTextBlockBase}"
+                        <TextBlock Style="{StaticResource HeaderNormalStyle}"
                                    HorizontalAlignment="Stretch"
+                                   Foreground="White"
                                    TextWrapping="Wrap"
-                                   FontSize="44"
                                    Text="{Binding Trip.Name}"/>
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource DateTimeTextStyle}"
+                                       Text="{Binding Trip.StartDate, StringFormat={StaticResource TripDateFormat}}" />
 
-                        <TextBlock Style="{StaticResource PhoneTextTitle3Style}"
-                                   Foreground="{StaticResource PhoneAccentBrush}"
-                                   Text="{Binding Trip.StartDate}" />
+                            <TextBlock Style="{StaticResource DateTimeTextWithoutMarginStyle}"
+                                       Text="-"/>
+
+                            <TextBlock Style="{StaticResource DateTimeTextStyle}"
+                                       Text="{Binding Trip.EndDate, StringFormat={StaticResource TripDateFormat}}" />
+                        </StackPanel>
                         
                         <TextBlock Style="{StaticResource PhoneTextBlockBase}"
                                    Padding="0,15,0,0"
-                                   TextWrapping="Wrap"
+                                   Foreground="White"
                                    FontSize="30"
+                                   TextWrapping="Wrap"
                                    Text="{Binding Trip.Notes}" />
                     </StackPanel>
                 </Grid>
             </controls:PanoramaItem>
 
             <!-- Checkpoints items -->
-            <controls:PanoramaItem Header="{Binding Localization.Resources.Checkpoints}">
+            <controls:PanoramaItem Header="{Binding Localization.Resources.CheckpointsHeader}">
                 <trippointcontrols:CheckpointList DataContext="{Binding}"
                                                   OnCheckpointSelected="CheckpointList_OnCheckpointSelected"
                                                   OnMore="CheckpointList_OnMore" />
@@ -69,7 +79,8 @@
             <coding4Fun:ProgressOverlay.Content>
                 <StackPanel>
                     <toolkit:PerformanceProgressBar IsIndeterminate="True" />
-                    <TextBlock Text="{Binding Localization.Resources.Deleting}" 
+                    <TextBlock Text="{Binding Localization.Resources.Deleting}"
+                               Foreground="White"
                                HorizontalAlignment="Center" 
                                Margin="10,0,0,0" />
                 </StackPanel>

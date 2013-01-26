@@ -14,6 +14,7 @@ using TripPoint.WindowsPhone.Navigation;
 using TripPoint.WindowsPhone.State;
 using TripPoint.WindowsPhone.State.Data;
 using TripPoint.WindowsPhone.Utils;
+using TripPoint.I18N;
 using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
@@ -73,25 +74,28 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             var worker = new BackgroundWorker();
 
-            worker.DoWork += (sender, args) => { SavePicture(); };
-            worker.RunWorkerCompleted += (sender, args) => { Navigator.GoBack(); };
+            worker.DoWork += (sender, args) => { AddPicture(); };
+            worker.RunWorkerCompleted += (sender, args) => { EnsurePictureWasAdded(args.Error); };
             worker.RunWorkerAsync();
         }
 
-        private void SavePicture()
+        private void AddPicture()
         {
-            var checkpoint = _checkpointRepository.FindCheckpoint(_checkpointID);
+            if (Picture == null) return;
 
-            if (checkpoint == null) return;
+            ScalePicture();
+            SavePicture();
+        }
 
-            checkpoint.Pictures.Add(Picture);
-            _checkpointRepository.UpdateCheckpoint(checkpoint);
-
+        /// <summary>
+        /// Scales the picture
+        /// This method will always run on the UI thread
+        /// The calling thread will block until scaling is finished
+        /// </summary>
+        private void ScalePicture()
+        {
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
-                // scale the picture in order to save disk space
-                // it will also help speed up loading the picture
-                //
                 ScalePicture(0.75f);
 
                 lock (Picture)
@@ -105,8 +109,47 @@ namespace TripPoint.WindowsPhone.ViewModel
             {
                 Monitor.Wait(Picture);
             }
+        }
+
+        private void ScalePicture(float scalingFactor)
+        {
+            if (Picture.RawBytes == null) return;
+
+            var bitmap = ImageUtils.CreateWriteableBitmapFromBytes(Picture.RawBytes);
+
+            if (bitmap == null) return;
+
+            bitmap = bitmap.Resize(Convert.ToInt32(bitmap.PixelWidth * scalingFactor),
+                Convert.ToInt32(bitmap.PixelHeight * scalingFactor),
+                WriteableBitmapExtensions.Interpolation.Bilinear);
+
+            Picture.RawBytes = TripPointConvert.ToBytes(bitmap.SaveJpeg());
+        }
+
+        /// <summary>
+        /// Saves the picture permanently
+        /// </summary>
+        private void SavePicture()
+        {
+            var checkpoint = _checkpointRepository.FindCheckpoint(_checkpointID);
+
+            if (checkpoint == null) return;
+
+            checkpoint.Pictures.Add(Picture);
+            _checkpointRepository.UpdateCheckpoint(checkpoint);
 
             PictureStateManager.Instance.SavePicture(Picture);
+        }
+
+        private void EnsurePictureWasAdded(Exception error)
+        {
+            if (error != null)
+            {
+                MessageBox.Show(Resources.PictureAddError, Resources.MessageBox_Error,
+                    MessageBoxButton.OK);
+            }
+
+            Navigator.GoBack();
         }
 
         private void CancelAddPictureAction()
@@ -153,21 +196,6 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
 
             return picture;
-        }
-
-        private void ScalePicture(float scalingFactor)
-        {
-            if (Picture.RawBytes == null) return;
-
-            var bitmap = ImageUtils.CreateWriteableBitmapFromBytes(Picture.RawBytes);
-
-            if (bitmap == null) return;
-
-            bitmap = bitmap.Resize(Convert.ToInt32(bitmap.PixelWidth * scalingFactor), 
-                Convert.ToInt32(bitmap.PixelHeight * scalingFactor),
-                WriteableBitmapExtensions.Interpolation.Bilinear);
-
-            Picture.RawBytes = TripPointConvert.ToBytes(bitmap.SaveJpeg());
         }
 
         private static int GetCheckpointID(PhoneApplicationPage view)

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using System.ComponentModel;
@@ -37,10 +36,6 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
                 if (message.PropertyName.Equals("ShouldShowCheckpointMap"))
                 {
                     UpdateCheckpointMapVisibility(message.NewValue);
-                }
-                else if (message.PropertyName.Equals("IsNotesSelectionEnabled"))
-                {
-                    UpdateNoteListSelectionEnabled(message.NewValue);
                 }
             });
         }
@@ -85,11 +80,6 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
             CheckpointDetails.Items.Remove(item);
         }
 
-        private void UpdateNoteListSelectionEnabled(bool isSelectionEnabled)
-        {
-            NoteList.IsSelectionEnabled = isSelectionEnabled;
-        }
-
         private void OnUnloaded()
         {
             Messenger.Default.Unregister(this);
@@ -125,14 +115,6 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
 
             ViewModel.OnNavigatedTo(new Navigation.TripPointNavigationEventArgs(e,
                 e.Content as PhoneApplicationPage));
-        }
-
-        private void NoteList_IsSelectionEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            bool isSelectionEnabled = (sender as MultiselectList).IsSelectionEnabled;
-
-            if (ViewModel.IsNotesSelectionEnabled != isSelectionEnabled)
-                ViewModel.IsNotesSelectionEnabled = isSelectionEnabled;
         }
 
         private void NoteList_SelectionChanged(object sender, SelectionChangedEventArgs e)

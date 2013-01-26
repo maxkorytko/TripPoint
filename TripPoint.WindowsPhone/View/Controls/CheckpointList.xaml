@@ -11,6 +11,7 @@
     d:DesignHeight="480" d:DesignWidth="480">
 
     <toolkit:LongListSelector IsFlatList="True"
+                              toolkit:TiltEffect.IsTiltEnabled="True"
                               ShowListFooter="{Binding CanPaginateCheckpoints}"
                               ItemsSource="{Binding Checkpoints}"
                               SelectionChanged="List_SelectionChanged">
@@ -29,14 +30,14 @@
 
                     <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="15,0,0,0">
                         <TextBlock x:Name="CheckpointTitle"
-                                   Text="{Binding Title}"
-                                   Style="{StaticResource PhoneTextLargeStyle}"
-                                   TextTrimming="WordEllipsis" />
+                                   Style="{StaticResource ListHeaderLargeStyle}"
+                                   Foreground="White"
+                                   TextTrimming="WordEllipsis"
+                                   Text="{Binding Title}" />
 
                         <TextBlock x:Name="CheckpointCreateDate"
-                                   Text="{Binding Timestamp}"
-                                   Foreground="{StaticResource PhoneAccentBrush}"
-                                   Style="{StaticResource PhoneTextBlockBase}" />
+                                   Style="{StaticResource DateTimeTextStyle}"
+                                   Text="{Binding Timestamp, StringFormat={StaticResource DateTimeFormat}}" />
                     </StackPanel>
                 </Grid>
             </DataTemplate>
@@ -45,10 +46,10 @@
         <toolkit:LongListSelector.ListFooterTemplate>
             <DataTemplate>
                 <HyperlinkButton HorizontalAlignment="Left" 
-                                             Width="Auto"
-                                             FontSize="{StaticResource PhoneFontSizeMediumLarge}"
-                                             Click="MoreButton_Click"
-                                             Content="MORE" />
+                                 Width="Auto"
+                                 FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+                                 Click="MoreButton_Click"
+                                 Content="MORE" />
             </DataTemplate>
         </toolkit:LongListSelector.ListFooterTemplate>
 

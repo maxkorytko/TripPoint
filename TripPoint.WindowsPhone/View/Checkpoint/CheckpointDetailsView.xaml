@@ -8,7 +8,6 @@
     xmlns:trippointcontrols="clr-namespace:TripPoint.WindowsPhone.View.Controls;assembly=TripPoint"
     xmlns:appBar="clr-namespace:Sh;assembly=Sh"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:convert="clr-namespace:TripPoint.WindowsPhone.Converters;assembly=TripPoint"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -20,16 +19,21 @@
     shell:SystemTray.IsVisible="True"
     DataContext="{Binding CheckpointDetailsViewModel, Source={StaticResource Locator}}">
     
-    <phone:PhoneApplicationPage.Resources>
-        <convert:BoolToVisibilityConverter x:Name="BoolToVisibility" />
-        <convert:InverseBoolToVisibilityConverter x:Name="InverseBoolToVisibility" />
-    </phone:PhoneApplicationPage.Resources>
-    
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <controls:Pivot x:Name="CheckpointDetails">
-            
-            <controls:PivotItem Header="{Binding Localization.Resources.Details}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0" Margin="12,17,0,0">
+            <TextBlock Style="{StaticResource PhoneTextNormalStyle}" 
+                       Text="{Binding Localization.Resources.AppTitle}" />
+        </StackPanel>
+        
+        <controls:Pivot x:Name="CheckpointDetails" Grid.Row="1">
+            <!-- Details -->
+            <controls:PivotItem Header="{Binding Localization.Resources.DetailsHeader}">
                 <Grid Name="CheckpointDetailsLayout">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -39,37 +43,44 @@
                     <!-- Title -->
                     <StackPanel Grid.Row="0" Margin="0,25,0,50">
                         <TextBlock Text="{Binding Checkpoint.Title}"
-                                   FontSize="36"
-                                   Style="{StaticResource PhoneTextBlockBase}" 
+                                   Style="{StaticResource HeaderNormalStyle}" 
                                    HorizontalAlignment="Stretch"
                                    TextWrapping="Wrap" />
 
-                        <TextBlock Text="{Binding Checkpoint.Timestamp}"
-                                   Foreground="{StaticResource PhoneAccentBrush}"
-                                   Style="{StaticResource PhoneTextBlockBase}" />
+                        <TextBlock Style="{StaticResource DateTimeTextStyle}"
+                                   Text="{Binding Checkpoint.Timestamp, StringFormat={StaticResource DateTimeFormat}}" />
                     </StackPanel>
                     
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
                         <!-- Pictures -->
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PhoneTextTitle2Style}"
-                                   Text="{Binding Localization.Resources.Pictures}" />
-                        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource PhoneTextTitle2Style}"
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                   Style="{StaticResource HeaderNormalStyle}"
+                                   Text="{Binding Localization.Resources.PicturesHeader}" />
+
+                        <TextBlock Grid.Row="0" Grid.Column="1"
+                                   Style="{StaticResource HeaderNormalStyle}"
                                    Text="{Binding Checkpoint.Pictures.Count}" />
-    
+                        
+                        <!-- Padding -->
+                        <TextBlock Grid.Row="1" Grid.Column="2" Height="25"/>
+                        
                         <!-- Notes -->
-                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PhoneTextTitle2Style}"
-                                   Text="{Binding Localization.Resources.Notes}" />
-                        <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource PhoneTextTitle2Style}"
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                                   Style="{StaticResource HeaderNormalStyle}"
+                                   Text="{Binding Localization.Resources.NotesHeader}" />
+
+                        <TextBlock Grid.Row="2" Grid.Column="1"
+                                   Style="{StaticResource HeaderNormalStyle}"
                                    Text="{Binding Checkpoint.Notes.Count}" />
 
                     </Grid>
@@ -81,16 +92,30 @@
                 </Grid>
             </controls:PivotItem>
             
-            <controls:PivotItem Header="{Binding Localization.Resources.Pictures}">
-                <trippointcontrols:PictureGrid DataContext="{Binding Thumbnails}" 
-                                               OnPictureSelected="PictureSelected" />
+            <!-- Pictures -->
+            <controls:PivotItem Header="{Binding Localization.Resources.PicturesHeader}">
+                <Grid>
+                    <TextBlock Style="{StaticResource HeaderNormalStyle}"
+                               Visibility="{Binding Checkpoint.Pictures.Count, Converter={StaticResource InverseCountToVisibility}}"
+                               Text="{Binding Localization.Resources.None}" />
+
+                    <trippointcontrols:PictureGrid DataContext="{Binding Thumbnails}"
+                                       Visibility="{Binding Count, Converter={StaticResource CountToVisibility}}"          
+                                       OnPictureSelected="PictureSelected" />
+                </Grid>
             </controls:PivotItem>
             
-            <controls:PivotItem Header="{Binding Localization.Resources.Notes}">
+            <!-- Notes -->
+            <controls:PivotItem Header="{Binding Localization.Resources.NotesHeader}">
                 <Grid>
+                    <TextBlock Style="{StaticResource HeaderNormalStyle}"
+                               Visibility="{Binding Checkpoint.Notes.Count, Converter={StaticResource InverseCountToVisibility}}"
+                               Text="{Binding Localization.Resources.None}" />
+                    
                     <toolkit:MultiselectList x:Name="NoteList"
+                                             Visibility="{Binding Checkpoint.Notes.Count, Converter={StaticResource CountToVisibility}}"
                                              SelectionChanged="NoteList_SelectionChanged"
-                                             IsSelectionEnabledChanged="NoteList_IsSelectionEnabledChanged"
+                                             IsSelectionEnabled="{Binding IsNotesSelectionEnabled, Mode=TwoWay}"
                                              ItemsSource="{Binding Checkpoint.Notes}">
                         <toolkit:MultiselectList.ItemContainerStyle>
                             <Style TargetType="toolkit:MultiselectItem">
@@ -101,18 +126,18 @@
                         <toolkit:MultiselectList.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="0,-10,0,0">
-                                    <TextBlock Style="{StaticResource PhoneTextTitle2Style}"
-                                                Text="{Binding Text}" />
+                                    <TextBlock Style="{StaticResource ListHeaderNormalStyle}"
+                                               Text="{Binding Text}" />
                                 
-                                    <TextBlock Style="{StaticResource PhoneTextBlockBase}"
-                                                Text="{Binding Timestamp}" />
+                                    <TextBlock Style="{StaticResource DateTimeTextStyle}"
+                                               Text="{Binding Timestamp, StringFormat={StaticResource DateTimeFormat}}" />
                                 </StackPanel>
                             </DataTemplate>
                         </toolkit:MultiselectList.ItemTemplate>
                     </toolkit:MultiselectList>
 
                     <appBar:AdvancedApplicationBarIconButton Text="{Binding Localization.Resources.Select_AppBar}"
-                                                             IconUri="/Assets/Images/Dark/appbar.list.check.png" 
+                                                             IconUri="/Assets/Images/Dark/appbar.list.check.png"
                                                              Visibility="{Binding IsNotesSelectionEnabled, Converter={StaticResource InverseBoolToVisibility}}" 
                                                              Command="{Binding SelectNotesCommand}" />
 
@@ -130,16 +155,18 @@
                 </Grid>
             </controls:PivotItem>
             
-            <controls:PivotItem Header="Map" x:Name="CheckpointMapPivotItem">
+            <!-- Map -->
+            <controls:PivotItem x:Name="CheckpointMapPivotItem"
+                                Header="{Binding Localization.Resources.MapHeader}">
                 <!-- 
                 Do not bind MapCenter to Checkpoint.Location.GeoCoordinate
                 It will cause ArgumentException when checkpoint gets deleted
                 This is because Location will be set to null
                 -->
                 <jwcontrols:StaticMap x:Name="CheckpointMap" Margin="-12,0,-12,0"
-                                      Provider="Bing" 
+                                      Provider="Bing"
                                       ZoomLevel="15" />
-                
+
             </controls:PivotItem>
             
         </controls:Pivot>

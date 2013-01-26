@@ -20,7 +20,6 @@
     DataContext="{Binding CreateCheckpointViewModel, Source={StaticResource Locator}}">
 
     <phone:PhoneApplicationPage.Resources>
-        <convert:BoolToVisibilityConverter x:Key="BoolToVisibility" />
         <convert:InverseBoolConverter x:Key="InverseBool" />
     </phone:PhoneApplicationPage.Resources>
 

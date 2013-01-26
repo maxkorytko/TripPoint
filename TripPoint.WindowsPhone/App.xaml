@@ -4,13 +4,28 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:convert="clr-namespace:TripPoint.WindowsPhone.Converters;assembly=TripPoint"
     xmlns:vm="clr-namespace:TripPoint.WindowsPhone.ViewModel"
-    xmlns:core="clr-namespace:System;assembly=mscorlib">
-
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--Application Resources-->
     <Application.Resources>
-        <core:String x:Key="BingMapsKey">ApZs4BwJrG3d81SRc4_4OaRynkUcyiK3U_Ftfj9lxPr-kQRWTwR8oDy28hwNp3po</core:String>
-        <vm:ViewModelLocator x:Key="Locator" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Assets/Resources/TripPointStyles.xaml"/>
+                <ResourceDictionary>
+                    <vm:ViewModelLocator x:Key="Locator" />
+                    
+                    <convert:BoolToVisibilityConverter x:Key="BoolToVisibility" />
+                    <convert:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility" />
+                    
+                    <convert:CountToVisibilityConverter x:Key="CountToVisibility" />
+                    <convert:InverseCountToVisibilityConverter x:Key="InverseCountToVisibility" />
+                    
+                    <system:String x:Key="DateTimeFormat">MMM d, yyyy 'at' h:mm tt</system:String>
+                    <system:String x:Key="TripDateFormat">MMM d, yyyy</system:String>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>

@@ -83,23 +83,28 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void CreateCheckpointAction()
         {
-            if (Checkpoint == null)
-            {
-                GoBack();
-                return;
-            }
+            if (Checkpoint == null) return;
                 
             AddNotesToCheckpoint();
 
-            if (IsLocationObtained())
+            if (LocationService.Permission == GeoPositionPermission.Denied)
             {
-                SaveCheckpoint();
-                GoBack();
-            }
-            else if (LocationService.Permission == GeoPositionPermission.Denied)
+                // inform the user that the location service is turned off on the device
+                // this is not be confused with turning off the location service in app settings
+                // in the latter case, the app should save the checkpoint without asking for user's permission
+                //
                 DisplayLocationNotFoundMessage();
-            else
-                WaitUntilLocationIsObtained(10);
+                return;
+            }
+            
+            if (!IsLocationObtained() && LocationService.IsRunning)
+            {
+                WaitUntilLocationIsObtained(15);
+                return;
+            }
+
+            SaveCheckpoint();
+            GoBack();
         }
 
         /// <summary>
@@ -142,9 +147,9 @@ namespace TripPoint.WindowsPhone.ViewModel
                 Resources.LocationNotFoundCaption,
                 MessageBoxButton.OKCancel);
 
-            if (userDecision == MessageBoxResult.OK)
-                SaveCheckpoint();
+            if (userDecision != MessageBoxResult.OK) return;
 
+            SaveCheckpoint();
             GoBack();
         }
 

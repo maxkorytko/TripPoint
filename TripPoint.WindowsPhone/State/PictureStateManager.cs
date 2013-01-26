@@ -82,16 +82,23 @@ namespace TripPoint.WindowsPhone.State
             if (String.IsNullOrWhiteSpace(picture.FileName))
                 throw new InvalidOperationException("Picture file name must not be blank");
 
-            WritePictureToIsolatedStorage(picture);
+            try
+            {
+                WritePictureToIsolatedStorage(picture);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(ex.Message);
+            }
         }
 
         private static void WritePictureToIsolatedStorage(Picture picture)
         {
-            EnsurePathExists(GetDirectoryPath(picture));
+            EnsureDirectoryExists(GetDirectoryPath(picture));
             WritePictureToIsolatedStorage(picture, GetFilePath(picture));
         }
 
-        private static void EnsurePathExists(string path)
+        private static void EnsureDirectoryExists(string path)
         {
             using (var isolatedStorage = IsolatedStorageFile.GetUserStoreForApplication())
             {
@@ -123,17 +130,86 @@ namespace TripPoint.WindowsPhone.State
         /// <param name="pictureToDelete"></param>
         public void DeletePicture(Picture pictureToDelete)
         {
-            if (pictureToDelete == null) return;
+            try
+            {
+                using (var isolatedStorage = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    DeletePicture(pictureToDelete, isolatedStorage);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Deletes a picture from isolated storage
+        /// </summary>
+        /// <param name="pictureToDelete"></param>
+        /// <param name="isolatedStorage"></param>
+        private static void DeletePicture(Picture pictureToDelete, IsolatedStorageFile isolatedStorage)
+        {
+            if (pictureToDelete == null || isolatedStorage == null) return;
 
             var filePath = GetFilePath(pictureToDelete);
 
-            using (var isolatedStorage = IsolatedStorageFile.GetUserStoreForApplication())
+            if (isolatedStorage.FileExists(filePath))
             {
-                if (isolatedStorage.FileExists(filePath))
-                    isolatedStorage.DeleteFile(filePath);
-
-                // TODO: delete the directory if it's empty
+                isolatedStorage.DeleteFile(filePath);
+                DeleteDirectoryIfEmpty(GetDirectoryPath(pictureToDelete), isolatedStorage);
             }
+        }
+
+        /// <summary>
+        /// Recursively deletes empty directories by moving from child to parent
+        /// Every time a directory is deletes, its parent directory is examined
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="isolatedStorage"></param>
+        private static void DeleteDirectoryIfEmpty(string path, IsolatedStorageFile isolatedStorage)
+        {
+            if (String.IsNullOrWhiteSpace(path)) return;
+            if (isolatedStorage == null) return;
+
+            // this only looks for files and does not count sub-directories
+            var fileNames = isolatedStorage.GetFileNames(Path.Combine(path, "*"));
+
+            if (fileNames.Length > 0) return;
+
+            try
+            {
+                // an exception will be thrown unless the directory is empty
+                isolatedStorage.DeleteDirectory(path);
+
+                // delete parent directory
+                DeleteDirectoryIfEmpty(GetParentDirectoryPath(path), isolatedStorage);
+            }
+            catch (Exception)
+            {
+                // swallow
+            }
+        }
+
+        /// <summary>
+        /// Constructs the new path which is the same as the original path minus the last directory name
+        /// The new path does not contain the directory separator at the end
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string GetParentDirectoryPath(string path)
+        {
+            if (path == null) return null;
+            if (String.IsNullOrWhiteSpace(path)) return String.Empty;
+
+            int lastSeparatorIndex = path.LastIndexOf(Path.DirectorySeparatorChar);
+            
+            lastSeparatorIndex = lastSeparatorIndex != -1 ? lastSeparatorIndex
+                : path.LastIndexOf(Path.AltDirectorySeparatorChar);
+
+            if (lastSeparatorIndex == -1) return String.Empty;
+
+            return path.Substring(0, lastSeparatorIndex);
         }
 
         /// <summary>
@@ -142,9 +218,19 @@ namespace TripPoint.WindowsPhone.State
         /// <param name="picturesToDelete"></param>
         public void DeletePictures(IEnumerable<Picture> picturesToDelete)
         {
-            foreach (var picture in picturesToDelete)
+            try
             {
-                DeletePicture(picture);
+                using (var isolatedStorage = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    foreach (var picture in picturesToDelete)
+                    {
+                        DeletePicture(picture, isolatedStorage);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(ex.Message);
             }
         }
     }

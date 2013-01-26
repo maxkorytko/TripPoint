@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddNotes" xml:space="preserve">
-    <value>Add Notes</value>
+    <value>add notes</value>
   </data>
   <data name="AddPictures" xml:space="preserve">
-    <value>Add Pictures</value>
+    <value>add pictures</value>
   </data>
   <data name="AddPictureTitle" xml:space="preserve">
     <value>title</value>
   </data>
   <data name="AppTitle" xml:space="preserve">
-    <value>Trip Point</value>
+    <value>TRIP POINT</value>
   </data>
   <data name="CheckpointAddNotesViewTitle" xml:space="preserve">
     <value>new note</value>
@@ -148,7 +148,7 @@
     <value>Are you sure you want to finish the trip?</value>
   </data>
   <data name="CreateCheckpoint" xml:space="preserve">
-    <value>Create Checkpoint</value>
+    <value>create checkpoint</value>
   </data>
   <data name="CreateCheckpointViewTitle" xml:space="preserve">
     <value>new checkpoint</value>
@@ -168,8 +168,8 @@
   <data name="Deleting" xml:space="preserve">
     <value>Deleting</value>
   </data>
-  <data name="Details" xml:space="preserve">
-    <value>Details</value>
+  <data name="DetailsHeader" xml:space="preserve">
+    <value>details</value>
   </data>
   <data name="Edit_AppBar" xml:space="preserve">
     <value>edit</value>
@@ -197,8 +197,8 @@ Would you like to save this checkpoint?</value>
   <data name="LocationServiceOnSettingDescription" xml:space="preserve">
     <value>Application has access to your location</value>
   </data>
-  <data name="Notes" xml:space="preserve">
-    <value>Notes</value>
+  <data name="NotesHeader" xml:space="preserve">
+    <value>notes</value>
   </data>
   <data name="PastTripsViewTitle" xml:space="preserve">
     <value>past trips</value>
@@ -206,8 +206,8 @@ Would you like to save this checkpoint?</value>
   <data name="PastTrips_AppBar" xml:space="preserve">
     <value>past trips</value>
   </data>
-  <data name="Pictures" xml:space="preserve">
-    <value>Pictures</value>
+  <data name="PicturesHeader" xml:space="preserve">
+    <value>pictures</value>
   </data>
   <data name="PrivacyPolicyLinkContent" xml:space="preserve">
     <value>Privacy Policy</value>
@@ -234,13 +234,13 @@ Would you like to save this checkpoint?</value>
     <value>type note</value>
   </data>
   <data name="CurrentTrip" xml:space="preserve">
-    <value>Current Trip</value>
+    <value>current trip</value>
   </data>
-  <data name="Checkpoints" xml:space="preserve">
-    <value>Checkpoints</value>
+  <data name="CheckpointsHeader" xml:space="preserve">
+    <value>checkpoints</value>
   </data>
   <data name="TripDetails" xml:space="preserve">
-    <value>Trip Details</value>
+    <value>trip details</value>
   </data>
   <data name="DeleteTripFailed" xml:space="preserve">
     <value>Failed to delete the trip. Restart the application and try again.</value>
@@ -280,5 +280,38 @@ Would you like to save this checkpoint?</value>
   </data>
   <data name="TripStartDate_Invalid" xml:space="preserve">
     <value>Start date must not be in the future</value>
+  </data>
+  <data name="MapHeader" xml:space="preserve">
+    <value>map</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>none</value>
+  </data>
+  <data name="CheckpointDeleteError" xml:space="preserve">
+    <value>The application failed to delete checkpoint.
+Please try again.</value>
+  </data>
+  <data name="MessageBox_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="PictureAddError" xml:space="preserve">
+    <value>The application failed to save picture.
+Please try again.</value>
+  </data>
+  <data name="PictureDeleteError" xml:space="preserve">
+    <value>The application failed to delete picture.
+Please try again.</value>
+  </data>
+  <data name="Location_PrivacyPolicy" xml:space="preserve">
+    <value>The application obtains user's location in order to offer best user experience. The location information is stored on the device. The location information may be shared with Microsoft. You can turn off Location Service at any time.</value>
+  </data>
+  <data name="LocationService" xml:space="preserve">
+    <value>Location Service</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Privacy Policy</value>
   </data>
 </root>

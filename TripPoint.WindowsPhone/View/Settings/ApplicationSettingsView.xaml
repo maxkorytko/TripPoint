@@ -40,11 +40,8 @@
                     </Grid.RowDefinitions>
                     
                     <StackPanel Grid.Row="0" VerticalAlignment="Center">
-                        <!--<TextBlock Text="Location services" Foreground="LightGray"
-                                   Style="{StaticResource PhoneTextTitle2Style}" />-->
-                        
                         <toolkit:ToggleSwitch Grid.Row="0" Grid.ColumnSpan="2"
-                                              Header="Location services"
+                                              Header="{Binding Localization.Resources.LocationService}"
                                               IsChecked="{Binding LocationServiceToggleIsChecked, Mode=TwoWay}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Checked">
@@ -61,11 +58,19 @@
                                    Style="{StaticResource PhoneTextTitle3Style}" />
                     </StackPanel>
 
-                    <HyperlinkButton Grid.Row="1" Margin="0,20,0,0" FontSize="20"
-                                     VerticalAlignment="Top" HorizontalAlignment="Left"
-                                     Content="{Binding Localization.Resources.PrivacyPolicyLinkContent}"
-                                     NavigateUri="/Privacy" />
-                    
+                    <RichTextBox Grid.Row="1"
+                                 Margin="0,25,0,0"
+                                 TextWrapping="Wrap">
+                        <Paragraph>
+                            <InlineUIContainer>
+                                <TextBlock FontWeight="Bold"
+                                           Text="{Binding Localization.Resources.PrivacyPolicy}" />
+                            </InlineUIContainer>
+                        </Paragraph>
+                        <Paragraph >
+                            <Run Text="{Binding Localization.Resources.Location_PrivacyPolicy}" />
+                        </Paragraph>
+                    </RichTextBox>
                 </Grid>
             </controls:PivotItem>
         </controls:Pivot>

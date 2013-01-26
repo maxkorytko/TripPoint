@@ -7,7 +7,6 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:trippointcontrols="clr-namespace:TripPoint.WindowsPhone.View.Controls;assembly=TripPoint"
     xmlns:appBar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
-    xmlns:convert="clr-namespace:TripPoint.WindowsPhone.Converters;assembly=TripPoint"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -18,16 +17,17 @@
     shell:SystemTray.IsVisible="True"
     DataContext="{Binding CurrentTripViewModel, Source={StaticResource Locator}}">
     
-    <phone:PhoneApplicationPage.Resources>
-        <convert:BoolToVisibilityConverter x:Key="BoolToVisibility" />
-        <convert:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility" />
-    </phone:PhoneApplicationPage.Resources>
-    
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <controls:Panorama Title="{Binding Localization.Resources.CurrentTrip}">
+        <controls:Panorama Title="{Binding Localization.Resources.CurrentTrip}"
+                           Foreground="White">
+            <controls:Panorama.Background>
+                <ImageBrush ImageSource="/Assets/Images/background.jpg" />
+            </controls:Panorama.Background>
+            
             <!-- Trip Details item -->
-            <controls:PanoramaItem Header="{Binding Localization.Resources.Details}">
+            <controls:PanoramaItem Header="{Binding Localization.Resources.DetailsHeader}"
+                                   Foreground="White">
                 <Grid x:Name="TripDetailsLayout">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -36,60 +36,52 @@
                     
                     <StackPanel Grid.Row="0">
                         <TextBlock x:Name="TripName"
-                                   Style="{StaticResource PhoneTextBlockBase}"
+                                   Style="{StaticResource HeaderNormalStyle}"
                                    HorizontalAlignment="Stretch"
+                                   Foreground="White"
                                    TextTrimming="WordEllipsis" 
-                                   FontSize="44"
                                    Text="{Binding Trip.Name}" />
 
-                        <TextBlock x:Name="TripStartDate" Style="{StaticResource PhoneTextTitle3Style}"
-                                   Foreground="{StaticResource PhoneAccentBrush}"
-                                   Text="{Binding Trip.StartDate}" />
+                        <TextBlock x:Name="TripStartDate"
+                                   Style="{StaticResource DateTimeTextStyle}"
+                                   Text="{Binding Trip.StartDate, StringFormat={StaticResource DateTimeFormat}}" />
                     </StackPanel>
                     
-                    <Grid x:Name="CreateCheckpointContainer" Grid.Row="1"
-                          Visibility="{Binding CurrentTripHasCheckpoints, Converter={StaticResource InverseBoolToVisibility}}">
-                        
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        
-                        <Button Content="{Binding Localization.Resources.CreateCheckpoint}" 
-                                VerticalAlignment="Center"
-                                Command="{Binding CreateCheckpointCommand}" />
-                    </Grid>
-                    
                     <Grid x:Name="CurrentCheckpointContainer" Grid.Row="1"
-                          Visibility="{Binding CurrentTripHasCheckpoints, Converter={StaticResource BoolToVisibility}}">
+                          Visibility="{Binding Trip.Checkpoints.Count, Converter={StaticResource CountToVisibility}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         
                         <StackPanel Grid.Row="0" Margin="0,25,0,15">
-                            <TextBlock Style="{StaticResource PhoneTextBlockBase}" 
-                                       FontSize="36"
+                            <TextBlock Style="{StaticResource HeaderSmallStyle}" 
                                        Foreground="{StaticResource PhoneAccentBrush}"
                                        Text="{Binding Localization.Resources.LatestCheckpoint}" />
 
-                            <TextBlock x:Name="LastCheckpointTitle" Style="{StaticResource PhoneTextBlockBase}"
-                                       FontSize="44"
-                                       HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                            <TextBlock x:Name="LastCheckpointTitle"
+                                       Style="{StaticResource HeaderNormalStyle}"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Center"
+                                       Foreground="White"
                                        TextTrimming="WordEllipsis" 
                                        Text="{Binding LatestCheckpoint.Title}" />
 
                             <TextBlock x:Name="LastCheckpointCreateDate" 
-                                       Style="{StaticResource PhoneTextTitle3Style}"
-                                       Foreground="{StaticResource PhoneAccentBrush}"
-                                       Text="{Binding LatestCheckpoint.Timestamp}" />
+                                       Style="{StaticResource DateTimeTextStyle}"
+                                       Text="{Binding LatestCheckpoint.Timestamp, StringFormat={StaticResource DateTimeFormat}}" />
                         </StackPanel>
                     
                         <StackPanel Grid.Row="1" VerticalAlignment="Bottom" Margin="0,0,0,5">
                             <Button x:Name="AddNotesButton"
+                                    Foreground="White"
+                                    BorderBrush="White"
                                     Content="{Binding Localization.Resources.AddNotes}" 
                                     Command="{Binding AddNotesCommand}" />
 
                             <Button x:Name="AddPicturesButton"
+                                    Foreground="White"
+                                    BorderBrush="White"
                                     Content="{Binding Localization.Resources.AddPictures}" 
                                     Command="{Binding AddPicturesCommand}" />
                         </StackPanel>
@@ -98,10 +90,23 @@
             </controls:PanoramaItem>
             
             <!-- Checkpoints item -->
-            <controls:PanoramaItem Header="{Binding Localization.Resources.Checkpoints}">
-                <trippointcontrols:CheckpointList DataContext="{Binding}"
-                                                  OnCheckpointSelected="CheckpointList_OnCheckpointSelected"
-                                                  OnMore="CheckpointList_OnMore" />
+            <controls:PanoramaItem Header="{Binding Localization.Resources.CheckpointsHeader}"
+                                   Foreground="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Button Content="{Binding Localization.Resources.CreateCheckpoint}" 
+                            VerticalAlignment="Center"
+                            Command="{Binding CreateCheckpointCommand}"
+                            Visibility="{Binding Trip.Checkpoints.Count, Converter={StaticResource InverseCountToVisibility}}" />
+
+                    <trippointcontrols:CheckpointList DataContext="{Binding}"
+                                                      Visibility="{Binding Trip.Checkpoints.Count, Converter={StaticResource CountToVisibility}}"
+                                                      OnCheckpointSelected="CheckpointList_OnCheckpointSelected"
+                                                      OnMore="CheckpointList_OnMore" />
+                </Grid>
             </controls:PanoramaItem>
         </controls:Panorama>
     </Grid>

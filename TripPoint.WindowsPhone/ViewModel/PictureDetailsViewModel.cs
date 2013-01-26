@@ -58,14 +58,13 @@ namespace TripPoint.WindowsPhone.ViewModel
             {
                 PictureStateManager.Instance.DeletePicture(Picture);
                 RepositoryFactory.PictureRepository.DeletePicture(Picture);
-            }
-            catch (Exception ex)
-            {
-                Logger.Log(this, String.Format("Could not delete picture: {0}", ex.Message));
-            }
-            finally
-            {
+
                 Navigator.GoBack();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(Resources.PictureDeleteError, Resources.MessageBox_Error,
+                    MessageBoxButton.OK);
             }
         }
 

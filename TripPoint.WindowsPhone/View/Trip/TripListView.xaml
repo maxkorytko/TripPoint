@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:mvvmlightcommand="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:appBar="clr-namespace:Sh;assembly=Sh"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -25,34 +25,53 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="{Binding Localization.Resources.AppTitle}" 
+            <TextBlock x:Name="ApplicationTitle"
+                       Text="{Binding Localization.Resources.AppTitle}" 
                        Style="{StaticResource PhoneTextNormalStyle}"/>
             
-            <TextBlock x:Name="PageTitle" Text="{Binding Localization.Resources.PastTripsViewTitle}" 
-                       Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="PageTitle"
+                       Text="{Binding Localization.Resources.PastTripsViewTitle}" 
+                       Margin="9,-7,0,0"
+                       Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
-        <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <ListBox x:Name="TripList" ItemsSource="{Binding Trips}" SelectionChanged="TripList_SelectionChanged">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Style="{StaticResource HeaderNormalStyle}"
+                       Visibility="{Binding NoPastTrips, Converter={StaticResource BoolToVisibility}}"
+                       Text="{Binding Localization.Resources.None}" />
+            
+            <ListBox x:Name="TripList" Grid.Column="0"
+                     toolkit:TiltEffect.IsTiltEnabled="True"
+                     ItemsSource="{Binding Trips}"
+                     SelectionChanged="TripList_SelectionChanged"
+                     Visibility="{Binding NoPastTrips, Converter={StaticResource InverseBoolToVisibility}}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="0,25,0,25">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="15,0,0,0">
-                                <TextBlock x:Name="TripTitle" 
-                                           Style="{StaticResource PhoneTextExtraLargeStyle}"
-                                           TextTrimming="WordEllipsis"
-                                           Text="{Binding Name}" />
-                                
-                                <TextBlock x:Name="TripStartDate" 
-                                           Style="{StaticResource PhoneTextBlockBase}"
-                                           Foreground="{StaticResource PhoneAccentBrush}"
-                                           Text="{Binding StartDate}" />
+                            <TextBlock x:Name="TripTitle" Grid.Row="0"
+                                       VerticalAlignment="Center"
+                                       Style="{StaticResource ListHeaderLargeStyle}"
+                                       TextTrimming="WordEllipsis"
+                                       Text="{Binding Name}" />
+
+                            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource DateTimeTextStyle}"
+                                           Text="{Binding StartDate, StringFormat={StaticResource TripDateFormat}}" />
+
+                                <TextBlock Style="{StaticResource DateTimeTextWithoutMarginStyle}"
+                                           Text="-"/>
+
+                                <TextBlock Style="{StaticResource DateTimeTextStyle}"
+                                           Text="{Binding EndDate, StringFormat={StaticResource TripDateFormat}}" />
                             </StackPanel>
                         </Grid>
                     </DataTemplate>

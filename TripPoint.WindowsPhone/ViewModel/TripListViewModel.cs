@@ -18,6 +18,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private ITripRepository _tripRepository;
         private ICollection<Trip> _trips;
         private bool _noCurrentTrip;
+        private bool _noPastTrips;
 
         public TripListViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
@@ -68,6 +69,18 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
+        public bool NoPastTrips
+        {
+            get { return _noPastTrips; }
+            set
+            {
+                if (_noPastTrips == value) return;
+
+                _noPastTrips = value;
+                RaisePropertyChanged("NoPastTrips");
+            }
+        }
+
         private IEnumerable<Trip> PastTrips
         {
             get
@@ -91,10 +104,16 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             _tripRepository = RepositoryFactory.TripRepository;
 
+            ResetViewModel();
             InitializeTrips();
             RefreshTrips();
-            InitializeNoCurrentTrip();
             StateManager.Instance.Remove(LAST_VIEWED_TRIP_ID);
+        }
+
+        private void ResetViewModel()
+        {
+            NoCurrentTrip = _tripRepository.CurrentTrip == null;
+            NoPastTrips = PastTrips.Count() == 0;
         }
 
         private void InitializeTrips()
@@ -137,13 +156,6 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             target.Name = source.Name;
             target.Notes = source.Notes;
-        }
-
-        private void InitializeNoCurrentTrip()
-        {
-            if (_tripRepository == null) return;
-
-            NoCurrentTrip = _tripRepository.CurrentTrip == null;
         }
     }
 }

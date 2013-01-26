@@ -11,7 +11,10 @@
     d:DesignHeight="480" d:DesignWidth="480">
     
     <Grid x:Name="LayoutRoot">
-        <ListBox x:Name="PictureList" ItemsSource="{Binding}" SelectionChanged="PictureList_SelectionChanged">
+        <ListBox x:Name="PictureList"
+                 toolkit:TiltEffect.IsTiltEnabled="True"
+                 ItemsSource="{Binding}"
+                 SelectionChanged="PictureList_SelectionChanged">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <toolkit:WrapPanel />
@@ -22,7 +25,9 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <Border BorderBrush="{StaticResource PhoneBackgroundBrush}" BorderThickness="5">
-                            <Image Width="125" Height="125" Stretch="UniformToFill" Source="{Binding Source}" />
+                            <Image Width="125" Height="125"
+                                   Stretch="UniformToFill"
+                                   Source="{Binding Source}" />
                         </Border>
                     </StackPanel>
                 </DataTemplate>

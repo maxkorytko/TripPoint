@@ -9,9 +9,9 @@ using System.Resources;
 [assembly: AssemblyTitle("TripPoint.WindowsPhone")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("Max Korytko")]
 [assembly: AssemblyProduct("TripPoint.WindowsPhone")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2012")]
+[assembly: AssemblyCopyright("Copyright © Max Korytko 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

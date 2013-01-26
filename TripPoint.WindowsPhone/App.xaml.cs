@@ -176,6 +176,7 @@ namespace TripPoint.WindowsPhone
         {
             InitializeStateManager();
             InitializeNavigation();
+            SetMapsApiKey();
             SetStartupPage();
         }
 
@@ -194,6 +195,25 @@ namespace TripPoint.WindowsPhone
                 uriMapper.UriMappings.Add(uriMapping);
 
             RootFrame.UriMapper = uriMapper;
+        }
+
+        /// <summary>
+        /// Sets up the API key required for the static map control
+        /// Search for Jeff Wilcox static map for more details
+        /// </summary>
+        private static void SetMapsApiKey()
+        {
+#if DEBUG
+            var apiKey = "ApZs4BwJrG3d81SRc4_4OaRynkUcyiK3U_Ftfj9lxPr-kQRWTwR8oDy28hwNp3po";
+#else
+            var apiKey = "AsZpZsTO90M6EkEo95RmyJUCf3t8hd8oSD6u4MUwIgBWzI0uJk2x40DrQgAGOKNK";
+#endif
+            const string BING_MAPS_KEY = "BingMapsKey";
+
+            var appResources = Application.Current.Resources;
+
+            if (appResources.Contains(BING_MAPS_KEY)) return;
+            appResources.Add(BING_MAPS_KEY, apiKey);
         }
 
         private static void SetStartupPage()

@@ -48,7 +48,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BindableApplicationBar, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="BindableApplicationBar">
+      <HintPath>Lib\BindableApplicationBar.dll</HintPath>
+    </Reference>
     <Reference Include="Coding4Fun.Phone.Controls">
       <HintPath>Lib\Coding4Fun.Phone.Controls.dll</HintPath>
     </Reference>
@@ -89,8 +91,10 @@
     </Compile>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\BytesToImageSourceConverter.cs" />
+    <Compile Include="Converters\CountToVisibilityConverter.cs" />
     <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Converters\InverseBoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\InverseCountToVisibilityConverter.cs" />
     <Compile Include="Navigation\INavigator.cs" />
     <Compile Include="Navigation\TripPointNavigation.cs" />
     <Compile Include="Navigation\TripPointNavigationEventArgs.cs" />
@@ -109,7 +113,6 @@
     <Compile Include="Utils\ExifLib\ExifReader.cs" />
     <Compile Include="Utils\ExifLib\ExifTag.cs" />
     <Compile Include="Utils\ExifLib\JpegInfo.cs" />
-    <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Utils\ImageUtils.cs" />
     <Compile Include="ViewModel\ApplicationSettingsViewModel.cs" />
     <Compile Include="ViewModel\Base\TripCheckpointsViewModelBase.cs" />
@@ -154,9 +157,6 @@
     <Compile Include="View\Settings\ApplicationSettingsView.xaml.cs">
       <DependentUpon>ApplicationSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Settings\PrivacyPolicyView.xaml.cs">
-      <DependentUpon>PrivacyPolicyView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Trip\CreateTripView.xaml.cs">
       <DependentUpon>CreateTripView.xaml</DependentUpon>
     </Compile>
@@ -179,6 +179,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="Assets\Resources\TripPointStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Checkpoint\CheckpointAddNotesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -215,10 +219,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Settings\PrivacyPolicyView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Trip\CreateTripView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -248,6 +248,8 @@
     <Content Include="ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Images\background.jpg" />
+    <Content Include="Assets\Images\checkpoint.thumb.png" />
     <Content Include="Assets\Images\Dark\appbar.check.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.delete.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.edit.rest.png" />
@@ -255,7 +257,7 @@
     <Content Include="Assets\Images\Dark\appbar.new.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.save.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.stop.rest.png" />
-    <Content Include="Assets\Images\Dark\checkpoint.thumb.png" />
+    <Content Include="Assets\Images\picture.thumb.png" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -276,6 +278,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

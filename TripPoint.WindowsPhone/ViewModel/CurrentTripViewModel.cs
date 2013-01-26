@@ -20,8 +20,6 @@ namespace TripPoint.WindowsPhone.ViewModel
     public class CurrentTripViewModel : Base.TripCheckpointsViewModelBase
     {
         private Checkpoint _latestCheckpoint;
-        private bool _currentTripHasCheckpoints;
-        
         private CameraCaptureTask _cameraCaptureTask;
         
         public CurrentTripViewModel(IRepositoryFactory repositoryFactory)
@@ -49,18 +47,6 @@ namespace TripPoint.WindowsPhone.ViewModel
 
                 _latestCheckpoint = value;
                 RaisePropertyChanged("LatestCheckpoint");
-            }
-        }
-
-        public bool CurrentTripHasCheckpoints
-        {
-            get { return _currentTripHasCheckpoints; }
-            private set
-            {
-                if (_currentTripHasCheckpoints == value) return;
-
-                _currentTripHasCheckpoints = value;
-                RaisePropertyChanged("CurrentTripHasCheckpoints");
             }
         }
 
@@ -172,7 +158,6 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             InitializeLatestCheckpoint();
             RefreshLatestCheckpoint();
-            InitializeCurrentTripHasCheckpoints();
         }
 
         private static bool IsReturningFromCameraCaptureTask()
@@ -192,13 +177,6 @@ namespace TripPoint.WindowsPhone.ViewModel
             if (_latestCheckpoint == null || _checkpoints == null) return;
 
             RefreshCheckpoint(_checkpoints.FirstOrDefault(), _latestCheckpoint);
-        }
-
-        private void InitializeCurrentTripHasCheckpoints()
-        {
-            if (Trip == null) return;
-
-            CurrentTripHasCheckpoints = Trip.Checkpoints.Count > 0;
         }
     }
 }

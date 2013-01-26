@@ -113,7 +113,7 @@ namespace TripPoint.WindowsPhone.ViewModel.Base
         {
             if (checkpoint == null) return null;
 
-            var thumbnail = new PictureThumbnail(new Uri("/Assets/Images/Dark/checkpoint.thumb.png", UriKind.Relative));
+            var thumbnail = new PictureThumbnail(new Uri("/Assets/Images/checkpoint.thumb.png", UriKind.Relative));
             thumbnail.Picture = checkpoint.Pictures.LastOrDefault();
 
             return thumbnail;
