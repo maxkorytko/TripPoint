@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
-  <App xmlns="" ProductID="{fb121dd1-e518-4381-9dfb-7d834ea045f7}" Title="TripPoint" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="TripPoint.WindowsPhone author" Description="Sample description" Publisher="TripPoint.WindowsPhone">
-    <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
+  <App xmlns="" ProductID="{fb121dd1-e518-4381-9dfb-7d834ea045f7}" Title="Trip Point" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="TripPoint.WindowsPhone author" Description="Sample description" Publisher="TripPoint.WindowsPhone">
+    <IconPath IsRelative="true" IsResource="false">Assets\Images\app.icon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_GAMERSERVICES" />
       <Capability Name="ID_CAP_IDENTITY_DEVICE" />
@@ -24,9 +24,9 @@
     <Tokens>
       <PrimaryToken TokenID="TripPoint.WindowsPhoneToken" TaskName="_default">
         <TemplateType5>
-          <BackgroundImageURI IsRelative="true" IsResource="false">Background.png</BackgroundImageURI>
+          <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Images\tile.png</BackgroundImageURI>
           <Count>0</Count>
-          <Title>TripPoint</Title>
+          <Title>Trip Point</Title>
         </TemplateType5>
       </PrimaryToken>
     </Tokens>
