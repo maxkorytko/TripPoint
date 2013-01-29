@@ -135,20 +135,29 @@
                             </DataTemplate>
                         </toolkit:MultiselectList.ItemTemplate>
                     </toolkit:MultiselectList>
-
-                    <appBar:AdvancedApplicationBarIconButton Text="{Binding Localization.Resources.Select_AppBar}"
+                    
+                    <!-- 
+                    Can not bind to tex properties for the 3 buttons below.
+                    An exception will thrown in the following case:
+                    - disable location service
+                    - create a checkpoint
+                    - open the checkpoint
+                    - currently displayed pivot item should be 'details'
+                    - swipe left to open 'notes' pivot item
+                    -->
+                    <appBar:AdvancedApplicationBarIconButton Text="select"
                                                              IconUri="/Assets/Images/Dark/appbar.list.check.png"
                                                              Visibility="{Binding IsNotesSelectionEnabled, Converter={StaticResource InverseBoolToVisibility}}" 
                                                              Command="{Binding SelectNotesCommand}" />
-
+                    
                     <appBar:AdvancedApplicationBarIconButton x:Name="DeleteNotesActionBarButton"
-                                                             Text="{Binding Localization.Resources.Delete_AppBar}"
+                                                             Text="delete"
                                                              IconUri="/Assets/Images/Dark/appbar.delete.rest.png"
                                                              IsEnabled="False"
                                                              Visibility="{Binding IsNotesSelectionEnabled, Converter={StaticResource BoolToVisibility}}"
                                                              Click="DeleteNotesActionBarButton_Click" />
-
-                    <appBar:AdvancedApplicationBarIconButton Text="{Binding Localization.Resources.Cancel_AppBar}"
+                    
+                    <appBar:AdvancedApplicationBarIconButton Text="cancel"
                                                              IconUri="/Assets/Images/Dark/appbar.stop.rest.png" 
                                                              Visibility="{Binding IsNotesSelectionEnabled, Converter={StaticResource BoolToVisibility}}"
                                                              Command="{Binding CancelSelectingNotesCommand}" />
