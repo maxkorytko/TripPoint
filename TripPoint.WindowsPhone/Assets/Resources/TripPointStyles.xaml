@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
 
     <Style x:Name="DateTimeTextStyle" 
            TargetType="TextBlock"
@@ -37,5 +39,57 @@
            BasedOn="{StaticResource PhoneTextBlockBase}">
         <Setter Property="FontSize" Value="36" />
     </Style>
-
+    
+    <!-- Navigation Transitions -->
+    
+    <Style x:Key="DefaultTransitionStyle" TargetType="phone:PhoneApplicationPage">
+        <Setter Property="toolkit:TransitionService.NavigationInTransition">
+            <Setter.Value>
+                <toolkit:NavigationInTransition>
+                    <toolkit:NavigationInTransition.Forward>
+                        <toolkit:TurnstileTransition Mode="ForwardIn" />
+                    </toolkit:NavigationInTransition.Forward>
+                    <toolkit:NavigationInTransition.Backward>
+                        <toolkit:TurnstileTransition Mode="BackwardIn" />
+                    </toolkit:NavigationInTransition.Backward>
+                </toolkit:NavigationInTransition>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="toolkit:TransitionService.NavigationOutTransition">
+            <Setter.Value>
+                <toolkit:NavigationOutTransition>
+                    <toolkit:NavigationOutTransition.Forward>
+                        <toolkit:TurnstileTransition Mode="ForwardOut" />
+                    </toolkit:NavigationOutTransition.Forward>
+                    <toolkit:NavigationOutTransition.Backward>
+                        <toolkit:TurnstileTransition Mode="BackwardOut" />
+                    </toolkit:NavigationOutTransition.Backward>
+                </toolkit:NavigationOutTransition>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="InputPageTransitionStyle" TargetType="phone:PhoneApplicationPage">
+        <Setter Property="toolkit:TransitionService.NavigationInTransition">
+            <Setter.Value>
+                <toolkit:NavigationInTransition>
+                    <toolkit:NavigationInTransition.Forward>
+                        <toolkit:SlideTransition Mode="SlideRightFadeIn" />
+                    </toolkit:NavigationInTransition.Forward>
+                </toolkit:NavigationInTransition>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="toolkit:TransitionService.NavigationOutTransition">
+            <Setter.Value>
+                <toolkit:NavigationOutTransition>
+                    <toolkit:NavigationOutTransition.Forward>
+                        <toolkit:SlideTransition Mode="SlideRightFadeOut" />
+                    </toolkit:NavigationOutTransition.Forward>
+                    <toolkit:NavigationOutTransition.Backward>
+                        <toolkit:SlideTransition Mode="SlideLeftFadeOut" />
+                    </toolkit:NavigationOutTransition.Backward>
+                </toolkit:NavigationOutTransition>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

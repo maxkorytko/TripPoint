@@ -14,7 +14,8 @@
                               toolkit:TiltEffect.IsTiltEnabled="True"
                               ShowListFooter="{Binding CanPaginateCheckpoints}"
                               ItemsSource="{Binding Checkpoints}"
-                              SelectionChanged="List_SelectionChanged">
+                              SelectionChanged="List_SelectionChanged"
+                              Background="Transparent">
         <toolkit:LongListSelector.ItemTemplate>
             <DataTemplate>
                 <Grid Margin="0,25,0,25">

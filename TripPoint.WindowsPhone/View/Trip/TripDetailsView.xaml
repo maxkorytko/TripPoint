@@ -18,6 +18,7 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True"
+    Style="{StaticResource DefaultTransitionStyle}"
     DataContext="{Binding TripDetailsViewModel, Source={StaticResource Locator}}">
 
     <phone:PhoneApplicationPage.Resources>

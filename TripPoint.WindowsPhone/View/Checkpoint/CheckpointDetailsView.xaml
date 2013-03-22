@@ -17,8 +17,9 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True"
+    Style="{StaticResource DefaultTransitionStyle}"
     DataContext="{Binding CheckpointDetailsViewModel, Source={StaticResource Locator}}">
-    
+
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
