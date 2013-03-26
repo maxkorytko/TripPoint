@@ -59,7 +59,8 @@
             <TextBlock Grid.Row="1"
                        Margin="9,0,0,10" 
                        Style="{StaticResource HeaderNormalStyle}"
-                       Text="{Binding Picture.Title}"/>
+                       TextTrimming="WordEllipsis"
+                       Text="{Binding Picture.Title}" />
 
             <TextBlock Style="{StaticResource DateTimeTextStyle}"
                        Text="{Binding Picture.DateTaken, StringFormat={StaticResource DateTimeFormat}}" />
