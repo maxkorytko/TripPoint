@@ -101,6 +101,8 @@
 
                     <Button Content="{Binding Localization.Resources.CreateCheckpoint}" 
                             VerticalAlignment="Center"
+                            Foreground="White"
+                            BorderBrush="White"
                             Command="{Binding CreateCheckpointCommand}"
                             Visibility="{Binding Trip.Checkpoints.Count, Converter={StaticResource InverseCountToVisibility}}" />
 
