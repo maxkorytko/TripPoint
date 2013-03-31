@@ -74,9 +74,18 @@
                    VerticalAlignment="Center"/> 
         </Grid>
         
-        <appBar:AdvancedApplicationBar>
+        <appBar:AdvancedApplicationBar Mode="Minimized">
+            <appBar:AdvancedApplicationBarIconButton IconUri="/Assets/Images/Dark/appbar.save.rest.png"
+                                                     Text="{Binding Localization.Resources.SavePicture_AppBar}"
+                                                     Command="{Binding SavePictureCommand}" />
             <appBar:AdvancedApplicationBarMenuItem Text="{Binding Localization.Resources.Delete_AppBar_MenuItem}" 
                                                    Command="{Binding DeletePictureCommand}" />
         </appBar:AdvancedApplicationBar>
     </Grid>
+    
+    <shell:SystemTray.ProgressIndicator>
+        <shell:ProgressIndicator IsIndeterminate="True"
+                                 IsVisible="{Binding SavingPictureToMediaLibrary}"
+                                 Text="{Binding Localization.Resources.Saving}" />
+    </shell:SystemTray.ProgressIndicator>
 </phone:PhoneApplicationPage>

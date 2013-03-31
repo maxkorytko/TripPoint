@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Phone.Controls;
+using Microsoft.Xna.Framework.Media;
 
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository.Factory;
@@ -16,7 +16,9 @@ namespace TripPoint.WindowsPhone.ViewModel
 {
     public class PictureDetailsViewModel : Base.TripPointViewModelBase
     {
-        private Picture _picture;
+        private TripPoint.Model.Domain.Picture _picture;
+
+        private bool _savingPictureToMediaLibrary;
 
         public PictureDetailsViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
@@ -26,10 +28,11 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void InitializeCommands()
         {
+            SavePictureCommand = new RelayCommand(SavePictureAction);
             DeletePictureCommand = new RelayCommand(DeletePictureAction);
         }
 
-        public Picture Picture
+        public TripPoint.Model.Domain.Picture Picture
         {
             get { return _picture; }
             set
@@ -41,7 +44,53 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
+        public bool SavingPictureToMediaLibrary
+        {
+            get { return _savingPictureToMediaLibrary; }
+            set
+            {
+                if (_savingPictureToMediaLibrary == value) return;
+
+                _savingPictureToMediaLibrary = value;
+                RaisePropertyChanged("SavingPictureToMediaLibrary");
+            }
+        }
+
+        public ICommand SavePictureCommand { get; private set; }
+
         public ICommand DeletePictureCommand { get; private set; }
+
+        private void SavePictureAction()
+        {
+            var userDecision = MessageBox.Show(Resources.ConfirmSavingPictureToPictureHub,
+                Resources.SavingPicture, MessageBoxButton.OKCancel);
+
+            if (userDecision == MessageBoxResult.OK)
+            {
+                SavingPictureToMediaLibrary = true;
+                SavePicture();
+                SavingPictureToMediaLibrary = false;
+            }   
+        }
+
+        private void SavePicture()
+        {
+            try
+            {
+                using (var mediaLibrary = new MediaLibrary())
+                {
+                    var name = Picture.Title;
+                    if (String.IsNullOrWhiteSpace(name)) name = Picture.FileName;
+
+                    mediaLibrary.SavePicture(name, Picture.RawBytes);
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(Resources.SavePictureToPictureHubFailed,
+                    Resources.MessageBox_Error, MessageBoxButton.OK);
+            }
+        }
 
         private void DeletePictureAction()
         {

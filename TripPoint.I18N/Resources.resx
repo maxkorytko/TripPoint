@@ -246,7 +246,7 @@ Would you like to save this checkpoint?</value>
     <value>Failed to delete the trip. Restart the application and try again.</value>
   </data>
   <data name="Saving" xml:space="preserve">
-    <value>Saving</value>
+    <value>Saving...</value>
   </data>
   <data name="Delete_Checkpoint_AppBar" xml:space="preserve">
     <value>delete checkpoint...</value>
@@ -313,5 +313,19 @@ Please try again.</value>
   </data>
   <data name="PrivacyPolicy" xml:space="preserve">
     <value>Privacy Policy</value>
+  </data>
+  <data name="SavePicture_AppBar" xml:space="preserve">
+    <value>save</value>
+  </data>
+  <data name="ConfirmSavingPictureToPictureHub" xml:space="preserve">
+    <value>The picture will be saved in the Saved Pictures album in the Picture Hub.
+Do you want to continue?</value>
+  </data>
+  <data name="SavePictureToPictureHubFailed" xml:space="preserve">
+    <value>The application failed to save picture to the Picture Hub.
+Please try again.</value>
+  </data>
+  <data name="SavingPicture" xml:space="preserve">
+    <value>Saving Picture</value>
   </data>
 </root>

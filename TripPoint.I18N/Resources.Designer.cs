@@ -197,6 +197,16 @@ namespace TripPoint.I18N {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The picture will be saved in the Saved Pictures album in the Picture Hub.
+        ///Do you want to continue?.
+        /// </summary>
+        public static string ConfirmSavingPictureToPictureHub {
+            get {
+                return ResourceManager.GetString("ConfirmSavingPictureToPictureHub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to create checkpoint.
         /// </summary>
         public static string CreateCheckpoint {
@@ -534,11 +544,39 @@ namespace TripPoint.I18N {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Saving.
+        ///   Looks up a localized string similar to save.
+        /// </summary>
+        public static string SavePicture_AppBar {
+            get {
+                return ResourceManager.GetString("SavePicture_AppBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The application failed to save picture to the Picture Hub.
+        ///Please try again..
+        /// </summary>
+        public static string SavePictureToPictureHubFailed {
+            get {
+                return ResourceManager.GetString("SavePictureToPictureHubFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saving....
         /// </summary>
         public static string Saving {
             get {
                 return ResourceManager.GetString("Saving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saving Picture.
+        /// </summary>
+        public static string SavingPicture {
+            get {
+                return ResourceManager.GetString("SavingPicture", resourceCulture);
             }
         }
         
