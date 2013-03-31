@@ -45,7 +45,8 @@
                 <TextBlock Text="{Binding Localization.Resources.Title}"
                            Style="{StaticResource PhoneTextBlockBase}" />
                 
-                <TextBox Text="{Binding Trip.Name, Mode=TwoWay}" 
+                <TextBox Text="{Binding Trip.Name, Mode=TwoWay}"
+                         InputScope="Text"
                          coding4FunBinding:TextBinding.UpdateSourceOnChange="True" />
             </StackPanel>
 
@@ -60,8 +61,13 @@
                 <TextBlock Text="{Binding Localization.Resources.Notes}"
                            Style="{StaticResource PhoneTextBlockBase}" />
                 
-                <TextBox Margin="0" AcceptsReturn="True" VerticalAlignment="Stretch" Height="160" 
-                         Text="{Binding Trip.Notes, Mode=TwoWay}" TextWrapping="Wrap" 
+                <TextBox Margin="0"
+                         AcceptsReturn="True"
+                         VerticalAlignment="Stretch"
+                         Height="160" 
+                         Text="{Binding Trip.Notes, Mode=TwoWay}"
+                         InputScope="Text"
+                         TextWrapping="Wrap" 
                          coding4FunBinding:TextBinding.UpdateSourceOnChange="True" />
             </StackPanel>
 
