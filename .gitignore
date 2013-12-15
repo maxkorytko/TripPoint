@@ -1,6 +1,7 @@
 */Bin/*
 */obj/*
 *.csproj.user
-TripPoint.suo
+*.suo
+*.userprefs
 Data/*
 Tmp/*
