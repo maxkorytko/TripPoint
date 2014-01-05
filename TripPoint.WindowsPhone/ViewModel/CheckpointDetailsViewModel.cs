@@ -77,8 +77,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             foreach (var picture in Checkpoint.Pictures)
             {
-                var thumbnail = new PictureThumbnail(new Uri("/Assets/Images/picture.thumb.png", UriKind.Relative),
-                    picture);
+                var thumbnail = new PictureThumbnail(new Uri("/Assets/Images/picture.thumb.png",
+                    UriKind.Relative), picture);
 
                 _thumbnails.Add(thumbnail);
             }

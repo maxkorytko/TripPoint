@@ -6,7 +6,7 @@
     xmlns:appBar="clr-namespace:Sh;assembly=Sh"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:convert="clr-namespace:TripPoint.WindowsPhone.Converters;assembly=TripPoint"
+    xmlns:trippointcontrols="clr-namespace:TripPoint.WindowsPhone.View.Controls;assembly=TripPoint"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -15,10 +15,6 @@
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True"
     DataContext="{Binding PictureDetailsViewModel, Source={StaticResource Locator}}">
-    
-    <phone:PhoneApplicationPage.Resources>
-        <convert:BytesToImageSourceConverter x:Name="BytesToImageSource" />
-    </phone:PhoneApplicationPage.Resources>
     
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
@@ -46,33 +42,20 @@
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
+        
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
             <TextBlock x:Name="ApplicationTitle"
                        Style="{StaticResource PhoneTextNormalStyle}"
                        Text="{Binding Localization.Resources.AppTitle}"/>
-
-            <TextBlock Grid.Row="1"
-                       Margin="9,0,0,10" 
-                       Style="{StaticResource HeaderNormalStyle}"
-                       TextTrimming="WordEllipsis"
-                       Text="{Binding Picture.Title}" />
-
-            <TextBlock Style="{StaticResource DateTimeTextStyle}"
-                       Text="{Binding Picture.DateTaken, StringFormat={StaticResource DateTimeFormat}}" />
         </StackPanel>
-
-        <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="2" Margin="12,0,12,0">
-            <Image Source="{Binding Picture.RawBytes, Converter={StaticResource BytesToImageSource}}" 
-                   Stretch="Uniform" 
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"/> 
-        </Grid>
+        
+        <!-- Picture Slider -->
+        <trippointcontrols:PictureSlider Grid.Row="1"
+                                         Pictures="{Binding Pictures}"
+                                         CurrentPicture="{Binding Picture, Mode=TwoWay}" />
         
         <appBar:AdvancedApplicationBar Mode="Minimized">
             <appBar:AdvancedApplicationBarIconButton IconUri="/Assets/Images/Dark/appbar.save.rest.png"

@@ -90,7 +90,7 @@ namespace TripPoint.WindowsPhone.Utils
         }
 
         /// <summary>
-        /// Create an instance of BitmapImage from the byte array
+        /// Creates an instance of BitmapImage from the byte array
         /// Decodes the image in the background by default
         /// </summary>
         /// <param name="bytes"></param>

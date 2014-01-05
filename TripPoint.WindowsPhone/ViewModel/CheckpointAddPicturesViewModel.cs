@@ -3,7 +3,6 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Windows;
 using System.Threading;
-using Microsoft.Phone.Controls;
 using System.Windows.Media.Imaging;
 
 using TripPoint.Model.Domain;
@@ -119,7 +118,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             if (bitmap == null) return;
 
-            bitmap = bitmap.Resize(Convert.ToInt32(bitmap.PixelWidth * scalingFactor),
+            bitmap = bitmap.Resize(
+                Convert.ToInt32(bitmap.PixelWidth * scalingFactor),
                 Convert.ToInt32(bitmap.PixelHeight * scalingFactor),
                 WriteableBitmapExtensions.Interpolation.Bilinear);
 
@@ -145,8 +145,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             if (error != null)
             {
-                MessageBox.Show(Resources.PictureAddError, Resources.MessageBox_Error,
-                    MessageBoxButton.OK);
+                MessageBox.Show(Resources.PictureAddError, Resources.MessageBox_Error, MessageBoxButton.OK);
             }
 
             Navigator.GoBack();
@@ -164,7 +163,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             ResetViewModel();
             InitializePicture();
 
-            _checkpointID = GetCheckpointID(e.View);
+            _checkpointID = TripPointConvert.ToInt32(GetParameter(e.View, "checkpointID"));
             _checkpointRepository = RepositoryFactory.CheckpointRepository;
         }
 
@@ -196,15 +195,6 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
 
             return picture;
-        }
-
-        private static int GetCheckpointID(PhoneApplicationPage view)
-        {
-            if (view == null) return -1;
-
-            var checkpointIdParameter = view.TryGetQueryStringParameter("checkpointID");
-
-            return TripPointConvert.ToInt32(checkpointIdParameter);
         }
     }
 }

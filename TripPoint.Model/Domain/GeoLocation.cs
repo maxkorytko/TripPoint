@@ -6,7 +6,7 @@ using System.Device.Location;
 namespace TripPoint.Model.Domain
 {
     /// <summary>
-    /// Represens geographical location
+    /// Represents geographical location
     /// </summary>
     ///
     [Table]
@@ -86,7 +86,11 @@ namespace TripPoint.Model.Domain
 
         public bool IsUnknown
         {
-            get { return Latitude == 0.0 && Longitude == 0.0; }
+            get
+            {
+                var unknownLocation = GeoLocation.Unknown;
+                return Latitude == unknownLocation.Latitude && Longitude == unknownLocation.Longitude;
+            }
         }
 
         public GeoCoordinate GeoCoordinate

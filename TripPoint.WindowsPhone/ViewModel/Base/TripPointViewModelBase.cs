@@ -73,5 +73,18 @@ namespace TripPoint.WindowsPhone.ViewModel.Base
                 return dataContext == this;
             }
         }
+
+        /// <summary>
+        /// Helper method for extracting a query string parameter from the given view
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="parameterName"></param>
+        /// <returns></returns>
+        public static string GetParameter(PhoneApplicationPage view, string parameterName)
+        {
+            if (view == null) return String.Empty;
+
+            return view.TryGetQueryStringParameter(parameterName);
+        }
     }
 }

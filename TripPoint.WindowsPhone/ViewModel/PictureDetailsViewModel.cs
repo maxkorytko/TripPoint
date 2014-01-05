@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
-using Microsoft.Phone.Controls;
+using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework.Media;
 
 using TripPoint.Model.Domain;
@@ -12,17 +12,20 @@ using TripPoint.WindowsPhone.State;
 using TripPoint.WindowsPhone.Navigation;
 using GalaSoft.MvvmLight.Command;
 
+
 namespace TripPoint.WindowsPhone.ViewModel
 {
     public class PictureDetailsViewModel : Base.TripPointViewModelBase
     {
         private TripPoint.Model.Domain.Picture _picture;
-
+        private Collection<TripPoint.Model.Domain.Picture> _pictures;
         private bool _savingPictureToMediaLibrary;
 
         public PictureDetailsViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
+            _pictures = new ObservableCollection<TripPoint.Model.Domain.Picture>();
+
             InitializeCommands();
         }
 
@@ -41,6 +44,18 @@ namespace TripPoint.WindowsPhone.ViewModel
 
                 _picture = value;
                 RaisePropertyChanged("Picture");
+            }
+        }
+
+        public Collection<TripPoint.Model.Domain.Picture> Pictures
+        {
+            get { return _pictures; }
+            set
+            {
+                if (_pictures == value) return;
+
+                _pictures = value;
+                RaisePropertyChanged("Pictures");
             }
         }
 
@@ -68,12 +83,12 @@ namespace TripPoint.WindowsPhone.ViewModel
             if (userDecision == MessageBoxResult.OK)
             {
                 SavingPictureToMediaLibrary = true;
-                SavePicture();
+                SavePictureToMediaLibrary();
                 SavingPictureToMediaLibrary = false;
             }   
         }
 
-        private void SavePicture()
+        private void SavePictureToMediaLibrary()
         {
             try
             {
@@ -97,18 +112,41 @@ namespace TripPoint.WindowsPhone.ViewModel
             var userDecision = MessageBox.Show(Resources.ConfirmDeletePicture, Resources.Deleting,
                 MessageBoxButton.OKCancel);
 
-            if (userDecision == MessageBoxResult.OK)
-                DeletePicture();
+            if (userDecision != MessageBoxResult.OK) return;
+
+            var adjacentPicture = GetAdjacentPicture();
+
+            DeletePicture(Picture);
+
+            if (Pictures.Count == 0) Navigator.GoBack();
+            else Picture = adjacentPicture;
         }
 
-        private void DeletePicture()
+        /// <summary>
+        /// Returns a picture that's to the right of the current picture if there is one.
+        /// Otherwise, returns a picture that's to the left of the current pictures.
+        /// Returns the current picture if it's the single item in the pictures collection.
+        /// </summary>
+        private TripPoint.Model.Domain.Picture GetAdjacentPicture()
+        {
+            if (Pictures.Count <= 1) return Picture;
+
+            var index = Pictures.IndexOf(Picture);
+            
+            return (index == Pictures.Count - 1) ? Pictures[--index] : Pictures[++index];
+        }
+
+        /// <summary>
+        /// Deletes the given picture from the repository
+        /// </summary>
+        /// <param name="pictureToDelete"></param>
+        private void DeletePicture(TripPoint.Model.Domain.Picture pictureToDelete)
         {
             try
             {
-                PictureStateManager.Instance.DeletePicture(Picture);
-                RepositoryFactory.PictureRepository.DeletePicture(Picture);
-
-                Navigator.GoBack();
+                PictureStateManager.Instance.DeletePicture(pictureToDelete);
+                RepositoryFactory.PictureRepository.DeletePicture(pictureToDelete);
+                Pictures.Remove(pictureToDelete);
             }
             catch (Exception)
             {
@@ -121,25 +159,36 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             base.OnNavigatedTo(e);
 
-            var pictureID = TripPointConvert.ToInt32(GetParameter(e.View, "pictureID"));
-            Picture = RepositoryFactory.PictureRepository.FindPicture(pictureID);
-            
-            LoadPicture();
+            InitializePicture(TripPointConvert.ToInt32(GetParameter(e.View, "pictureID")));
+            InitializePicturesCollection();
         }
 
-        // TO-DO: move this method to TripPointViewModelBase
-        private static string GetParameter(PhoneApplicationPage view, string parameterName)
+        private void InitializePicture(int pictureID)
         {
-            if (view == null) return String.Empty;
+            var picture = RepositoryFactory.PictureRepository.FindPicture(pictureID);
 
-            return view.TryGetQueryStringParameter(parameterName);
+            if (picture != null && picture != Picture) Picture = picture;
         }
 
-        private void LoadPicture()
+        private void InitializePicturesCollection()
         {
             if (Picture == null) return;
 
-            Picture.RawBytes = PictureStateManager.Instance.LoadPicture(Picture);
+            LoadPicturesFromCheckpoint(Picture.Checkpoint);
+        }
+
+        private void LoadPicturesFromCheckpoint(Checkpoint checkpoint)
+        {
+            if (checkpoint == null) return;
+            if (checkpoint.Pictures.Count == 0) return;
+
+            Pictures.Clear();
+
+            foreach (var picture in checkpoint.Pictures)
+            {
+                picture.RawBytes = PictureStateManager.Instance.LoadPicture(picture);
+                Pictures.Add(picture);
+            }
         }
     }
 }

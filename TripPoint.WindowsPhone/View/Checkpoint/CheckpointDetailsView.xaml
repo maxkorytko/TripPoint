@@ -96,13 +96,15 @@
             <!-- Pictures -->
             <controls:PivotItem Header="{Binding Localization.Resources.PicturesHeader}">
                 <Grid>
-                    <TextBlock Style="{StaticResource HeaderNormalStyle}"
-                               Visibility="{Binding Checkpoint.Pictures.Count, Converter={StaticResource InverseCountToVisibility}}"
-                               Text="{Binding Localization.Resources.None}" />
+                    <TextBlock
+                        Style="{StaticResource HeaderNormalStyle}"
+                        Visibility="{Binding Checkpoint.Pictures.Count, Converter={StaticResource InverseCountToVisibility}}"
+                        Text="{Binding Localization.Resources.None}" />
 
-                    <trippointcontrols:PictureGrid DataContext="{Binding Thumbnails}"
-                                       Visibility="{Binding Count, Converter={StaticResource CountToVisibility}}"          
-                                       OnPictureSelected="PictureSelected" />
+                    <trippointcontrols:PictureGrid 
+                        DataContext="{Binding Thumbnails}"
+                        Visibility="{Binding Count, Converter={StaticResource CountToVisibility}}"          
+                        OnPictureSelected="PictureSelected" />
                 </Grid>
             </controls:PivotItem>
             

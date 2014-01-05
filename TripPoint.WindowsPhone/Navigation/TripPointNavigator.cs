@@ -15,8 +15,7 @@ namespace TripPoint.WindowsPhone.Navigation
 
         public TripPointNavigator(PhoneApplicationFrame rootFrame)
         {
-            if (rootFrame == null)
-                throw new ArgumentNullException("rootFrame");
+            if (rootFrame == null) throw new ArgumentException("rootFrame");
 
             _rootFrame = rootFrame;
         }
@@ -91,7 +90,7 @@ namespace TripPoint.WindowsPhone.Navigation
         /// <returns></returns>
         private bool PerformNavigation(string uri, TripPointNavigatedEventHandler eventHandler)
         {
-            if (string.IsNullOrWhiteSpace(uri)) return false;
+            if (String.IsNullOrWhiteSpace(uri)) return false;
 
             NavigatedEventHandler navigatedEventHandler = null;
             navigatedEventHandler = (sender, args) =>
