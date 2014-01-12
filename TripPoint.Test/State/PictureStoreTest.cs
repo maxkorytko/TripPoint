@@ -6,14 +6,14 @@ using TripPoint.WindowsPhone.State;
 namespace TripPoint.Test.State
 {
     [TestClass]
-    public class PictureStateManagerTest
+    public class PictureStoreTest
     {
         [TestMethod]
         public void TestGetParentDirectoryPath()
         {
             string path = "Directory A/Directory B/Directory C";
 
-            string parentDirectoryPath = PictureStateManager.GetParentDirectoryPath(path);
+            string parentDirectoryPath = PictureStore.GetParentDirectoryPath(path);
 
             Assert.AreEqual<string>("Directory A/Directory B", parentDirectoryPath,
                 "Expected path does not match the actual one");
@@ -24,17 +24,17 @@ namespace TripPoint.Test.State
         {
             string path = "Directory A";
 
-            Assert.IsTrue(String.IsNullOrWhiteSpace(PictureStateManager.GetParentDirectoryPath(path)),
+            Assert.IsTrue(String.IsNullOrWhiteSpace(PictureStore.GetParentDirectoryPath(path)),
                 "Parent directory path must be empty");
         }
 
         [TestMethod]
         public void TestGetParentDirectoryPathNoDirectoryPath()
         {
-            Assert.IsTrue(String.IsNullOrWhiteSpace(PictureStateManager.GetParentDirectoryPath("")),
+            Assert.IsTrue(String.IsNullOrWhiteSpace(PictureStore.GetParentDirectoryPath("")),
                 "Parent directory path must be empty for empty path");
 
-            Assert.IsNull(PictureStateManager.GetParentDirectoryPath(null),
+            Assert.IsNull(PictureStore.GetParentDirectoryPath(null),
                 "Parent directory path must be null for null path");
         }
     }

@@ -88,7 +88,7 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
 
         private void PictureSelected(object sender, PictureSelectedEventArgs args)
         {
-            var selected = (args.SelectedPicture as PictureThumbnail);
+            var selected = (args.SelectedPicture as Thumbnail);
 
             if (selected != null)
                 ViewModel.ViewPictureCommand.Execute(selected.Picture);

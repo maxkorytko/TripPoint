@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Microsoft.Phone.Controls;
 
 using TripPoint.Model.Domain;
@@ -11,7 +13,6 @@ using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.State;
-using TripPoint.WindowsPhone.State.Data;
 using TripPoint.WindowsPhone.Navigation;
 using TripPoint.I18N;
 using GalaSoft.MvvmLight.Command;
@@ -20,8 +21,12 @@ namespace TripPoint.WindowsPhone.ViewModel
 {
     public class CheckpointDetailsViewModel : Base.TripPointViewModelBase
     {
+        private static readonly ImageSource PICTURE_THUMBNAIL_PLACEHOLDER =
+            new BitmapImage(new Uri("", UriKind.RelativeOrAbsolute));
+
+
         private Checkpoint _checkpoint;
-        private ICollection<PictureThumbnail> _thumbnails;
+        private ICollection<Thumbnail> _thumbnails;
         private bool _shouldShowCheckpointMap;
         private bool _isNotesSelectionEnabled;
         private ICheckpointRepository _checkpointRepository;
@@ -54,7 +59,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
-        public ICollection<PictureThumbnail> Thumbnails
+        public ICollection<Thumbnail> Thumbnails
         {
             get
             {
@@ -72,15 +77,16 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void InitializeThumbnails()
         {
-            if (_thumbnails == null) _thumbnails = new ObservableCollection<PictureThumbnail>();
+            if (_thumbnails == null) _thumbnails = new ObservableCollection<Thumbnail>();
             if (_thumbnails.Count > 0) return;
 
             foreach (var picture in Checkpoint.Pictures)
             {
-                var thumbnail = new PictureThumbnail(new Uri("/Assets/Images/picture.thumb.png",
-                    UriKind.Relative), picture);
-
-                _thumbnails.Add(thumbnail);
+                _thumbnails.Add(new Thumbnail
+                {
+                    Picture = picture,
+                    Placeholder = PICTURE_THUMBNAIL_PLACEHOLDER
+                });
             }
         }
 
@@ -144,7 +150,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             try
             {
-                PictureStateManager.Instance.DeletePictures(Checkpoint.Pictures);
+                PictureStore.DeletePictures(Checkpoint.Pictures);
                 _checkpointRepository.DeleteCheckpoint(Checkpoint);
 
                 Navigator.GoBack();

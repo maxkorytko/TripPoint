@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:convert="clr-namespace:TripPoint.WindowsPhone.Converters;assembly=TripPoint"
+    xmlns:utils="clr-namespace:TripPoint.WindowsPhone.Utils.View;assembly=TripPoint"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -11,8 +11,6 @@
     d:DesignHeight="480" d:DesignWidth="480">
 
     <UserControl.Resources>
-        <convert:BytesToImageSourceConverter x:Name="BytesToImageSource" />
-
         <ControlTemplate x:Name="picturesScrollViewerTemplate" TargetType="ScrollViewer">
             <Border BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
@@ -70,14 +68,13 @@
                                            Text="{Binding DateTaken,
                                                           StringFormat={StaticResource DateTimeFormat}}" />
 
-                                <Image Source="{Binding RawBytes,
-                                                        Converter={StaticResource BytesToImageSource}}"
-                                       Width="{Binding ElementName=picturesScrollViewer, Path=ViewportWidth}"
+                                <Image Width="{Binding ElementName=picturesScrollViewer, Path=ViewportWidth}"
                                        Height="{Binding ElementName=picturesScrollViewer, Path=ViewportHeight}"
                                        Stretch="Uniform" 
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
-                                       Margin="0,10,0,0" />
+                                       Margin="0,10,0,0"
+                                       utils:PictureBitmap.Source="{Binding}" />
                             </StackPanel>
                         </Border>
                     </DataTemplate>

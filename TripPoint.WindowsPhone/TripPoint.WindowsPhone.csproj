@@ -106,8 +106,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\LocationService.cs" />
     <Compile Include="State\Data\CapturedPicture.cs" />
-    <Compile Include="State\Data\PictureThumbnail.cs" />
-    <Compile Include="State\PictureStateManager.cs" />
+    <Compile Include="State\PictureStore.cs" />
     <Compile Include="State\StateManager.cs" />
     <Compile Include="Utils\CollectionPaginator.cs" />
     <Compile Include="Utils\CountdownTimer.cs" />
@@ -117,6 +116,7 @@
     <Compile Include="Utils\ExifLib\ExifTag.cs" />
     <Compile Include="Utils\ExifLib\JpegInfo.cs" />
     <Compile Include="Utils\ImageUtils.cs" />
+    <Compile Include="Utils\View\PictureBitmap.cs" />
     <Compile Include="ViewModel\ApplicationSettingsViewModel.cs" />
     <Compile Include="ViewModel\Base\TripCheckpointsViewModelBase.cs" />
     <Compile Include="ViewModel\Base\TripPointViewModelBase.cs" />

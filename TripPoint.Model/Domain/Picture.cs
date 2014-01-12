@@ -12,7 +12,6 @@ namespace TripPoint.Model.Domain
         private string _fileName;
         private string _title;
         private DateTime _dateTaken;
-        private byte[] _rawBytes;
         
         private EntityRef<Checkpoint> _checkpoint;
 
@@ -116,19 +115,10 @@ namespace TripPoint.Model.Domain
         }
         #endregion
 
-        #region RawBytes
-        public byte[] RawBytes
+        public override string ToString()
         {
-            get { return _rawBytes; }
-            set
-            {
-                if (_rawBytes == value) return;
-
-                _rawBytes = value;
-                NotifyPropertyChanged("RawBytes");
-            }
+            return string.Format("{0} - {1}", ID, FileName);
         }
-        #endregion
 
         #region INotifyPropertyChanged Members
 

@@ -2,36 +2,24 @@
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Collections.Generic;
+using System.Windows.Media.Imaging;
+using Microsoft.Phone;
 
 using TripPoint.Model.Domain;
+using TripPoint.WindowsPhone.Utils;
 
 namespace TripPoint.WindowsPhone.State
 {
-    public class PictureStateManager
+    public class PictureStore
     {
         private static readonly byte[] EMPTY_BYTE_ARRAY = new byte[0];
-
-        private static PictureStateManager _instance;
-
-        private PictureStateManager()
-        {
-        }
-
-        public static PictureStateManager Instance
-        {
-            get
-            {
-                if (_instance == null) _instance = new PictureStateManager();
-                return _instance;
-            }
-        }
 
         /// <summary>
         /// Restores byte array containing the picture 
         /// </summary>
         /// <param name="picture"></param>
         /// <returns></returns>
-        public byte[] LoadPicture(Picture picture)
+        public static byte[] LoadPicture(Picture picture)
         {
             if (picture == null) return EMPTY_BYTE_ARRAY;
 
@@ -71,20 +59,23 @@ namespace TripPoint.WindowsPhone.State
         }
 
         /// <summary>
-        /// Persists byte array containing the picture
+        /// Persists byte array containing the picture bitmap
+        /// Does nothing if byte array is empty
         /// </summary>
-        /// <param name="picture"></param>
+        /// <param name="picture">picture being saved</param>
+        /// <param name="bytes">byte array containing the picture bitmap</param>
         /// <returns></returns>
-        public void SavePicture(Picture picture)
+        public static void SavePicture(Picture picture, byte[] bytes)
         {
             if (picture == null) return;
+            if (bytes == null || bytes.Length == 0) return;
 
             if (String.IsNullOrWhiteSpace(picture.FileName))
                 throw new InvalidOperationException("Picture file name must not be blank");
 
             try
             {
-                WritePictureToIsolatedStorage(picture);
+                WritePictureToIsolatedStorage(picture, bytes);
             }
             catch (Exception ex)
             {
@@ -92,10 +83,10 @@ namespace TripPoint.WindowsPhone.State
             }
         }
 
-        private static void WritePictureToIsolatedStorage(Picture picture)
+        private static void WritePictureToIsolatedStorage(Picture picture, byte[] bytes)
         {
             EnsureDirectoryExists(GetDirectoryPath(picture));
-            WritePictureToIsolatedStorage(picture, GetFilePath(picture));
+            WriteToIsolatedStorage(bytes, GetFilePath(picture));
         }
 
         private static void EnsureDirectoryExists(string path)
@@ -108,7 +99,7 @@ namespace TripPoint.WindowsPhone.State
             }
         }
 
-        private static void WritePictureToIsolatedStorage(Picture picture, string filePath)
+        private static void WriteToIsolatedStorage(byte[] bytes, string filePath)
         {
             if (String.IsNullOrWhiteSpace(filePath)) throw new ArgumentException("filePath");
 
@@ -118,7 +109,7 @@ namespace TripPoint.WindowsPhone.State
                 {
                     using (var writer = new BinaryWriter(fileStream))
                     {
-                        writer.Write(picture.RawBytes);
+                        writer.Write(bytes);
                     }
                 }
             }
@@ -128,7 +119,7 @@ namespace TripPoint.WindowsPhone.State
         /// Deletes a picture
         /// </summary>
         /// <param name="pictureToDelete"></param>
-        public void DeletePicture(Picture pictureToDelete)
+        public static void DeletePicture(Picture pictureToDelete)
         {
             try
             {
@@ -163,7 +154,7 @@ namespace TripPoint.WindowsPhone.State
 
         /// <summary>
         /// Recursively deletes empty directories by moving from child to parent
-        /// Every time a directory is deletes, its parent directory is examined
+        /// Every time a directory is deleted, its parent directory is examined to see if it's empty
         /// </summary>
         /// <param name="path"></param>
         /// <param name="isolatedStorage"></param>
@@ -216,7 +207,7 @@ namespace TripPoint.WindowsPhone.State
         /// Deletes a number of pictures
         /// </summary>
         /// <param name="picturesToDelete"></param>
-        public void DeletePictures(IEnumerable<Picture> picturesToDelete)
+        public static void DeletePictures(IEnumerable<Picture> picturesToDelete)
         {
             try
             {

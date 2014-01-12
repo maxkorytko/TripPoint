@@ -11,12 +11,16 @@ using TripPoint.WindowsPhone.State;
 using TripPoint.WindowsPhone.State.Data;
 using TripPoint.WindowsPhone.Utils;
 using GalaSoft.MvvmLight.Command;
+using System.Windows.Media.Imaging;
 
 namespace TripPoint.WindowsPhone.ViewModel.Base
 {
     public class TripCheckpointsViewModelBase : TripViewModelBase
     {
         private static readonly string LAST_VIEWED_CHECKPOINT_ID = "LastViewedCheckpointID";
+
+        private static readonly BitmapSource CHECKPOINT_THUMBNAIL_PLACEHOLDER =
+            new BitmapImage(new Uri("/Assets/Images/checkpoint.thumb.png", UriKind.RelativeOrAbsolute));
 
         protected ICollection<Checkpoint> _checkpoints;
         private CollectionPaginator<Checkpoint> _checkpointPaginator;
@@ -78,7 +82,8 @@ namespace TripPoint.WindowsPhone.ViewModel.Base
             PaginateCheckpoints();
         }
 
-        private static CollectionPaginator<Checkpoint> CreateCheckpointPaginator(IEnumerable<Checkpoint> checkpoints)
+        private static CollectionPaginator<Checkpoint> CreateCheckpointPaginator(
+            IEnumerable<Checkpoint> checkpoints)
         {
             var paginator = new CollectionPaginator<Checkpoint>(checkpoints);
             paginator.PageSize = 5;
@@ -113,10 +118,11 @@ namespace TripPoint.WindowsPhone.ViewModel.Base
         {
             if (checkpoint == null) return null;
 
-            var thumbnail = new PictureThumbnail(new Uri("/Assets/Images/checkpoint.thumb.png", UriKind.Relative));
-            thumbnail.Picture = checkpoint.Pictures.LastOrDefault();
-
-            return thumbnail;
+            return new Thumbnail
+            {
+                Picture = checkpoint.Pictures.LastOrDefault(),
+                Placeholder = CHECKPOINT_THUMBNAIL_PLACEHOLDER
+            };
         }
 
         private void PaginateCheckpointsAction()

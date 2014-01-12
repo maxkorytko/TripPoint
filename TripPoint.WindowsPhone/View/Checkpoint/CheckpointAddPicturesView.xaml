@@ -51,8 +51,10 @@
                                   Text="{Binding Picture.Title, Mode=TwoWay}"
                                   coding4FunBinding:TextBinding.UpdateSourceOnChange="True" />
 
-            <Image Grid.Row="1" Stretch="Uniform"
-                   Source="{Binding Picture.RawBytes, Converter={StaticResource BytesToImageSource}}" />
+            <Image Grid.Row="1"
+                   Stretch="Uniform"
+                   Source="{Binding CapturedPicture.RawBytes,
+                                    Converter={StaticResource BytesToImageSource}}" />
         </Grid>
 
         <coding4Fun:ProgressOverlay Grid.RowSpan="2" 

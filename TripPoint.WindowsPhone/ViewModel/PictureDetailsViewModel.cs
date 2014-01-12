@@ -97,7 +97,7 @@ namespace TripPoint.WindowsPhone.ViewModel
                     var name = Picture.Title;
                     if (String.IsNullOrWhiteSpace(name)) name = Picture.FileName;
 
-                    mediaLibrary.SavePicture(name, Picture.RawBytes);
+                    mediaLibrary.SavePicture(name, PictureStore.LoadPicture(Picture));
                 }
             }
             catch (Exception)
@@ -144,7 +144,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             try
             {
-                PictureStateManager.Instance.DeletePicture(pictureToDelete);
+                PictureStore.DeletePicture(pictureToDelete);
                 RepositoryFactory.PictureRepository.DeletePicture(pictureToDelete);
                 Pictures.Remove(pictureToDelete);
             }
@@ -186,9 +186,14 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             foreach (var picture in checkpoint.Pictures)
             {
-                picture.RawBytes = PictureStateManager.Instance.LoadPicture(picture);
                 Pictures.Add(picture);
             }
+        }
+
+        public void ResetViewModel()
+        {
+            Picture = null;
+            Pictures.Clear();
         }
     }
 }

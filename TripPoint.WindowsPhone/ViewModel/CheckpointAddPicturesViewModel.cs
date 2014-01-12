@@ -51,6 +51,8 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
+        public CapturedPicture CapturedPicture { get; set; }
+
         public bool IsSavingPicture
         {
             get { return _isSavingPicture; }
@@ -112,9 +114,9 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void ScalePicture(float scalingFactor)
         {
-            if (Picture.RawBytes == null) return;
+            if (CapturedPicture.RawBytes == null) return;
 
-            var bitmap = ImageUtils.CreateWriteableBitmapFromBytes(Picture.RawBytes);
+            var bitmap = ImageUtils.CreateWriteableBitmapFromBytes(CapturedPicture.RawBytes);
 
             if (bitmap == null) return;
 
@@ -123,7 +125,7 @@ namespace TripPoint.WindowsPhone.ViewModel
                 Convert.ToInt32(bitmap.PixelHeight * scalingFactor),
                 WriteableBitmapExtensions.Interpolation.Bilinear);
 
-            Picture.RawBytes = TripPointConvert.ToBytes(bitmap.SaveJpeg());
+            CapturedPicture.RawBytes = TripPointConvert.ToBytes(bitmap.SaveJpeg());
         }
 
         /// <summary>
@@ -138,7 +140,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             checkpoint.Pictures.Add(Picture);
             _checkpointRepository.UpdateCheckpoint(checkpoint);
 
-            PictureStateManager.Instance.SavePicture(Picture);
+            PictureStore.SavePicture(Picture, CapturedPicture.RawBytes);
         }
 
         private void EnsurePictureWasAdded(Exception error)
@@ -167,7 +169,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             _checkpointRepository = RepositoryFactory.CheckpointRepository;
         }
 
-        private void ResetViewModel()
+        public void ResetViewModel()
         {
             Picture = null;
             IsSavingPicture = false;
@@ -175,10 +177,10 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void InitializePicture()
         {
-            var capturedPicture = StateManager.Instance.Get<CapturedPicture>(CAPTURED_PICTURE);
+            CapturedPicture = StateManager.Instance.Get<CapturedPicture>(CAPTURED_PICTURE);
             StateManager.Instance.Remove(CAPTURED_PICTURE);
 
-            Picture = CreatePicture(capturedPicture);
+            Picture = CreatePicture(CapturedPicture);
         }
 
         private static Picture CreatePicture(CapturedPicture source)
@@ -190,7 +192,6 @@ namespace TripPoint.WindowsPhone.ViewModel
             if (source != null)
             {
                 picture.FileName = source.FileName;
-                picture.RawBytes = source.RawBytes;
                 picture.Title = String.Empty;
             }
 

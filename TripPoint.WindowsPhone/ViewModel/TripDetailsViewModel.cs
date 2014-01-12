@@ -97,7 +97,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void DeletePictures()
         {
             var picturesToDelete = Trip.Checkpoints.SelectMany(checkpoint => checkpoint.Pictures);
-            PictureStateManager.Instance.DeletePictures(picturesToDelete);
+            PictureStore.DeletePictures(picturesToDelete);
         }
 
         private void DeleteCheckpoints()
