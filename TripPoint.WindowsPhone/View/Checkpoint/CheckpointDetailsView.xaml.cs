@@ -12,6 +12,7 @@ using TripPoint.WindowsPhone.State.Data;
 using TripPoint.WindowsPhone.ViewModel;
 using TripPoint.WindowsPhone.View.Controls;
 using GalaSoft.MvvmLight.Messaging;
+using TripPoint.WindowsPhone.Utils.View;
 
 namespace TripPoint.WindowsPhone.View.Checkpoint
 {
@@ -98,15 +99,10 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
         {
             base.OnBackKeyPress(e);
 
-            if (ViewModel.IsNotesSelectionEnabled)
-            {
-                ViewModel.IsNotesSelectionEnabled = false;
-                e.Cancel = true;
-                return;
-            }
-
-            // clear thumbnails to free up memory
-            ViewModel.Thumbnails.Clear();
+            if (!ViewModel.IsNotesSelectionEnabled) return;
+            
+            ViewModel.IsNotesSelectionEnabled = false;
+            e.Cancel = true;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -115,6 +111,17 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
 
             ViewModel.OnNavigatedTo(new Navigation.TripPointNavigationEventArgs(e,
                 e.Content as PhoneApplicationPage));
+        }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+
+            if (e.NavigationMode != NavigationMode.Back) return;
+            
+            // free as much memory as possible
+            ViewModel.Thumbnails.Clear();
+            PictureBitmapCache.Instance.Clear();
         }
 
         private void NoteList_SelectionChanged(object sender, SelectionChangedEventArgs e)

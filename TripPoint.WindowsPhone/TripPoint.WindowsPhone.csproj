@@ -117,6 +117,7 @@
     <Compile Include="Utils\ExifLib\JpegInfo.cs" />
     <Compile Include="Utils\ImageUtils.cs" />
     <Compile Include="Utils\View\PictureBitmap.cs" />
+    <Compile Include="Utils\View\PictureBitmapCache.cs" />
     <Compile Include="ViewModel\ApplicationSettingsViewModel.cs" />
     <Compile Include="ViewModel\Base\TripCheckpointsViewModelBase.cs" />
     <Compile Include="ViewModel\Base\TripPointViewModelBase.cs" />
