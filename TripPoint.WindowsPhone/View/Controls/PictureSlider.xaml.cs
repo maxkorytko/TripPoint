@@ -15,7 +15,7 @@ namespace TripPoint.WindowsPhone.View.Controls
     /// </summary>
     public partial class PictureSlider : UserControl
     {
-        private static readonly double IMAGE_BORDER_THICKNESS = 20.0;
+        private static readonly double IMAGE_BORDER_THICKNESS = 80.0;
 
         private PictureSliderHelper _sliderHelper;
 
@@ -311,16 +311,22 @@ namespace TripPoint.WindowsPhone.View.Controls
             /// Programmatically scrolls to an item at the given index
             /// Scrolling is animated
             /// </summary>
-            /// <param name="itemIndex">Must not be negative.</param>
+            /// <param name="itemIndex">Must not be negative</param>
             /// <param name="duration">Duration of the animation in seconds</param>
             public void ScrollToItemAtIndex(int itemIndex, double duration)
             {
                 if (itemIndex < 0) return;
 
+                var horizontalOffset = GetHorizontalOffsetOfItemAtIndex(itemIndex);
+                ScrollToHorizontalOffset(horizontalOffset, duration);
+            }
+
+            private double GetHorizontalOffsetOfItemAtIndex(int itemIndex)
+            {
                 var horizontalOffset = itemIndex * _scrollViewer.ViewportWidth;
                 horizontalOffset += itemIndex * PictureSlider.IMAGE_BORDER_THICKNESS;
 
-                ScrollToHorizontalOffset(horizontalOffset, duration);
+                return horizontalOffset;
             }
 
             private void ScrollToHorizontalOffset(double offset, double duration)

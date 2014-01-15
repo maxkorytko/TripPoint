@@ -56,7 +56,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border BorderBrush="{StaticResource PhoneBackgroundBrush}"
-                                BorderThickness="0,0,20,0">
+                                BorderThickness="0,0,80,0">
                             <StackPanel>
                                 <TextBlock FontSize="50"
                                            MinHeight="70"
