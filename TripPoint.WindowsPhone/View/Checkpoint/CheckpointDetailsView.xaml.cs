@@ -8,9 +8,7 @@ using System.Device.Location;
 using Microsoft.Phone.Controls;
 
 using TripPoint.Model.Domain;
-using TripPoint.WindowsPhone.State.Data;
 using TripPoint.WindowsPhone.ViewModel;
-using TripPoint.WindowsPhone.View.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using TripPoint.WindowsPhone.Utils.View;
 
@@ -29,6 +27,8 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
         {
             get { return DataContext as CheckpointDetailsViewModel; }
         }
+
+        private bool ShouldFreeUpResources { get; set; }
 
         private void RegisterMessages()
         {
@@ -83,16 +83,20 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
 
         private void OnUnloaded()
         {
+            // we are releasing resources here, because the page is no longer visible at this point
+            // since we're changing properties bound to UI controls,
+            // it will help us avoid updating the UI as the use navigates back
+            // (e.g.) picture count droppoing to 0, or replacing thumbnails grid with 'none'
+            //
+            if (ShouldFreeUpResources)
+            {
+                TripPoint.Model.Utils.Logger.Log("Free up resources");
+                ViewModel.Thumbnails.Clear();
+                PictureBitmapCache.Instance.Clear();
+            }
+
             Messenger.Default.Unregister(this);
             ViewModel.ResetViewModel();
-        }
-
-        private void PictureSelected(object sender, PictureSelectedEventArgs args)
-        {
-            var selected = (args.SelectedPicture as Thumbnail);
-
-            if (selected != null)
-                ViewModel.ViewPictureCommand.Execute(selected.Picture);
         }
 
         protected override void OnBackKeyPress(CancelEventArgs e)
@@ -117,11 +121,7 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
         {
             base.OnNavigatingFrom(e);
 
-            if (e.NavigationMode != NavigationMode.Back) return;
-            
-            // free as much memory as possible
-            ViewModel.Thumbnails.Clear();
-            PictureBitmapCache.Instance.Clear();
+            ShouldFreeUpResources = e.NavigationMode == NavigationMode.Back;
         }
 
         private void NoteList_SelectionChanged(object sender, SelectionChangedEventArgs e)

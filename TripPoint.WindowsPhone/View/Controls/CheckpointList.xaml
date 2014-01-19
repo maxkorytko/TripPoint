@@ -51,6 +51,7 @@
                 <HyperlinkButton HorizontalAlignment="Left" 
                                  Width="Auto"
                                  FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+                                 Foreground="White"
                                  Click="MoreButton_Click"
                                  Content="MORE" />
             </DataTemplate>

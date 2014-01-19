@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TripPoint.WindowsPhone.View.Controls.PictureGrid"
+﻿<UserControl x:Class="TripPoint.WindowsPhone.View.Controls.PictureThumbnailGrid"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,12 +9,13 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="480" d:DesignWidth="480">
+    d:DesignHeight="480" d:DesignWidth="480"
+    x:Name="PictureThumbnailsGridControl">
     
     <Grid x:Name="LayoutRoot">
         <ListBox x:Name="PictureList"
                  toolkit:TiltEffect.IsTiltEnabled="True"
-                 ItemsSource="{Binding}"
+                 ItemsSource="{Binding Thumbnails}"
                  SelectionChanged="PictureList_SelectionChanged">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -30,6 +31,19 @@
                                Height="125"
                                Stretch="UniformToFill"
                                utils:PictureBitmap.Thumbnail="{Binding}" />
+                        
+                        <toolkit:ContextMenuService.ContextMenu>
+                            <toolkit:ContextMenu>
+                                <toolkit:MenuItem
+                                    Header="{Binding ElementName=PictureThumbnailsGridControl,
+                                                     Path=DataContext.Localization.Resources.DeleteThumbnail}"
+                                    
+                                    Command="{Binding ElementName=PictureThumbnailsGridControl,
+                                                      Path=DataContext.DeleteThumbnailCommand}"
+                                    
+                                    CommandParameter="{Binding}" />
+                            </toolkit:ContextMenu>
+                        </toolkit:ContextMenuService.ContextMenu>
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>

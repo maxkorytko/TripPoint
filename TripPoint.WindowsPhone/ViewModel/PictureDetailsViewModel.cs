@@ -4,13 +4,14 @@ using System.Windows.Input;
 using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework.Media;
 
+using GalaSoft.MvvmLight.Command;
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.I18N;
 using TripPoint.WindowsPhone.State;
 using TripPoint.WindowsPhone.Navigation;
-using GalaSoft.MvvmLight.Command;
+using TripPoint.Model.Data.Repository;
 
 
 namespace TripPoint.WindowsPhone.ViewModel
@@ -136,16 +137,11 @@ namespace TripPoint.WindowsPhone.ViewModel
             return (index == Pictures.Count - 1) ? Pictures[--index] : Pictures[++index];
         }
 
-        /// <summary>
-        /// Deletes the given picture from the repository
-        /// </summary>
-        /// <param name="pictureToDelete"></param>
         private void DeletePicture(TripPoint.Model.Domain.Picture pictureToDelete)
         {
             try
             {
-                PictureStore.DeletePicture(pictureToDelete);
-                RepositoryFactory.PictureRepository.DeletePicture(pictureToDelete);
+                DeletePicture(pictureToDelete, RepositoryFactory.PictureRepository);
                 Pictures.Remove(pictureToDelete);
             }
             catch (Exception)
@@ -153,6 +149,21 @@ namespace TripPoint.WindowsPhone.ViewModel
                 MessageBox.Show(Resources.PictureDeleteError, Resources.MessageBox_Error,
                     MessageBoxButton.OK);
             }
+        }
+
+        /// <summary>
+        /// Deletes the given picture from the repository
+        /// </summary>
+        /// <param name="picture"></param>
+        /// <param name="repository"></param>
+        public static void DeletePicture(TripPoint.Model.Domain.Picture picture,
+            IPictureRepository repository)
+        {
+            if (picture == null) throw new ArgumentException("picture");
+            if (repository == null) throw new ArgumentException("repository");
+
+            PictureStore.DeletePicture(picture);
+            repository.DeletePicture(picture);
         }
 
         public override void OnNavigatedTo(TripPointNavigationEventArgs e)

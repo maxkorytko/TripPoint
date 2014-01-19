@@ -24,7 +24,6 @@ namespace TripPoint.WindowsPhone.ViewModel
         private static readonly ImageSource PICTURE_THUMBNAIL_PLACEHOLDER =
             new BitmapImage(new Uri("", UriKind.RelativeOrAbsolute));
 
-
         private Checkpoint _checkpoint;
         private ICollection<Thumbnail> _thumbnails;
         private bool _shouldShowCheckpointMap;
@@ -45,6 +44,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             SelectNotesCommand = new RelayCommand(SelectNotesAction);
             CancelSelectingNotesCommand = new RelayCommand(CancelSelectingNotesAction);
             DeleteNotesCommand = new RelayCommand<IEnumerable<Note>>(DeleteNotesAction);
+            DeleteThumbnailCommand = new RelayCommand<Thumbnail>(DeleteThumbnailAction);
         }
 
         public Checkpoint Checkpoint 
@@ -132,6 +132,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         public ICommand DeleteNotesCommand { get; private set; }
 
+        public ICommand DeleteThumbnailCommand { get; private set; }
+
         private void EditCheckpointAction()
         {
             Navigator.Navigate(String.Format("/Checkpoints/{0}/Edit", Checkpoint.ID));
@@ -189,6 +191,27 @@ namespace TripPoint.WindowsPhone.ViewModel
             
             // ensure the UI renders the most up to date checkpoint
             Checkpoint = _checkpointRepository.FindCheckpoint(Checkpoint.ID);
+        }
+
+        private void DeleteThumbnailAction(Thumbnail thumbnail)
+        {
+            if (thumbnail == null) return;
+
+            var userDecision = MessageBox.Show(Resources.ConfirmDeletePicture, Resources.Deleting,
+                MessageBoxButton.OKCancel);
+
+            if (userDecision != MessageBoxResult.OK) return;
+
+            try
+            {
+                PictureDetailsViewModel.DeletePicture(thumbnail.Picture, RepositoryFactory.PictureRepository);
+                Thumbnails.Remove(thumbnail);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(Resources.PictureDeleteError, Resources.MessageBox_Error,
+                    MessageBoxButton.OK);
+            }
         }
 
         public void ResetViewModel()

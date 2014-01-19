@@ -70,7 +70,7 @@
 
                         <TextBlock Grid.Row="0" Grid.Column="1"
                                    Style="{StaticResource HeaderNormalStyle}"
-                                   Text="{Binding Checkpoint.Pictures.Count}" />
+                                   Text="{Binding Thumbnails.Count}" />
                         
                         <!-- Padding -->
                         <TextBlock Grid.Row="1" Grid.Column="2" Height="25"/>
@@ -98,13 +98,12 @@
                 <Grid>
                     <TextBlock
                         Style="{StaticResource HeaderNormalStyle}"
-                        Visibility="{Binding Checkpoint.Pictures.Count, Converter={StaticResource InverseCountToVisibility}}"
+                        Visibility="{Binding Thumbnails.Count, Converter={StaticResource InverseCountToVisibility}}"
                         Text="{Binding Localization.Resources.None}" />
 
-                    <trippointcontrols:PictureGrid 
-                        DataContext="{Binding Thumbnails}"
-                        Visibility="{Binding Count, Converter={StaticResource CountToVisibility}}"          
-                        OnPictureSelected="PictureSelected" />
+                    <trippointcontrols:PictureThumbnailGrid 
+                        DataContext="{Binding}"
+                        Visibility="{Binding Thumbnails.Count, Converter={StaticResource CountToVisibility}}" />
                 </Grid>
             </controls:PivotItem>
             

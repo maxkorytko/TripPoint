@@ -35,7 +35,8 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <toolkit:PhoneTextBox Hint="{Binding Localization.Resources.TypeNote}" 
+            <toolkit:PhoneTextBox x:Name="NotesTextBox"
+                                  Hint="{Binding Localization.Resources.TypeNote}" 
                                   Text="{Binding Notes, Mode=TwoWay}"
                                   coding4FunBinding:TextBinding.UpdateSourceOnChange="True" />
         </Grid>

@@ -9,6 +9,7 @@ using TripPoint.Model.Settings;
 using TripPoint.Model.Data;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
+using TripPoint.WindowsPhone.Utils.View;
 using TripPoint.WindowsPhone.State;
 using TripPoint.WindowsPhone.Navigation;
 
@@ -176,6 +177,7 @@ namespace TripPoint.WindowsPhone
         {
             InitializeStateManager();
             InitializeNavigation();
+            InitializeBitmapCache();
             SetMapsApiKey();
             SetStartupPage();
         }
@@ -195,6 +197,11 @@ namespace TripPoint.WindowsPhone
                 uriMapper.UriMappings.Add(uriMapping);
 
             RootFrame.UriMapper = uriMapper;
+        }
+
+        private void InitializeBitmapCache()
+        {
+            PictureBitmapCache.Initialize(25);
         }
 
         /// <summary>

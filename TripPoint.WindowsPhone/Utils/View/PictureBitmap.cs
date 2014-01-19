@@ -13,8 +13,6 @@ namespace TripPoint.WindowsPhone.Utils.View
     /// </summary>
     public class PictureBitmap : DependencyObject
     {
-        private static readonly int CACHE_MAX_SIZE = 25;
-
         #region Source Attached Property
         
         public static void SetSource(DependencyObject o, Picture value)
@@ -113,8 +111,6 @@ namespace TripPoint.WindowsPhone.Utils.View
         private static BitmapSource GetImageSource(Picture picture)
         {
             if (picture == null) return null;
-
-            PictureBitmapCache.Initialize(CACHE_MAX_SIZE);
 
             var imageSource = PictureBitmapCache.Instance.Get(picture);
 

@@ -152,11 +152,11 @@
     <Compile Include="View\Controls\CheckpointList.xaml.cs">
       <DependentUpon>CheckpointList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\PictureGrid.xaml.cs">
-      <DependentUpon>PictureGrid.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Controls\PictureSlider.xaml.cs">
       <DependentUpon>PictureSlider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\PictureThumbnailGrid.xaml.cs">
+      <DependentUpon>PictureThumbnailGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Picture\PictureDetailsView.xaml.cs">
       <DependentUpon>PictureDetailsView.xaml</DependentUpon>
@@ -214,13 +214,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Controls\PictureGrid.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Controls\PictureSlider.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\PictureThumbnailGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Picture\PictureDetailsView.xaml">
       <SubType>Designer</SubType>

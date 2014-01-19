@@ -18,6 +18,8 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
         public CheckpointAddNotesView()
         {
             InitializeComponent();
+
+            Loaded += (sender, args) => { NotesTextBox.Focus(); };
         }
     }
 }
