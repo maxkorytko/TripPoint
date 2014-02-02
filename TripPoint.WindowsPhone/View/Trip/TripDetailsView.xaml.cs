@@ -40,16 +40,15 @@ namespace TripPoint.WindowsPhone.View.Trip
         {
             base.OnBackKeyPress(e);
 
-            ViewModel.Checkpoints = null;
+            ViewModel.ResetViewModel();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
-            ViewModel.OnNavigatedTo(new Navigation.TripPointNavigationEventArgs(e));
-
             if (e.NavigationMode == NavigationMode.New) LoadBackgroundImage();
+            if (e.NavigationMode == NavigationMode.Back) ViewModel.OnBackNavigatedTo();
         }
 
         private void LoadBackgroundImage()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Linq;
 using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework.Media;
 
@@ -18,15 +19,13 @@ namespace TripPoint.WindowsPhone.ViewModel
 {
     public class PictureDetailsViewModel : Base.TripPointViewModelBase
     {
+        private Checkpoint _checkpoint;
         private TripPoint.Model.Domain.Picture _picture;
-        private Collection<TripPoint.Model.Domain.Picture> _pictures;
         private bool _savingPictureToMediaLibrary;
 
         public PictureDetailsViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
-            _pictures = new ObservableCollection<TripPoint.Model.Domain.Picture>();
-
             InitializeCommands();
         }
 
@@ -34,6 +33,18 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             SavePictureCommand = new RelayCommand(SavePictureAction);
             DeletePictureCommand = new RelayCommand(DeletePictureAction);
+        }
+
+        public Checkpoint Checkpoint
+        {
+            get { return _checkpoint; }
+            set
+            {
+                if (_checkpoint == value) return;
+
+                _checkpoint = value;
+                RaisePropertyChanged("Checkpoint");
+            }
         }
 
         public TripPoint.Model.Domain.Picture Picture
@@ -45,18 +56,6 @@ namespace TripPoint.WindowsPhone.ViewModel
 
                 _picture = value;
                 RaisePropertyChanged("Picture");
-            }
-        }
-
-        public Collection<TripPoint.Model.Domain.Picture> Pictures
-        {
-            get { return _pictures; }
-            set
-            {
-                if (_pictures == value) return;
-
-                _pictures = value;
-                RaisePropertyChanged("Pictures");
             }
         }
 
@@ -119,7 +118,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
             DeletePicture(Picture);
 
-            if (Pictures.Count == 0) Navigator.GoBack();
+            if (Checkpoint.Pictures.Count == 0) Navigator.GoBack();
             else Picture = adjacentPicture;
         }
 
@@ -130,11 +129,12 @@ namespace TripPoint.WindowsPhone.ViewModel
         /// </summary>
         private TripPoint.Model.Domain.Picture GetAdjacentPicture()
         {
-            if (Pictures.Count <= 1) return Picture;
+            if (Checkpoint.Pictures.Count <= 1) return Picture;
 
-            var index = Pictures.IndexOf(Picture);
-            
-            return (index == Pictures.Count - 1) ? Pictures[--index] : Pictures[++index];
+            var index = Checkpoint.Pictures.IndexOf(Picture);
+
+            return (index == Checkpoint.Pictures.Count - 1) ? Checkpoint.Pictures[--index]
+                                                            : Checkpoint.Pictures[++index];
         }
 
         private void DeletePicture(TripPoint.Model.Domain.Picture pictureToDelete)
@@ -142,7 +142,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             try
             {
                 DeletePicture(pictureToDelete, RepositoryFactory.PictureRepository);
-                Pictures.Remove(pictureToDelete);
+                Checkpoint.Pictures.Remove(pictureToDelete);
             }
             catch (Exception)
             {
@@ -171,40 +171,28 @@ namespace TripPoint.WindowsPhone.ViewModel
             base.OnNavigatedTo(e);
 
             InitializePicture(TripPointConvert.ToInt32(GetParameter(e.View, "pictureID")));
-            InitializePicturesCollection();
+            InitializeCheckpoint();
         }
 
         private void InitializePicture(int pictureID)
         {
-            var picture = RepositoryFactory.PictureRepository.FindPicture(pictureID);
+            if (Picture != null) return;
 
-            if (picture != null && picture != Picture) Picture = picture;
+            Picture = RepositoryFactory.PictureRepository.FindPicture(pictureID);
         }
 
-        private void InitializePicturesCollection()
+        private void InitializeCheckpoint()
         {
             if (Picture == null) return;
+            if (Checkpoint != null) return;
 
-            LoadPicturesFromCheckpoint(Picture.Checkpoint);
-        }
-
-        private void LoadPicturesFromCheckpoint(Checkpoint checkpoint)
-        {
-            if (checkpoint == null) return;
-            if (checkpoint.Pictures.Count == 0) return;
-
-            Pictures.Clear();
-
-            foreach (var picture in checkpoint.Pictures)
-            {
-                Pictures.Add(picture);
-            }
+            Checkpoint = Picture.Checkpoint;
         }
 
         public void ResetViewModel()
         {
             Picture = null;
-            Pictures.Clear();
+            Checkpoint = null;
         }
     }
 }

@@ -42,14 +42,14 @@
             </Grid.ColumnDefinitions>
             
             <TextBlock Style="{StaticResource HeaderNormalStyle}"
-                       Visibility="{Binding NoPastTrips, Converter={StaticResource BoolToVisibility}}"
+                       Visibility="{Binding NoTrips, Converter={StaticResource BoolToVisibility}}"
                        Text="{Binding Localization.Resources.None}" />
             
             <ListBox x:Name="TripList" Grid.Column="0"
                      toolkit:TiltEffect.IsTiltEnabled="True"
                      ItemsSource="{Binding Trips}"
                      SelectionChanged="TripList_SelectionChanged"
-                     Visibility="{Binding NoPastTrips, Converter={StaticResource InverseBoolToVisibility}}">
+                     Visibility="{Binding NoTrips, Converter={StaticResource InverseBoolToVisibility}}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="0,25,0,25">

@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Microsoft.Phone.Controls;
 
+using GalaSoft.MvvmLight.Command;
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
@@ -15,7 +15,6 @@ using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.State;
 using TripPoint.WindowsPhone.Navigation;
 using TripPoint.I18N;
-using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
@@ -116,7 +115,15 @@ namespace TripPoint.WindowsPhone.ViewModel
                 if (_isNotesSelectionEnabled == value) return;
 
                 _isNotesSelectionEnabled = value;
-                RaisePropertyChanged("IsNotesSelectionEnabled");
+
+                try
+                {
+                    // for some reason an ArgumentOutOfRange exception is thrown here occasionally
+                    // the exception appears to originate in one of the system libraries
+                    //
+                    RaisePropertyChanged("IsNotesSelectionEnabled");
+                }
+                catch (Exception) { /* nothing */ }
             }
         }
 
@@ -190,7 +197,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             RepositoryFactory.NoteRepository.DeleteNotes(notesToDelete);
             
             // ensure the UI renders the most up to date checkpoint
-            Checkpoint = _checkpointRepository.FindCheckpoint(Checkpoint.ID);
+            Checkpoint = RepositoryFactory.CheckpointRepository.FindCheckpoint(Checkpoint.ID);
         }
 
         private void DeleteThumbnailAction(Thumbnail thumbnail)
@@ -216,7 +223,8 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         public void ResetViewModel()
         {
-            Checkpoint = null;
+            _thumbnails = null;
+            _checkpoint = null;
             ShouldShowCheckpointMap = false;
         }
 
@@ -224,27 +232,21 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             base.OnNavigatedTo(e);
 
-            _checkpointRepository = RepositoryFactory.CheckpointRepository;
-
-            InitializeCheckpoint(GetCheckpointID(e.View));
+            InitializeCheckpoint(TripPointConvert.ToInt32(GetParameter(e.View, "checkpointID")));
             DetermineCheckpointMapAvailability();
-            
-            // ensure thumbnails for deleted pictures are not displayed
-            DeleteStaleThumbnailsIfNecessary();
-        }
-
-        private static int GetCheckpointID(PhoneApplicationPage view)
-        {
-            if (view == null) return -1;
-
-            var parameter = view.TryGetQueryStringParameter("checkpointID");
-
-            return TripPointConvert.ToInt32(parameter);
         }
 
         private void InitializeCheckpoint(int checkpointID)
         {
+            if (checkpointID == -1) return;
             if (Checkpoint != null && Checkpoint.ID == checkpointID) return;
+
+            RefreshCheckpoint(checkpointID);
+        }
+
+        private void RefreshCheckpoint(int checkpointID)
+        {
+            _checkpointRepository = RepositoryFactory.CheckpointRepository;
 
             Checkpoint = _checkpointRepository.FindCheckpoint(checkpointID) ?? new Checkpoint();
         }
@@ -255,9 +257,28 @@ namespace TripPoint.WindowsPhone.ViewModel
             ShouldShowCheckpointMap = Checkpoint.Location != null && !Checkpoint.Location.IsUnknown;
         }
 
+        public override void OnBackNavigatedTo()
+        {
+            base.OnBackNavigatedTo();
+
+            RefreshCheckpoint();
+            DeleteStaleThumbnailsIfNecessary();
+        }
+
+        private void RefreshCheckpoint()
+        {
+            if (Checkpoint == null) return;
+
+            RefreshCheckpoint(Checkpoint.ID);
+        }
+
+        /// <summary>
+        /// Scans through the thumbnails collection and deletes the items that are not in the
+        /// checkpoint pictures collection.
+        /// </summary>
         private void DeleteStaleThumbnailsIfNecessary()
         {
-            if (_thumbnails == null) return;
+            if (_thumbnails == null || Checkpoint == null) return;
             if (Checkpoint.Pictures.Count == _thumbnails.Count) return;
 
             var staleThumbnails = (from thumbnail in _thumbnails
@@ -270,6 +291,8 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
+        #region PictureComparer
+        
         class PictureComparer : IEqualityComparer<Picture>
         {
             public bool Equals(Picture left, Picture right)
@@ -291,5 +314,7 @@ namespace TripPoint.WindowsPhone.ViewModel
                 return titleHashCode ^ idHashCode;
             }
         }
+
+        #endregion
     }
 }

@@ -267,7 +267,9 @@
     <Content Include="Assets\Images\Dark\appbar.new.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.save.rest.png" />
     <Content Include="Assets\Images\Dark\appbar.stop.rest.png" />
+    <Content Include="Assets\Images\notes.icon.png" />
     <Content Include="Assets\Images\picture.thumb.png" />
+    <Content Include="Assets\Images\pictures.icon.png" />
     <Content Include="Assets\Images\tile.png" />
     <Content Include="SplashScreenImage.jpg" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />

@@ -4,7 +4,6 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
 using TripPoint.WindowsPhone.ViewModel;
-using TripPoint.I18N;
 
 namespace TripPoint.WindowsPhone.View.Trip
 {

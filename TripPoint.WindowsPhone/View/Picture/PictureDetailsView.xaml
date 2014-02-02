@@ -54,7 +54,7 @@
         
         <!-- Picture Slider -->
         <trippointcontrols:PictureSlider Grid.Row="1"
-                                         Pictures="{Binding Pictures}"
+                                         Pictures="{Binding Checkpoint.Pictures}"
                                          CurrentPicture="{Binding Picture, Mode=TwoWay}" />
         
         <appBar:AdvancedApplicationBar Mode="Minimized">

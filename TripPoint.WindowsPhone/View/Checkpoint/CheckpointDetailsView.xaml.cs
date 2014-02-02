@@ -19,7 +19,9 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
         public CheckpointDetailsView()
         {
             InitializeComponent();
+            
             RegisterMessages();
+            
             Unloaded += (sender, args) => OnUnloaded();
         }
 
@@ -83,20 +85,18 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
 
         private void OnUnloaded()
         {
+            Messenger.Default.Unregister(this);
+
             // we are releasing resources here, because the page is no longer visible at this point
             // since we're changing properties bound to UI controls,
-            // it will help us avoid updating the UI as the use navigates back
+            // it will help us avoid updating the UI while the page is visible as the use navigates back
             // (e.g.) picture count droppoing to 0, or replacing thumbnails grid with 'none'
             //
             if (ShouldFreeUpResources)
-            {
-                TripPoint.Model.Utils.Logger.Log("Free up resources");
-                ViewModel.Thumbnails.Clear();
+            {   
+                ViewModel.ResetViewModel();
                 PictureBitmapCache.Instance.Clear();
             }
-
-            Messenger.Default.Unregister(this);
-            ViewModel.ResetViewModel();
         }
 
         protected override void OnBackKeyPress(CancelEventArgs e)
@@ -113,8 +113,7 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
         {
             base.OnNavigatedTo(e);
 
-            ViewModel.OnNavigatedTo(new Navigation.TripPointNavigationEventArgs(e,
-                e.Content as PhoneApplicationPage));
+            if (e.NavigationMode == NavigationMode.Back) ViewModel.OnBackNavigatedTo();
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)

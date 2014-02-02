@@ -1,6 +1,4 @@
-﻿using Microsoft.Phone.Controls;
-
-using TripPoint.Model.Domain;
+﻿using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
@@ -8,6 +6,9 @@ using TripPoint.WindowsPhone.Navigation;
 
 namespace TripPoint.WindowsPhone.ViewModel.Base
 {
+    /// <summary>
+    /// Encapsulates the behavior to retrieve a trip from the repository and keep it updated
+    /// </summary>
     public abstract class TripViewModelBase : TripPointViewModelBase
     {
         private Trip _trip;
@@ -35,25 +36,49 @@ namespace TripPoint.WindowsPhone.ViewModel.Base
         {
             base.OnNavigatedTo(e);
 
+            InitializeTrip(TripPointConvert.ToInt32(GetParameter(e.View, "tripID")));
+        }
+
+        private void InitializeTrip(int tripID)
+        {
             TripRepository = RepositoryFactory.TripRepository;
-            InitializeTrip(GetTripID(e.View));
+            Trip = GetTrip(tripID);
         }
 
-        private static int GetTripID(PhoneApplicationPage view)
+        /// <summary>
+        /// Retrieves and returns the trip with the given ID or an emty trip
+        /// </summary>
+        /// <param name="tripID"></param>
+        /// <returns></returns>
+        protected virtual Trip GetTrip(int tripID)
         {
-            var tripID = -1;
-
-            if (view != null)
-                tripID = TripPointConvert.ToInt32(view.TryGetQueryStringParameter("tripID"));
-
-            return tripID;
+            return TripRepository.FindTrip(tripID) ?? new Trip();
         }
 
-        protected virtual void InitializeTrip(int tripID)
+        public override void OnBackNavigatedTo()
         {
-            if (TripRepository == null) return;
+            base.OnBackNavigatedTo();
 
-            Trip = TripRepository.FindTrip(tripID);
+            // it's important to refresh the trip when the user navigates back to the view,
+            // in order to ensure the trip has the latest changes made to it from other views
+            //
+            RefreshTrip();
+        }
+
+        private void RefreshTrip()
+        {
+            if (Trip == null) return;
+
+            InitializeTrip(Trip.ID);
+        }
+
+        /// <summary>
+        /// Resets view model's state to initial values
+        /// </summary>
+        public virtual void ResetViewModel()
+        {
+            Trip = null;
+            TripRepository = null;
         }
     }
 }

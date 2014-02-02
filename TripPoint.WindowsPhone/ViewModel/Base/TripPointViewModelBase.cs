@@ -57,6 +57,13 @@ namespace TripPoint.WindowsPhone.ViewModel.Base
         public virtual void OnNavigatedTo(TripPointNavigationEventArgs e) { }
 
         /// <summary>
+        /// Called when a view managed by this view model has been navigated to using back navigation
+        /// Currently, it's up to the view to call this method from its OnNavigatedTo override,
+        /// provided that NavigationMode is NavigationMode.Back
+        /// </summary>
+        public virtual void OnBackNavigatedTo() { }
+
+        /// <summary>
         /// Determines if the view, which the view model is bound to, is on top of the navigation stack
         /// </summary>
         public bool IsViewTopMost

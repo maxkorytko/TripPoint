@@ -4,13 +4,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
+using GalaSoft.MvvmLight.Command;
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository.Factory;
-using TripPoint.WindowsPhone.Navigation;
 using TripPoint.WindowsPhone.State;
-using TripPoint.WindowsPhone.State.Data;
 using TripPoint.WindowsPhone.Utils;
-using GalaSoft.MvvmLight.Command;
 using System.Windows.Media.Imaging;
 
 namespace TripPoint.WindowsPhone.ViewModel.Base
@@ -22,7 +20,7 @@ namespace TripPoint.WindowsPhone.ViewModel.Base
         private static readonly BitmapSource CHECKPOINT_THUMBNAIL_PLACEHOLDER =
             new BitmapImage(new Uri("/Assets/Images/checkpoint.thumb.png", UriKind.RelativeOrAbsolute));
 
-        protected ICollection<Checkpoint> _checkpoints;
+        protected IList<Checkpoint> _checkpoints;
         private CollectionPaginator<Checkpoint> _checkpointPaginator;
         private bool _canPaginateCheckpoints;
 
@@ -41,7 +39,7 @@ namespace TripPoint.WindowsPhone.ViewModel.Base
         /// <summary>
         /// A collection of checkpoints being displayed to the user
         /// </summary>
-        public ICollection<Checkpoint> Checkpoints
+        public IList<Checkpoint> Checkpoints
         {
             get
             {
@@ -134,64 +132,42 @@ namespace TripPoint.WindowsPhone.ViewModel.Base
         {
             if (checkpoint == null) return;
 
-            StateManager.Instance.Set<int>(LAST_VIEWED_CHECKPOINT_ID, checkpoint.ID);
-
+            RememberCheckpoint(checkpoint);
             Navigator.Navigate(string.Format("/Checkpoints/{0}/Details", checkpoint.ID));
         }
 
-        public override void OnNavigatedTo(TripPointNavigationEventArgs e)
+        protected void RememberCheckpoint(Checkpoint checkpoint)
         {
-            base.OnNavigatedTo(e);
+            if (checkpoint == null) return;
 
-            RefreshCheckpoints();
-            StateManager.Instance.Remove(LAST_VIEWED_CHECKPOINT_ID);
+            StateManager.Instance.Set<int>(LAST_VIEWED_CHECKPOINT_ID, checkpoint.ID);
         }
 
-        private void RefreshCheckpoints()
+        public override void OnBackNavigatedTo()
         {
-            if (_checkpoints == null || _checkpointPaginator == null) return;
+ 	        base.OnBackNavigatedTo();
 
-            if (Trip.Checkpoints.Count == _checkpointPaginator.Dataset.Count())
-            {
-                // no checkpoints were added or removed
-                // the user, however, could have updated the last viewed checkpoint
-                // ensure updates (if any) are immediately visible
-                //
-                RefreshLastViewedCheckpoint();
-                return;
-            }
-
-            _checkpoints.Clear();
-            ReloadCheckpoints();
+            RefreshLastViewedCheckpoint();
+            ForgetCheckpoint();
         }
 
         private void RefreshLastViewedCheckpoint()
         {
-            if (!StateManager.Instance.Contains(LAST_VIEWED_CHECKPOINT_ID)) return;
-            if (_checkpoints == null) return;
+            if (_checkpointPaginator == null) return;
 
-            var id = StateManager.Instance.Get<int>(LAST_VIEWED_CHECKPOINT_ID);
+            if (Trip.Checkpoints.Count != _checkpointPaginator.Dataset.Count())
+            {
+                // last viewed checkpoint has been deleted
+                // for simplicity's sake, let's just reload checkpoints
+                //
+                ReloadCheckpoints();
+                return;
+            }
 
-            var staleCheckpoint = _checkpoints.SingleOrDefault(c => c.ID == id);
-            var updatedCheckpoint = Trip.Checkpoints.SingleOrDefault(c => c.ID == id);
-
-            RefreshCheckpoint(staleCheckpoint, updatedCheckpoint);
-        }
-
-        protected static void RefreshCheckpoint(Checkpoint target, Checkpoint source)
-        {
-            if (target == null || source == null) return;
-
-            target.Title = source.Title;
-            RefreshCheckpointThumbnail(target, source);
-        }
-
-        private static void RefreshCheckpointThumbnail(Checkpoint target, Checkpoint source)
-        {
-            if (target.Pictures.Count == source.Pictures.Count) return;
-
-            target.Pictures = source.Pictures;
-            target.Thumbnail = CreateThumbnailForCheckpoint(target);
+            // last viewed checkpoint may have been updated
+            // refresh it to make the view up-to-date
+            //
+            RefreshCheckpoint(StateManager.Instance.Get<int>(LAST_VIEWED_CHECKPOINT_ID));
         }
 
         private void ReloadCheckpoints()
@@ -199,12 +175,55 @@ namespace TripPoint.WindowsPhone.ViewModel.Base
             var currentPage = _checkpointPaginator.CurrentPage;
 
             _checkpointPaginator = CreateCheckpointPaginator(Trip.Checkpoints);
+            _checkpoints.Clear();
 
             do
             {
                 PaginateCheckpoints();
             }
             while (_checkpointPaginator.CurrentPage < currentPage && _checkpointPaginator.CanPaginate);
+        }
+
+        private void RefreshCheckpoint(int checkpointID)
+        {
+            var oldCheckpoint = _checkpoints.SingleOrDefault(c => c.ID == checkpointID);
+            var newCheckpoint = Trip.Checkpoints.SingleOrDefault(c => c.ID == checkpointID);
+
+            RefreshCheckpoint(oldCheckpoint, newCheckpoint);
+        }
+
+        private void RefreshCheckpoint(Checkpoint oldCheckpoint, Checkpoint newCheckpoint)
+        {
+            if (oldCheckpoint == null || newCheckpoint == null) return;
+
+            ReplaceCheckpointAt(_checkpoints.IndexOf(oldCheckpoint), newCheckpoint);
+            newCheckpoint.Thumbnail = CreateThumbnailForCheckpoint(newCheckpoint);
+        }
+
+        private void ReplaceCheckpointAt(int index, Checkpoint checkpoint)
+        {
+            if (index < 0 || index >= _checkpoints.Count) return;
+            if (checkpoint == null) return;
+
+            // it's safe to bypass the checkpoint paginator and mutate the collection directly,
+            // as long as the number of items remains the same
+            // also, checkpoint paginator only moves forward, so it won't even notice the new checkpoint
+            //
+            _checkpoints.RemoveAt(index);
+            _checkpoints.Insert(index, checkpoint);
+        }
+
+        private void ForgetCheckpoint()
+        {
+            StateManager.Instance.Remove(LAST_VIEWED_CHECKPOINT_ID);
+        }
+
+        public override void ResetViewModel()
+        {
+            base.ResetViewModel();
+
+            _checkpointPaginator = null;
+            _checkpoints = null;
         }
     }
 }

@@ -15,14 +15,11 @@ namespace TripPoint.WindowsPhone.ViewModel
 {
     public class TripDetailsViewModel : Base.TripCheckpointsViewModelBase
     {
-        private int _tripID;
         private bool _isDeletingTrip;
 
         public TripDetailsViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
-            _tripID = -1;
-
             InitializeCommands();
         }
 
@@ -60,9 +57,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             var userDecision = MessageBox.Show(Resources.ConfirmDeleteTrip, Resources.Deleting,
                 MessageBoxButton.OKCancel);
 
-            if (userDecision != MessageBoxResult.OK) return;
-
-            DeleteTripAsync();
+            if (userDecision == MessageBoxResult.OK) DeleteTripAsync();
         }
 
         private void DeleteTripAsync()
@@ -106,27 +101,11 @@ namespace TripPoint.WindowsPhone.ViewModel
             Checkpoints = null;
         }
 
-        protected override void InitializeTrip(int tripID)
-        {
-            // if the user navigates back to this view, the query string will be empty
-            // therefore tripID will be equal to -1
-            // ensure we preserve trip ID value set previously
-            //
-            if (tripID != -1) _tripID = tripID;
-
-            base.InitializeTrip(_tripID);
-        }
-
         public override void OnNavigatedTo(TripPointNavigationEventArgs e)
         {
  	         base.OnNavigatedTo(e);
 
-             ResetViewModel();
-        }
-
-        private void ResetViewModel()
-        {
-            IsDeletingTrip = false;
+             IsDeletingTrip = false;
         }
     }
 }

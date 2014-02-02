@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 using TripPoint.Model.Utils;
@@ -59,16 +60,16 @@ namespace TripPoint.WindowsPhone.View.Controls
 
         #region Pictures Dependency Property
 
-        public Collection<TripPoint.Model.Domain.Picture> Pictures
+        public IList<TripPoint.Model.Domain.Picture> Pictures
         {
-            get { return (Collection<TripPoint.Model.Domain.Picture>)GetValue(PicturesProperty); }
+            get { return (IList<TripPoint.Model.Domain.Picture>)GetValue(PicturesProperty); }
             set { SetValue(PicturesProperty, value); }
         }
 
         public static readonly DependencyProperty PicturesProperty =
             DependencyProperty.Register(
                 "Pictures",
-                typeof(Collection<TripPoint.Model.Domain.Picture>),
+                typeof(IList<TripPoint.Model.Domain.Picture>),
                 typeof(PictureSlider),
                 new PropertyMetadata(OnPicturesChanged));
 
@@ -112,6 +113,13 @@ namespace TripPoint.WindowsPhone.View.Controls
         private void SlideToCurrentPicture(double duration)
         {
             if (_sliderHelper != null) _sliderHelper.SlideToCurrentPicture(duration);
+        }
+
+        private bool HasPictureAtIndex(int index)
+        {
+            if (Pictures == null) return false;
+
+            return index >= 0 && index < Pictures.Count;
         }
 
         #region PictureSliderHelper Class
@@ -209,7 +217,7 @@ namespace TripPoint.WindowsPhone.View.Controls
 
             private void SlideToPictureAtIndex(int index)
             {
-                if (index < 0 || index >= _slider.Pictures.Count) return;
+                if (!_slider.HasPictureAtIndex(index)) return;
 
                 var picture = _slider.Pictures[index];
 

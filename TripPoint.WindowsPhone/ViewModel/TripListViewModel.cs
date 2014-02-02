@@ -18,7 +18,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private ITripRepository _tripRepository;
         private ICollection<Trip> _trips;
         private bool _noCurrentTrip;
-        private bool _noPastTrips;
+        private bool _noTrips;
 
         public TripListViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
@@ -69,28 +69,15 @@ namespace TripPoint.WindowsPhone.ViewModel
             }
         }
 
-        public bool NoPastTrips
+        public bool NoTrips
         {
-            get { return _noPastTrips; }
+            get { return _noTrips; }
             set
             {
-                if (_noPastTrips == value) return;
+                if (_noTrips == value) return;
 
-                _noPastTrips = value;
-                RaisePropertyChanged("NoPastTrips");
-            }
-        }
-
-        private IEnumerable<Trip> PastTrips
-        {
-            get
-            {
-                if (_tripRepository == null) return new List<Trip>();
-
-                return (from trip in _tripRepository.Trips
-                        where trip.EndDate.HasValue
-                        select trip)
-                        .OrderByDescending(trip => trip.EndDate);
+                _noTrips = value;
+                RaisePropertyChanged("NoTrips");
             }
         }
 
@@ -103,39 +90,48 @@ namespace TripPoint.WindowsPhone.ViewModel
             base.OnNavigatedTo(e);
 
             _tripRepository = RepositoryFactory.TripRepository;
-
-            ResetViewModel();
             InitializeTrips();
-            RefreshTrips();
-            StateManager.Instance.Remove(LAST_VIEWED_TRIP_ID);
-        }
-
-        private void ResetViewModel()
-        {
-            NoCurrentTrip = _tripRepository.CurrentTrip == null;
-            NoPastTrips = PastTrips.Count() == 0;
         }
 
         private void InitializeTrips()
         {
             if (_tripRepository == null) return;
-            if (Trips != null) return;
+            
+            Trips = new ObservableCollection<Trip>(GetPastTrips());
+            NoTrips = Trips.Count == 0;
+            NoCurrentTrip = _tripRepository.CurrentTrip == null;
+        }
 
-            Trips = new ObservableCollection<Trip>(PastTrips);
+        private IEnumerable<Trip> GetPastTrips()
+        {
+            if (_tripRepository == null) return new List<Trip>();
+
+            return (from trip in _tripRepository.Trips
+                    where trip.EndDate.HasValue
+                    select trip)
+                    .OrderByDescending(trip => trip.EndDate);
+        }
+
+        public override void OnBackNavigatedTo()
+        {
+            base.OnBackNavigatedTo();
+
+            _tripRepository = RepositoryFactory.TripRepository;
+            RefreshTrips();
+            StateManager.Instance.Remove(LAST_VIEWED_TRIP_ID);
         }
 
         private void RefreshTrips()
         {
             if (Trips == null) return;
 
-            if (Trips.Count != PastTrips.Count())
+            if (Trips.Count == GetPastTrips().Count())
             {
-                Trips = null;
-                InitializeTrips();
+                RefreshLastViewedTrip();
                 return;
             }
 
-            RefreshLastViewedTrip();
+            InitializeTrips();
         }
 
         private void RefreshLastViewedTrip()
@@ -145,7 +141,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             var id = StateManager.Instance.Get<int>(LAST_VIEWED_TRIP_ID);
 
             var staleTrip = Trips.FirstOrDefault(trip => trip.ID == id);
-            var updatedTrip = PastTrips.FirstOrDefault(trip => trip.ID == id);
+            var updatedTrip = GetPastTrips().FirstOrDefault(trip => trip.ID == id);
 
             RefreshTrip(staleTrip, updatedTrip);
         }

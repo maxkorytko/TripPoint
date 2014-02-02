@@ -1,13 +1,11 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using System.Linq;
 
+using GalaSoft.MvvmLight.Command;
 using TripPoint.Model.Domain;
-using TripPoint.Model.Domain.Validation;
 using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.I18N;
-using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
@@ -83,12 +81,6 @@ namespace TripPoint.WindowsPhone.ViewModel
             base.OnNavigatedTo(e);
 
             _tripRepository = RepositoryFactory.TripRepository;
-
-            InitializeTrip();
-        }
-
-        private void InitializeTrip()
-        {
             Trip = new Trip();
         }
     }

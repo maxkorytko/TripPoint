@@ -50,36 +50,29 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void AddNotesAction()
         {
-            if (string.IsNullOrWhiteSpace(Notes)) return;
+            if (String.IsNullOrWhiteSpace(Notes)) return;
 
-            var checkpoint = _checkpointRepository.FindCheckpoint(_checkpointID);
-
-            AddNotesToCheckpoint(checkpoint);
-            UpdateCheckpoint(checkpoint);
-
+            AddNotesToCheckpoint(_checkpointID);
             ResetViewModel();
             Navigator.GoBack();
+        }
+
+        private void AddNotesToCheckpoint(int checkpointID)
+        {
+            AddNotesToCheckpoint(_checkpointRepository.FindCheckpoint(checkpointID));
         }
 
         private void AddNotesToCheckpoint(Checkpoint checkpoint)
         {
             if (checkpoint == null) return;
 
-            var note = new Note { Text = Notes };
-
-            checkpoint.Notes.Add(note);
-        }
-
-        private void UpdateCheckpoint(Checkpoint checkpoint)
-        {
-            if (checkpoint == null) return;
-
+            checkpoint.Notes.Add(new Note { Text = Notes });
             _checkpointRepository.UpdateCheckpoint(checkpoint);
         }
 
         private void ResetViewModel()
         {
-            Notes = string.Empty;
+            Notes = String.Empty;
         }
 
         private void CancelAddNotesAction()
@@ -93,16 +86,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             base.OnNavigatedTo(e);
 
             _checkpointRepository = RepositoryFactory.CheckpointRepository;
-            _checkpointID = GetCheckpointID(e.View);
-        }
-
-        private static int GetCheckpointID(PhoneApplicationPage view)
-        {
-            if (view == null) return -1;
-
-            var checkpointIdParameter = view.TryGetQueryStringParameter("checkpointID");
-
-            return TripPointConvert.ToInt32(checkpointIdParameter);
+            _checkpointID = TripPointConvert.ToInt32(GetParameter(e.View, "checkpointID"));
         }
     }
 }

@@ -67,16 +67,23 @@ namespace TripPoint.WindowsPhone.ViewModel
             var userDecision = MessageBox.Show(Resources.ConfirmFinishTrip, Resources.Confirm,
                 MessageBoxButton.OKCancel);
 
-            if (userDecision == MessageBoxResult.OK)
-                FinishCurrentTrip();
+            if (userDecision == MessageBoxResult.OK) FinishCurrentTrip();
         }
 
         private void FinishCurrentTrip()
         {
             Trip.EndDate = DateTime.Now;
             TripRepository.UpdateTrip(Trip);
+            ResetViewModel();
 
             Navigator.NavigateWithoutHistory("/Trips");
+        }
+
+        public override void ResetViewModel()
+        {
+            base.ResetViewModel();
+
+            LatestCheckpoint = null;
         }
 
         private void PastTripsAction()
@@ -91,6 +98,7 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void AddNotesAction()
         {
+            RememberLatestCheckpoint();
             Navigator.Navigate(string.Format("/Checkpoints/{0}/Add/Notes", LatestCheckpoint.ID));
         }
 
@@ -139,44 +147,47 @@ namespace TripPoint.WindowsPhone.ViewModel
             Navigator.Navigate("/Application/Settings");
         }
 
-        protected override void InitializeTrip(int tripID)
+        protected override Trip GetTrip(int tripID)
         {
-            if (TripRepository == null) return;
-
-            Trip = TripRepository.CurrentTrip;
+            return TripRepository.CurrentTrip;
         }
 
         public override void OnNavigatedTo(TripPointNavigationEventArgs e)
-        {
-            if (IsReturningFromCameraCaptureTask())
-            {
-                Navigator.Navigate(String.Format("/Checkpoints/{0}/Add/Pictures", LatestCheckpoint.ID));
-                return;
-            }
-            
+        {   
             base.OnNavigatedTo(e);
 
-            InitializeLatestCheckpoint();
-            RefreshLatestCheckpoint();
+            SetLatestCheckpoint();
         }
 
-        private static bool IsReturningFromCameraCaptureTask()
-        {
-            return StateManager.Instance.Contains(CheckpointAddPicturesViewModel.CAPTURED_PICTURE);
-        }
-
-        private void InitializeLatestCheckpoint()
+        private void SetLatestCheckpoint()
         {
             if (Trip == null) return;
 
             LatestCheckpoint = Trip.Checkpoints.FirstOrDefault();
         }
 
-        private void RefreshLatestCheckpoint()
+        public override void OnBackNavigatedTo()
         {
-            if (_latestCheckpoint == null || _checkpoints == null) return;
+            if (ShouldDisplayCameraCapturedPicture())
+            {
+                RememberLatestCheckpoint();
+                Navigator.Navigate(String.Format("/Checkpoints/{0}/Add/Pictures", LatestCheckpoint.ID));
+                return;
+            }
 
-            RefreshCheckpoint(_checkpoints.FirstOrDefault(), _latestCheckpoint);
+            base.OnBackNavigatedTo();
+
+            SetLatestCheckpoint();
+        }
+
+        private static bool ShouldDisplayCameraCapturedPicture()
+        {
+            return StateManager.Instance.Contains(CheckpointAddPicturesViewModel.CAPTURED_PICTURE);
+        }
+
+        private void RememberLatestCheckpoint()
+        {
+            RememberCheckpoint(LatestCheckpoint);
         }
     }
 }

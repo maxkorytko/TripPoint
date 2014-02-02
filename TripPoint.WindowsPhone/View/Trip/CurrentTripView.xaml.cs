@@ -19,7 +19,10 @@ namespace TripPoint.WindowsPhone.View.Trip
         {
             base.OnNavigatedTo(e);
 
-            (DataContext as CurrentTripViewModel).OnNavigatedTo(new TripPointNavigationEventArgs(e));
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                (DataContext as CurrentTripViewModel).OnBackNavigatedTo();
+            }
         }
 
         private void CheckpointList_OnCheckpointSelected(object sender, CheckpointSelectedEventArgs args)

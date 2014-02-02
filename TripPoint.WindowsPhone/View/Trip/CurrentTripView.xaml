@@ -46,11 +46,14 @@
 
                         <TextBlock x:Name="TripStartDate"
                                    Style="{StaticResource DateTimeTextStyle}"
-                                   Text="{Binding Trip.StartDate, StringFormat={StaticResource DateTimeFormat}}" />
+                                   Text="{Binding Trip.StartDate,
+                                                  StringFormat={StaticResource DateTimeFormat}}" />
                     </StackPanel>
                     
-                    <Grid x:Name="CurrentCheckpointContainer" Grid.Row="1"
-                          Visibility="{Binding Trip.Checkpoints.Count, Converter={StaticResource CountToVisibility}}">
+                    <Grid x:Name="CurrentCheckpointContainer"
+                          Grid.Row="1"
+                          Visibility="{Binding Trip.Checkpoints.Count,
+                                               Converter={StaticResource CountToVisibility}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
@@ -71,10 +74,13 @@
 
                             <TextBlock x:Name="LastCheckpointCreateDate" 
                                        Style="{StaticResource DateTimeTextStyle}"
-                                       Text="{Binding LatestCheckpoint.Timestamp, StringFormat={StaticResource DateTimeFormat}}" />
+                                       Text="{Binding LatestCheckpoint.Timestamp,
+                                                      StringFormat={StaticResource DateTimeFormat}}" />
                         </StackPanel>
                     
-                        <StackPanel Grid.Row="1" VerticalAlignment="Bottom" Margin="0,0,0,5">
+                        <StackPanel Grid.Row="1"
+                                    VerticalAlignment="Bottom"
+                                    Margin="0,0,0,5">
                             <Button x:Name="AddNotesButton"
                                     Foreground="White"
                                     BorderBrush="White"
@@ -104,10 +110,12 @@
                             Foreground="White"
                             BorderBrush="White"
                             Command="{Binding CreateCheckpointCommand}"
-                            Visibility="{Binding Trip.Checkpoints.Count, Converter={StaticResource InverseCountToVisibility}}" />
+                            Visibility="{Binding Trip.Checkpoints.Count,
+                                                 Converter={StaticResource InverseCountToVisibility}}" />
 
                     <trippointcontrols:CheckpointList DataContext="{Binding}"
-                                                      Visibility="{Binding Trip.Checkpoints.Count, Converter={StaticResource CountToVisibility}}"
+                                                      Visibility="{Binding Trip.Checkpoints.Count,
+                                                                           Converter={StaticResource CountToVisibility}}"
                                                       OnCheckpointSelected="CheckpointList_OnCheckpointSelected"
                                                       OnMore="CheckpointList_OnMore" />
                 </Grid>
@@ -116,7 +124,8 @@
     </Grid>
 
     <appBar:Bindable.ApplicationBar>
-        <appBar:BindableApplicationBar IsVisible="True" Mode="Minimized">
+        <appBar:BindableApplicationBar IsVisible="True"
+                                       Mode="Minimized">
             <appBar:BindableApplicationBarButton Text="{Binding Localization.Resources.CreateCheckpoint_AppBar}"
                                                  IconUri="/Assets/Images/Dark/appbar.new.rest.png" 
                                                  Command="{Binding CreateCheckpointCommand}" />

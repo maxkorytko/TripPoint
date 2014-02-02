@@ -1,12 +1,11 @@
 ﻿using System.Windows.Input;
-using Microsoft.Phone.Controls;
 
+using GalaSoft.MvvmLight.Command;
 using TripPoint.Model.Domain;
 using TripPoint.Model.Data.Repository;
 using TripPoint.Model.Data.Repository.Factory;
 using TripPoint.Model.Utils;
 using TripPoint.WindowsPhone.Navigation;
-using GalaSoft.MvvmLight.Command;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
@@ -17,7 +16,6 @@ namespace TripPoint.WindowsPhone.ViewModel
         public CheckpointEditViewModel(IRepositoryFactory repositoryFactory)
             : base(repositoryFactory)
         {
-            Checkpoint = new Checkpoint();
             InitializeCommands();
         }
 
@@ -49,26 +47,12 @@ namespace TripPoint.WindowsPhone.ViewModel
             base.OnNavigatedTo(e);
 
             _checkpointRepository = RepositoryFactory.CheckpointRepository;
-
-            var checkpointID = GetCheckpointID(e.View);
-            InitializeCheckpoint(checkpointID);
-        }
-
-        private static int GetCheckpointID(PhoneApplicationPage view)
-        {
-            if (view == null) return -1;
-
-            var parameter = view.TryGetQueryStringParameter("checkpointID");
-
-            return TripPointConvert.ToInt32(parameter);
+            InitializeCheckpoint(TripPointConvert.ToInt32(GetParameter(e.View, "checkpointID")));
         }
 
         private void InitializeCheckpoint(int checkpointID)
         {
-            var checkpoint = _checkpointRepository.FindCheckpoint(checkpointID);
-
-            if (checkpoint != null)
-                Checkpoint = checkpoint;
+            Checkpoint = _checkpointRepository.FindCheckpoint(checkpointID) ?? new Checkpoint();
         }
     }
 }

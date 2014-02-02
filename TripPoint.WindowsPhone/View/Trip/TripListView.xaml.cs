@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 
 using TripPoint.WindowsPhone.ViewModel;
@@ -27,7 +28,10 @@ namespace TripPoint.WindowsPhone.View.Trip
         {
             base.OnNavigatedTo(e);
 
-            (DataContext as TripListViewModel).OnNavigatedTo(new Navigation.TripPointNavigationEventArgs(e));
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                (DataContext as TripListViewModel).OnBackNavigatedTo();
+            }
         }
     }
 }

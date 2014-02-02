@@ -25,23 +25,51 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Image Grid.Column="0"
-                           Width="80"
-                           Height="80"
+                    <Image Grid.Row="0" 
+                           Width="120"
+                           Height="120"
                            Stretch="UniformToFill"
                            utils:PictureBitmap.Thumbnail="{Binding Thumbnail}" />
 
-                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="15,0,0,0">
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
                         <TextBlock x:Name="CheckpointTitle"
+                                   Grid.Row="0"
                                    Style="{StaticResource ListHeaderLargeStyle}"
                                    Foreground="White"
                                    TextTrimming="WordEllipsis"
                                    Text="{Binding Title}" />
 
                         <TextBlock x:Name="CheckpointCreateDate"
+                                   Grid.Row="1"
                                    Style="{StaticResource DateTimeTextStyle}"
                                    Text="{Binding Timestamp, StringFormat={StaticResource DateTimeFormat}}" />
-                    </StackPanel>
+
+                        <StackPanel Grid.Row="2"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Left"
+                                    Margin="{StaticResource PhoneMargin}">
+                            
+                            <Image Source="\Assets\Images\pictures.icon.png" />
+
+                            <TextBlock Text="{Binding Pictures.Count}"
+                                       FontWeight="Bold"
+                                       Style="{StaticResource PhoneTextNormalStyle}"
+                                       Foreground="{StaticResource PhoneAccentBrush}" />
+
+                            <Image Source="\Assets\Images\notes.icon.png" />
+
+                            <TextBlock Text="{Binding Notes.Count}"
+                                       FontWeight="Bold"
+                                       Style="{StaticResource PhoneTextNormalStyle}"
+                                       Foreground="{StaticResource PhoneAccentBrush}" />
+                        </StackPanel>
+                    </Grid>
                 </Grid>
             </DataTemplate>
         </toolkit:LongListSelector.ItemTemplate>

@@ -35,33 +35,7 @@ namespace TripPoint.WindowsPhone.Navigation
 
         public void GoBack()
         {
-            PerformBackNavigation(args =>
-            {
-                TripPointNavigator.NotifyViewModelIfPossible(args);
-            });
-        }
-
-        /// <summary>
-        /// Moves back once in navigation history
-        /// Fires the passed in event handler when navigation is completed
-        /// </summary>
-        /// <param name="eventHandler"></param>
-        private void PerformBackNavigation(TripPointNavigatedEventHandler eventHandler)
-        {
-            if (!_rootFrame.CanGoBack) return;
-
-            NavigatedEventHandler navigatedEventHandler = null;
-            navigatedEventHandler = (sender, args) =>
-            {
-                _rootFrame.Navigated -= navigatedEventHandler;
-
-                if (eventHandler != null)
-                    eventHandler(args);
-            };
-
-            _rootFrame.Navigated += navigatedEventHandler;
-
-            _rootFrame.GoBack();
+            if (CanGoBack) _rootFrame.GoBack();
         }
 
         public bool Navigate(string uri)

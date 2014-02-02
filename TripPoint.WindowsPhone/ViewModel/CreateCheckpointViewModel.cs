@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Device.Location;
-using Microsoft.Phone.Controls;
 
 using GalaSoft.MvvmLight.Command;
 using TripPoint.Model.Domain;
@@ -12,12 +11,12 @@ using TripPoint.WindowsPhone.Navigation;
 using TripPoint.WindowsPhone.Services;
 using TripPoint.WindowsPhone.Utils;
 using TripPoint.I18N;
+using TripPoint.Model.Data.Repository;
 
 namespace TripPoint.WindowsPhone.ViewModel
 {
-    public class CreateCheckpointViewModel : Base.TripPointViewModelBase
+    public class CreateCheckpointViewModel : Base.TripViewModelBase
     {
-        private int _tripID = -1;
         private Checkpoint _checkpoint;
         private string _notes;
         private bool _isWaitingForLocation;
@@ -112,7 +111,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         /// </summary>
         private void AddNotesToCheckpoint()
         {
-            if (string.IsNullOrEmpty(Notes)) return;
+            if (String.IsNullOrEmpty(Notes)) return;
 
             Checkpoint.Notes.Add(
                new Note { Text = Notes }
@@ -126,13 +125,10 @@ namespace TripPoint.WindowsPhone.ViewModel
 
         private void SaveCheckpoint()
         {
-            var tripRepository = RepositoryFactory.TripRepository;
-            var trip = tripRepository.FindTrip(_tripID);
+            if (Trip == null || TripRepository == null) return;
 
-            if (trip == null) return;
-
-            trip.Checkpoints.Add(Checkpoint);
-            tripRepository.UpdateTrip(trip);
+            Trip.Checkpoints.Add(Checkpoint);
+            TripRepository.UpdateTrip(Trip);
         }
 
         private void GoBack()
@@ -203,12 +199,6 @@ namespace TripPoint.WindowsPhone.ViewModel
             };
         }
 
-        private void StopWaitingForLocation()
-        {
-            _timer.Stop();
-            IsWaitingForLocation = false;
-        }
-
         /// <summary>
         /// Sets default values to properties intended for UI binding
         /// This ensures that the user will not see previous values if he/she opens the view again
@@ -216,7 +206,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         private void ResetViewModel()
         {
             Checkpoint = null;
-            Notes = string.Empty;
+            Notes = String.Empty;
         }
 
         private void CancelCreateCheckpointAction()
@@ -228,21 +218,8 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             base.OnNavigatedTo(e);
 
-            StopWaitingForLocation();
-            
-            InitializeTripID(e.View);
             InitializeCheckpoint();
-        }
-
-        private void InitializeTripID(PhoneApplicationPage view)
-        {
-            if (view == null) return;
-
-            var tripID = view.TryGetQueryStringParameter("tripID");
-
-            if (string.IsNullOrWhiteSpace(tripID)) return;
-
-            _tripID = TripPointConvert.ToInt32(tripID);
+            StopWaitingForLocation();
         }
 
         private void InitializeCheckpoint()
@@ -253,6 +230,12 @@ namespace TripPoint.WindowsPhone.ViewModel
             {
                 Timestamp = DateTime.Now
             };
+        }
+
+        private void StopWaitingForLocation()
+        {
+            _timer.Stop();
+            IsWaitingForLocation = false;
         }
     }
 }

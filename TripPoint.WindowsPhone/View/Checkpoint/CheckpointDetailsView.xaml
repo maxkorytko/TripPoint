@@ -139,7 +139,7 @@
                     </toolkit:MultiselectList>
                     
                     <!-- 
-                    Can not bind to tex properties for the 3 buttons below.
+                    Can not bind to text properties for the 3 buttons below.
                     An exception will thrown in the following case:
                     - disable location service
                     - create a checkpoint
@@ -149,19 +149,22 @@
                     -->
                     <appBar:AdvancedApplicationBarIconButton Text="select"
                                                              IconUri="/Assets/Images/Dark/appbar.list.check.png"
-                                                             Visibility="{Binding IsNotesSelectionEnabled, Converter={StaticResource InverseBoolToVisibility}}" 
+                                                             Visibility="{Binding IsNotesSelectionEnabled,
+                                                                                  Converter={StaticResource InverseBoolToVisibility}}" 
                                                              Command="{Binding SelectNotesCommand}" />
                     
                     <appBar:AdvancedApplicationBarIconButton x:Name="DeleteNotesActionBarButton"
                                                              Text="delete"
                                                              IconUri="/Assets/Images/Dark/appbar.delete.rest.png"
                                                              IsEnabled="False"
-                                                             Visibility="{Binding IsNotesSelectionEnabled, Converter={StaticResource BoolToVisibility}}"
+                                                             Visibility="{Binding IsNotesSelectionEnabled,
+                                                                                  Converter={StaticResource BoolToVisibility}}"
                                                              Click="DeleteNotesActionBarButton_Click" />
                     
                     <appBar:AdvancedApplicationBarIconButton Text="cancel"
                                                              IconUri="/Assets/Images/Dark/appbar.stop.rest.png" 
-                                                             Visibility="{Binding IsNotesSelectionEnabled, Converter={StaticResource BoolToVisibility}}"
+                                                             Visibility="{Binding IsNotesSelectionEnabled,
+                                                                                  Converter={StaticResource BoolToVisibility}}"
                                                              Command="{Binding CancelSelectingNotesCommand}" />
                 </Grid>
             </controls:PivotItem>
