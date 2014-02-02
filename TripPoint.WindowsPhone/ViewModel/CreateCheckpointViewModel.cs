@@ -85,6 +85,7 @@ namespace TripPoint.WindowsPhone.ViewModel
             if (Checkpoint == null) return;
                 
             AddNotesToCheckpoint();
+            Checkpoint.Timestamp = DateTime.Now;
 
             if (LocationService.Permission == GeoPositionPermission.Denied)
             {
@@ -199,12 +200,10 @@ namespace TripPoint.WindowsPhone.ViewModel
             };
         }
 
-        /// <summary>
-        /// Sets default values to properties intended for UI binding
-        /// This ensures that the user will not see previous values if he/she opens the view again
-        /// </summary>
-        private void ResetViewModel()
+        public override void ResetViewModel()
         {
+            base.ResetViewModel();
+
             Checkpoint = null;
             Notes = String.Empty;
         }
@@ -226,10 +225,7 @@ namespace TripPoint.WindowsPhone.ViewModel
         {
             if (Checkpoint != null) return;
 
-            Checkpoint = new Checkpoint
-            {
-                Timestamp = DateTime.Now
-            };
+            Checkpoint = new Checkpoint();
         }
 
         private void StopWaitingForLocation()

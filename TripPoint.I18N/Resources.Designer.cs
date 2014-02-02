@@ -79,7 +79,7 @@ namespace TripPoint.I18N {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to title.
+        ///   Looks up a localized string similar to title (optional).
         /// </summary>
         public static string AddPictureTitle {
             get {
@@ -179,7 +179,8 @@ namespace TripPoint.I18N {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete this trip?.
+        ///   Looks up a localized string similar to Are you sure you want to delete this trip?
+        ///Pictures and notes will also be deleted..
         /// </summary>
         public static string ConfirmDeleteTrip {
             get {
@@ -452,7 +453,7 @@ namespace TripPoint.I18N {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Notes.
+        ///   Looks up a localized string similar to Notes (optional).
         /// </summary>
         public static string Notes {
             get {

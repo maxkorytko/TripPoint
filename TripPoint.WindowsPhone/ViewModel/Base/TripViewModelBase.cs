@@ -73,7 +73,8 @@ namespace TripPoint.WindowsPhone.ViewModel.Base
         }
 
         /// <summary>
-        /// Resets view model's state to initial values
+        /// Sets default values to properties
+        /// This helps ensure that the user will not see previous values re-vising a view
         /// </summary>
         public virtual void ResetViewModel()
         {

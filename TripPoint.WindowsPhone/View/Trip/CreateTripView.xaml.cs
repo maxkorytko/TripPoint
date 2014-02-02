@@ -12,6 +12,8 @@ namespace TripPoint.WindowsPhone.View.Trip
         public CreateTripView()
         {
             InitializeComponent();
+
+            Loaded += (sender, args) => { TripTitleTextBox.Focus(); };
         }
 
         private CreateTripViewModel ViewModel

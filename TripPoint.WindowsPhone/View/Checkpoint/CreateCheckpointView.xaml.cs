@@ -26,6 +26,8 @@ namespace TripPoint.WindowsPhone.View.Checkpoint
                         ViewModel.OnLocationObtained(args.Position.Location);
                 });
             };
+
+            Loaded += (sender, args) => { CheckpointTitleTextBox.Focus(); };
         }
 
         private CreateCheckpointViewModel ViewModel
